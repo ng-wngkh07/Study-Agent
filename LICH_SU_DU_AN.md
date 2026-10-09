@@ -30,20 +30,20 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 
 | YC-179 làm rõ YC-178 | Giữ tên/email tác giả và attribution Git; phân công/giao việc dùng TV1-TV6; bảng ánh xạ quản lý riêng | Đã áp dụng; thay đề xuất ẩn toàn bộ danh tính ở YC-178, không đổi lịch sử Git. |
 
-## Mẫu mục mới
+  ## Mẫu mục mới
 
-```markdown
-<a id="log-ID"></a>
-### <ID duy nhất, ví dụ LOG-YYYYMMDD-chucnang-maviec-tvN> - DD/MM/YYYY HH:mm (UTC+07)
-- Người thực hiện / loại thay đổi:
-- Lỗi hoặc mục tiêu (ý chính):
-- Trước / sau thay đổi:
-- Phần/file sửa và cách xử lý:
-- Log/phiên bản liên quan; lý do thay quyết định nếu có:
-- Ảnh hưởng/phối hợp với phần còn lại:
-- Kiểm thử: môi trường/model/data version, ca tái hiện/hồi quy, kết quả:
-- Trạng thái: PASS / FAIL / đang làm / NOT_RUN / N/A có lý do:
-- Giới hạn, lỗi còn lại, rollback/bước tiếp:
+  ```markdown
+  <a id="log-ID"></a>
+  ### <ID duy nhất, ví dụ LOG-YYYYMMDD-chucnang-maviec-tvN> - DD/MM/YYYY HH:mm (UTC+07)
+  - Người thực hiện / loại thay đổi:
+  - Lỗi hoặc mục tiêu (ý chính):
+  - Trước / sau thay đổi:
+  - Phần/file sửa và cách xử lý:
+  - Log/phiên bản liên quan; lý do thay quyết định nếu có:
+  - Ảnh hưởng/phối hợp với phần còn lại:
+  - Kiểm thử: môi trường/model/data version, ca tái hiện/hồi quy, kết quả:
+  - Trạng thái: PASS / FAIL / đang làm / NOT_RUN / N/A có lý do:
+  - Giới hạn, lỗi còn lại, rollback/bước tiếp:
 ```
 
 ## Nhật ký chung
@@ -393,3 +393,15 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   không tự merge hoặc đổi bảo vệ nhánh. Cập nhật 2026-10-09T17:34:05.950966+07:00.
 - Giới hạn: nghiệm thu model thật/Windows full installer/corpus và hiệu năng còn mở
   theo YC-175/177; tài liệu không tự xác nhận các phần đó đã hoàn thành.
+
+<a id="yc-174"></a>
+### YC-174 - 09/10/2026 21:38 (UTC+07)
+
+- Người thực hiện: mtrstapcode; loại: tài liệu phương án cải tiến và tài sản dự án.
+- Lỗi/mục tiêu: bổ sung tài liệu đề xuất 8 phương án cải tiến chức năng QA (Improvement_QA_Study_Agent.docx) nhằm nâng cao độ tin cậy, khả năng kiểm chứng bằng chứng và trải nghiệm tự học cho sinh viên.
+- Trước/sau: trước chưa có tài liệu tổng hợp đánh giá công sức, rủi ro và các chỉ số đo lường gợi ý cho các phương án QA; sau có báo cáo phân tích chi tiết 8 phương án (A đến H) phục vụ định hướng phát triển và nghiệm thu.
+- Phần sửa: thêm mới file Improvement_QA_Study_Agent.docx vào thư mục gốc dự án, dùng git add -f để vượt qua chặn gitignore.
+- Kiểm thử tại mốc 09/10/2026: đã kiểm tra tính toàn vẹn của file .docx, xác nhận Git tracking đúng nhánh docs-qa-improvements và không ảnh hưởng tới các file mã nguồn hiện có.
+- Ảnh hưởng: thuần tài liệu tài sản, không can thiệp luồng runtime hay thay đổi mã nguồn hệ thống.
+- Trạng thái: PASS (đã push nhánh docs-qa-improvements và cập nhật nhật ký cho PR #4).
+- Liên quan: YC-173; PR #4 trên GitHub repo ng-wngkh07/Study-Agent.

@@ -1,7 +1,7 @@
 # Dữ liệu demo của nhóm
 
 Tất cả nội dung ở đây được tạo riêng cho kiểm thử, không chứa sách hoặc lịch cá nhân.
-Chạy `python scripts/dev.py demo` để dựng chỉ mục FTS ở `data/team-demo/`.
+Cài môi trường theo [README chính](../../README.md) trước; trên Mac chạy `.venv/bin/python scripts/dev.py demo`, trên Windows chạy `.venv\Scripts\python.exe scripts/dev.py demo` để dựng chỉ mục FTS ở `data/team-demo/`.
 Không cần Ollama cho bước này; QA/embedding/đọc ảnh thật cần các model tương ứng.
 
 - `documents/`: một tài liệu tiếng Việt tự biên soạn và một PDF tiếng Anh tổng hợp.

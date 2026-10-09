@@ -10,6 +10,28 @@ from datetime import date, datetime, timedelta, timezone
 from typing import Any, Dict, List, Tuple
 
 
+def _escape_text(value: str) -> str:
+    """Encode RFC 5545 TEXT without allowing new content lines."""
+    value = value.replace('\r\n', '\n').replace('\r', '\n')
+    return value.replace('\\', '\\\\').replace('\n', '\\n').replace(';', '\\;').replace(',', '\\,')
+
+
+def _fold_line(line: str) -> str:
+    """Fold at 75 UTF-8 octets, including the continuation space."""
+    parts = []
+    current = ''
+    size = 0
+    for character in line:
+        width = len(character.encode('utf-8'))
+        if size + width > 75:
+            parts.append(current)
+            current, size = ' ', 1
+        current += character
+        size += width
+    parts.append(current)
+    return '\r\n'.join(parts)
+
+
 def validate_date_range(start_date_str: str, end_date_str: str) -> Tuple[date, date]:
     """Validate and parse start_date and end_date in YYYY-MM-DD format.
 
@@ -107,27 +129,27 @@ def generate_ics(
         dtend = f"{first_event_date.strftime('%Y%m%d')}T{eh:02d}{em:02d}00"
         until_str = f"{end_date.strftime('%Y%m%d')}T235959Z"
 
-        room = entry.get("room") or ""
-        notes = entry.get("notes") or ""
+        room = str(entry.get("room") or "")
+        notes = str(entry.get("notes") or "")
         description = f"Môn học: {course}"
         if room:
-            description += f"\\nPhòng: {room}"
+            description += f"\nPhòng: {room}"
         if notes:
-            description += f"\\nGhi chú: {notes}"
+            description += f"\nGhi chú: {notes}"
 
         lines.extend([
             "BEGIN:VEVENT",
             f"UID:{event_uid}",
-            f"DTSTAMP:{datetime.now(timezone.utc).strftime('%Y%m%d%T%H%M%SZ')}",
+            f"DTSTAMP:{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}",
             f"DTSTART;TZID=Asia/Ho_Chi_Minh:{dtstart}",
             f"DTEND;TZID=Asia/Ho_Chi_Minh:{dtend}",
             f"RRULE:FREQ=WEEKLY;BYDAY={byday_map[raw_weekday]};UNTIL={until_str}",
-            f"SUMMARY:{course}",
-            f"LOCATION:{room}",
-            f"DESCRIPTION:{description}",
+            f"SUMMARY:{_escape_text(course)}",
+            f"LOCATION:{_escape_text(room)}",
+            f"DESCRIPTION:{_escape_text(description)}",
             "STATUS:CONFIRMED",
             "END:VEVENT",
         ])
 
     lines.append("END:VCALENDAR")
-    return "\r\n".join(lines) + "\r\n"
+    return "\r\n".join(_fold_line(line) for line in lines) + "\r\n"

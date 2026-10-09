@@ -44,7 +44,12 @@ local là điều kiện chạy/tái hiện lỗi, báo rõ và cập nhật c�
 
 Một repo toàn bộ mã. Không push trực tiếp main, force-push nhánh chung hoặc reset mã
 người khác. Không tự động merge các nhánh
-train cho các thành viên khác. Nên bật bảo vệ main khi tạo repo, chưa coi là đã bật. Tham khảo
+train cho các thành viên khác. Main được bảo vệ, đọc lại trong YC-176 ngày 09/10/2026:
+CI features Windows/Mac và history phải đạt, nhánh cập nhật, hội thoại đã xử lý;
+approval count=0, last-push approval tắt. Quy tắc áp dụng cả admin, cấm force-push/xóa main.
+Nhóm vẫn review chéo; đây là phối hợp, không phải GitHub bắt duyệt. Bảo vệ cũ ở
+YC-173/174 cần 1 approval đã thay đổi và được lưu trong nhật ký. Kiểm trực tiếp
+Settings/PR trước merge. Tham khảo
 [GitHub Docs về bảo vệ nhánh](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches).
 
 Tên nhánh: `<loai>/<phamvi>/<ma-viec>-<ten>`; chữ thường không dấu, không khoảng trắng.
@@ -54,7 +59,11 @@ Một branch/PR cho một việc rõ ràng; cập nhật main trước tạo và
 
 Vòng PR: đọc log → tái hiện/chốt tiêu chí → branch → sửa/test → thêm log → PR →
 review chéo → xử lý xung đột/kiểm lại → merge → đồng bộ main và kiểm tích hợp.
-Ít nhất một reviewer khác tác giả; phần chung có review của các chủ trì bị ảnh hưởng.
+Theo quy trình nhóm, có ít nhất một reviewer khác tác giả; phần chung có review
+của các chủ trì bị ảnh hưởng. Khi bật lại yêu cầu approval, repo chỉ có tác giả sẽ thiếu reviewer: chủ repo vào
+Settings → Collaborators → Add people, mời thành viên nhận lời rồi review Approve PR.
+Tác giả không tự Approve; PR của Khải cần người khác khi bật required reviews. Hướng dẫn chi tiết ở
+[CONTRIBUTING](CONTRIBUTING.md). Không tự tắt quy tắc review chỉ để vượt blocker.
 PR ghi trước/sau, phạm vi/ảnh hưởng, dữ liệu/model version, checks và phần chưa chạy.
 
 ## Một nhật ký chung của ứng dụng

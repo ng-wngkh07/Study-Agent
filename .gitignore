@@ -9,6 +9,11 @@
 !/LICENSE
 !/LICENSE.*
 !/requirements.txt
+!/requirements-dev.txt
+!/requirements-mlx.txt
+!/constraints-web-py312.txt
+!/constraints-mlx-py313.txt
+!/README_MAC.md
 !/pytest.ini
 !/run.py
 !/start_app.command

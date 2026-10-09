@@ -136,7 +136,7 @@ MỘT REPO MÃ CHUNG, MỘT NHÁNH MAIN ỔN ĐỊNH
 
 - 5. Có ít nhất một reviewer khác tác giả; sửa phần chung cần reviewer từ từng chức năng bị ảnh hưởng. Khải merge sau các check áp dụng đạt; sau merge nhóm đồng bộ main.
 
-- Không push trực tiếp main, không force-push nhánh chung, không tự reset/ghi đè thay đổi của thành viên khác. Nên bật bảo vệ main và yêu cầu review/check; đây là quy tắc cần cấu hình khi có repo, chưa phải trạng thái GitHub đã bật.
+- Không push trực tiếp main, không force-push nhánh chung, không tự reset/ghi đè thay đổi của thành viên khác. Main đã được bảo vệ: CI Windows/Mac/history, nhánh cập nhật và hội thoại đã xử lý; áp dụng cả admin, cấm force-push/xóa. Readback YC-176 ngày 09/10/2026 không còn bắt buộc approval; review chéo/Khải merge là quy trình nhóm, người có quyền ghi cũng có thể merge. Kiểm chính sách hiện tại theo CONTRIBUTING.
 
 Tham khảo: [GitHub Docs - About protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches), [Git - git-switch](https://git-scm.com/docs/git-switch).
 

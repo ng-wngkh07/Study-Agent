@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "python_minor": "3.12",
+  "packages": [
+    {"name": "python", "id": "Python.Python.3.12", "profiles": ["demo", "full"]},
+    {"name": "git", "id": "Git.Git", "profiles": ["demo", "full"]},
+    {"name": "ollama", "id": "Ollama.Ollama", "profiles": ["full"]}
+  ],
+  "ollama_base_url": "http://127.0.0.1:11434",
+  "models": [
+    {"role": "qa", "name": "qwen2.5:3b"},
+    {"role": "embedding", "name": "bge-m3"},
+    {"role": "vision", "name": "qwen2.5vl:3b"}
+  ],
+  "sources": ["https://learn.microsoft.com/en-us/windows/package-manager/winget/install", "https://docs.ollama.com/windows"]
+}

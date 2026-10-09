@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Học Tập - Tra cứu tài liệu và hỏi đáp đa lĩnh vực</title>
+    <link rel="stylesheet" href="/static/style.css?v=5-source-images">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">📚</div>
+                <div class="brand-text">
+                    <h2>Agent Học Tập AI</h2>
+                    <span class="badge local">100% Cục bộ & Miễn phí</span>
+                </div>
+            </div>
+
+            <!-- Knowledge base stats summary -->
+            <div class="sidebar-card">
+                <h3>📚 Thư viện tài liệu</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-num" id="stat-docs">-</span>
+                        <span class="stat-label">Tài liệu</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num" id="stat-pages">-</span>
+                        <span class="stat-label">Trang chữ</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num" id="stat-chunks">-</span>
+                        <span class="stat-label">Đoạn chỉ mục</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num" id="stat-scanned">-</span>
+                        <span class="stat-label">Tài liệu dạng ảnh</span>
+                    </div>
+                </div>
+                <button id="btn-open-kb" class="btn btn-secondary btn-sm w-full">Xem chi tiết thư viện</button>
+                <button id="btn-reindex" class="btn btn-outline btn-sm w-full mt-2">🔄 Đồng bộ thư viện</button>
+                <button id="btn-open-ocr-review" class="btn btn-outline btn-sm w-full mt-2">📝 Thẩm định OCR cục bộ</button>
+                <button id="btn-open-timetable" class="btn btn-outline btn-sm w-full mt-2">📅 Thời khóa biểu từ ảnh</button>
+            </div>
+
+            <div class="sidebar-card history-card">
+                <div class="history-heading">
+                    <h3>💬 Cuộc trò chuyện</h3>
+                    <div class="history-actions" style="display: flex; gap: 4px;">
+                        <button id="btn-new-chat-sidebar" class="btn btn-sm" style="padding: 2px 8px; font-size: 0.75rem; background: var(--primary); color: white;" title="Bắt đầu cuộc trò chuyện mới">➕ Mới</button>
+                        <button id="btn-clear-history" class="btn btn-sm" style="padding: 2px 6px; font-size: 0.75rem;" title="Xóa toàn bộ lịch sử đã lưu">Xóa hết</button>
+                    </div>
+                </div>
+                <div class="session-search-wrapper" style="margin: 8px 0 6px 0;">
+                    <input type="text" id="input-session-search" placeholder="🔍 Tìm cuộc trò chuyện..." class="form-input" style="width: 100%; font-size: 0.78rem; padding: 4px 8px; box-sizing: border-box;">
+                </div>
+                <p class="history-note" style="margin: 4px 0 8px 0;">Lưu trên máy này.</p>
+                <div id="history-list" class="history-list">Đang tải cuộc trò chuyện...</div>
+            </div>
+
+            <!-- Model Settings -->
+            <div class="sidebar-card">
+                <h3>⚙️ Cấu hình Mô hình</h3>
+                <div class="form-group">
+                    <label for="select-model">Mô hình suy luận:</label>
+                    <div class="input-with-status">
+                        <select id="select-model" class="form-select">
+                            <option value="" selected>Đang kiểm tra mô hình…</option>
+                        </select>
+                    </div>
+                    <small class="text-muted" style="display:block;margin-top:4px;font-size:0.78rem;">Mô hình được chọn theo cấu hình máy. Bản phát triển Ollama cần được kiểm thử riêng với bản MLX trên Mac.</small>
+                    <small id="ollama-status" class="status-indicator">Đang kiểm tra mô hình...</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="select-embed">Mô hình Embedding:</label>
+                    <select id="select-embed" class="form-select">
+                        <option value="bge-m3" selected>bge-m3 (Mặc định)</option>
+                        <option value="nomic-embed-text">nomic-embed-text</option>
+                        <option value="">Chỉ dùng Full-Text (FTS5 BM25)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="input-topk">Số đoạn trích (Top-K): <span id="topk-val">6</span></label>
+                    <input type="range" id="input-topk" min="2" max="15" value="6" class="form-range">
+                </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="sidebar-footer">
+                <div class="disclaimer-mini">
+                    ⚠️ <strong>Lưu ý quan trọng:</strong> Ứng dụng phục vụ học tập và tra cứu đa lĩnh vực. Khi gặp nội dung y tế hoặc sức khỏe, ứng dụng từ chối chẩn đoán, không kê đơn và khuyến cáo tham vấn chuyên gia.
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="main-content">
+            <header class="chat-header">
+                <div class="header-info">
+                    <h1>Trợ Lý Học Tập Cục Bộ</h1>
+                    <p class="subtitle">Tra cứu nguồn và hỏi đáp đa lĩnh vực từ thư viện tài liệu</p>
+                </div>
+                <div class="header-actions">
+                    <button id="btn-clear-chat" class="btn btn-icon" title="Bắt đầu cuộc trò chuyện mới">＋ Chat mới</button>
+                </div>
+            </header>
+
+            <nav class="mode-switch" aria-label="Chế độ ứng dụng">
+                <button id="mode-qa" class="mode-button active" aria-pressed="true" aria-controls="qa-panel">💬 Hỏi đáp dựa trên tài liệu</button>
+                <button id="mode-documents" class="mode-button" aria-pressed="false" aria-controls="documents-panel">📚 Tra cứu tài liệu</button>
+                <button id="mode-timetable" class="mode-button" aria-pressed="false" aria-controls="timetable-panel">📅 Thời khóa biểu từ ảnh</button>
+            </nav>
+            <section id="documents-panel" class="documents-panel" aria-label="Tra cứu tài liệu" hidden>
+                <h2>Tra cứu tài liệu</h2>
+                <p class="lookup-description">Tìm trích đoạn gốc, xem tên sách và mở PDF đúng trang. Tra cứu từ khóa dùng được khi mô hình đang bận.</p>
+                <form id="document-search-form" class="document-search-form">
+                    <label for="document-query">Từ khóa hoặc chủ đề</label>
+                    <input id="document-query" class="form-input" maxlength="500" required placeholder="Ví dụ: trí nhớ, thói quen, attachment…">
+                    <div class="document-filters">
+                        <div><label for="document-book">Tìm trong sách</label><select id="document-book" class="form-select"><option value="">Tất cả tài liệu</option></select></div>
+                        <div><label for="document-method">Cách tìm</label><select id="document-method" class="form-select"><option value="fts">Từ khóa</option><option value="hybrid">Ngữ nghĩa và từ khóa</option></select></div>
+                        <button class="btn btn-primary" type="submit">Tìm tài liệu</button>
+                    </div>
+                </form>
+                <p id="document-search-status" role="status" aria-live="polite">Nhập từ khóa để bắt đầu. Trích đoạn được giữ nguyên ngôn ngữ của sách.</p>
+                <div id="document-results" class="document-results"></div>
+            </section>
+            <section id="timetable-panel" class="timetable-panel" aria-label="Thời khóa biểu từ ảnh" hidden>
+                <div class="timetable-header">
+                    <h2>📅 Lập Thời Khóa Biểu từ Ảnh</h2>
+                    <p class="lookup-description">Tải ảnh chụp thời khóa biểu (PNG, JPEG, WebP). Hệ thống AI cục bộ (Qwen2.5-VL 3B) sẽ trích xuất thành bản nháp để bạn đối chiếu, sửa và xác nhận trước khi lưu. Dữ liệu chỉ lưu trên máy này.</p>
+                </div>
+
+                <div class="timetable-grid">
+                    <!-- Left Column: Upload, Image Preview & Period Converter -->
+                    <div class="timetable-col-left">
+                        <div class="timetable-card">
+                            <h3>📸 Tải ảnh thời khóa biểu</h3>
+                            <div id="timetable-dropzone" class="timetable-dropzone">
+                                <input type="file" id="timetable-file-input" accept="image/png,image/jpeg,image/webp" style="display: none;">
+                                <div class="dropzone-content">
+                                    <span class="dropzone-icon" style="font-size: 2.5rem; display: block; margin-bottom: 8px;">🖼️</span>
+                                    <p style="margin: 0 0 6px 0; font-weight: 600;">Kéo thả ảnh vào đây hoặc bấm để chọn tệp</p>
+                                    <small class="text-muted">Hỗ trợ PNG, JPEG, WebP (Tối đa 15MB). Ảnh lưu cục bộ, không đưa vào dữ liệu huấn luyện.</small>
+                                </div>
+                            </div>
+
+                            <div id="timetable-preview-container" class="timetable-preview-container" style="display: none; margin-top: 12px;">
+                                <div class="preview-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <span id="timetable-filename" style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                                    <button id="btn-reupload-image" class="btn btn-sm btn-outline">Chọn ảnh khác</button>
+                                </div>
+                                <div class="preview-img-box" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden; max-height: 400px; display: flex; justify-content: center; background: #0f172a;">
+                                    <img id="timetable-preview-img" src="" alt="Thời khóa biểu" style="max-width: 100%; max-height: 400px; object-fit: contain;">
+                                </div>
+                                <div id="timetable-image-meta" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 6px;"></div>
+                            </div>
+
+                            <div id="timetable-extract-loading" class="timetable-loading-box" style="display: none; text-align: center; padding: 20px; margin-top: 12px; background: #f8fafc; border-radius: 8px; border: 1px dashed var(--border);">
+                                <div class="spinner" style="margin: 0 auto 10px auto;"></div>
+                                <strong id="timetable-extract-status" style="display: block; font-size: 0.9rem;">Đang phân tích ảnh bằng Qwen2.5-VL 3B cục bộ...</strong>
+                                <small class="text-muted" style="display: block; margin-top: 4px;">Ảnh được phân tích trên máy này. Vui lòng chờ.</small>
+                            </div>
+                        </div>
+
+                        <!-- Period to Clock Mapping Tool -->
+                        <div class="timetable-card mt-3" style="margin-top: 16px;">
+                            <h3>⏰ Công cụ điền giờ theo tiết học</h3>
+                            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 10px;">Nếu thời khóa biểu ghi theo tiết (Tiết 1, Tiết 2-4...), bạn có thể áp dụng khung giờ học do bạn nhập:</p>
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: flex; gap: 6px; align-items: center; margin-top: 4px;">
+                                    <input type="text" id="map-period-code" placeholder="Tiết (VD: 1-3)" class="form-input" style="width: 100px; font-size: 0.82rem; padding: 4px 8px;">
+                                    <input type="time" id="map-start-time" class="form-input" style="width: 95px; font-size: 0.82rem; padding: 4px 6px;">
+                                    <span style="font-size: 0.82rem;">-</span>
+                                    <input type="time" id="map-end-time" class="form-input" style="width: 95px; font-size: 0.82rem; padding: 4px 6px;">
+                                    <button type="button" id="btn-apply-period-map" class="btn btn-sm btn-secondary">Áp dụng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Editable Draft & Confirmed Schedule -->
+                    <div class="timetable-col-right">
+                        <!-- Draft Card (Visible upon extraction) -->
+                        <div id="timetable-draft-card" class="timetable-card" style="display: none;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <div>
+                                    <span style="background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; border: 1px solid #fde68a;">BẢN NHÁP — BẮT BUỘC KIỂM TRA TRƯỚC KHI LƯU</span>
+                                    <h3 style="margin: 6px 0 0 0;">Dữ liệu trích xuất từ ảnh</h3>
+                                </div>
+                                <button id="btn-add-draft-row" class="btn btn-sm btn-outline">＋ Thêm dòng</button>
+                            </div>
+
+                            <div id="timetable-uncertainties" style="display: none; margin-bottom: 12px; padding: 10px 14px; background: #fffbeb; border: 1px solid #fef3c7; border-radius: 6px; font-size: 0.82rem; color: #b45309;"></div>
+
+                            <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
+                                <table class="kb-table timetable-editor-table" id="draft-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 90px;">Thứ</th>
+                                            <th>Tên môn học</th>
+                                            <th style="width: 80px;">Tiết</th>
+                                            <th style="width: 95px;">Bắt đầu</th>
+                                            <th style="width: 95px;">Kết thúc</th>
+                                            <th style="width: 90px;">Phòng</th>
+                                            <th style="width: 40px; text-align: center;">Xóa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="draft-table-body"></tbody>
+                                </table>
+                            </div>
+
+                            <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);">
+                                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; margin-bottom: 12px;">
+                                    <input type="checkbox" id="check-replace-existing">
+                                    <span>Ghi đè toàn bộ lịch học đang lưu (bỏ chọn để ghép thêm các môn mới)</span>
+                                </label>
+                                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                                    <button id="btn-discard-draft" class="btn btn-sm btn-secondary">Hủy bản nháp</button>
+                                    <button id="btn-confirm-draft" class="btn btn-sm btn-primary">💾 Xác nhận & Lưu vào lịch học</button>
+                                </div>
+                                <p id="draft-confirm-status" style="margin: 8px 0 0 0; font-size: 0.82rem;"></p>
+                            </div>
+                        </div>
+
+                        <!-- Confirmed Schedule Card -->
+                        <div class="timetable-card" style="margin-top: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <div>
+                                    <h3 style="margin: 0;">📋 Lịch học đã lưu</h3>
+                                    <p class="text-muted" style="margin: 2px 0 0 0; font-size: 0.78rem;">Lịch học được lưu trên máy này và giữ lại khi mở ứng dụng lần sau.</p>
+                                </div>
+                                <div style="display: flex; gap: 6px;">
+                                    <button id="btn-toggle-manual" class="btn btn-sm btn-outline">＋ Nhập tay</button>
+                                    <button id="btn-clear-confirmed" class="btn btn-sm btn-outline" style="color: #dc2626;">🗑 Xóa hết</button>
+                                </div>
+                            </div>
+
+                            <!-- Manual Add Row Subform -->
+                            <form id="form-manual-entry" style="display: none; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px;">
+                                <strong style="font-size: 0.85rem; display: block; margin-bottom: 8px;">Thêm buổi học thủ công:</strong>
+                                <div style="display: grid; grid-template-columns: 110px 1fr 100px 100px 90px; gap: 8px; align-items: center;">
+                                    <div>
+                                        <label for="manual-weekday" style="font-size: 0.75rem; display: block;">Thứ</label>
+                                        <select id="manual-weekday" class="form-input" style="font-size: 0.8rem; padding: 4px;">
+                                            <option value="1">Thứ 2</option>
+                                            <option value="2">Thứ 3</option>
+                                            <option value="3">Thứ 4</option>
+                                            <option value="4">Thứ 5</option>
+                                            <option value="5">Thứ 6</option>
+                                            <option value="6">Thứ 7</option>
+                                            <option value="7">Chủ nhật</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="manual-course" style="font-size: 0.75rem; display: block;">Tên môn học</label>
+                                        <input type="text" id="manual-course" required placeholder="Đại số tuyến tính" class="form-input" style="font-size: 0.8rem; padding: 4px 6px;">
+                                    </div>
+                                    <div>
+                                        <label for="manual-start" style="font-size: 0.75rem; display: block;">Bắt đầu</label>
+                                        <input type="time" id="manual-start" required class="form-input" style="font-size: 0.8rem; padding: 4px 6px;">
+                                    </div>
+                                    <div>
+                                        <label for="manual-end" style="font-size: 0.75rem; display: block;">Kết thúc</label>
+                                        <input type="time" id="manual-end" required class="form-input" style="font-size: 0.8rem; padding: 4px 6px;">
+                                    </div>
+                                    <div>
+                                        <label for="manual-room" style="font-size: 0.75rem; display: block;">Phòng</label>
+                                        <input type="text" id="manual-room" placeholder="C301" class="form-input" style="font-size: 0.8rem; padding: 4px 6px;">
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+                                    <button type="button" id="btn-cancel-manual" class="btn btn-sm btn-secondary">Đóng</button>
+                                    <button type="submit" class="btn btn-sm btn-primary">Lưu môn học</button>
+                                </div>
+                                <p id="manual-status" style="margin: 6px 0 0 0; font-size: 0.8rem;"></p>
+                            </form>
+
+                            <div class="table-responsive" style="max-height: 280px; overflow-y: auto;">
+                                <table class="kb-table" id="confirmed-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 90px;">Thứ</th>
+                                            <th>Tên môn học</th>
+                                            <th style="width: 130px;">Khung giờ</th>
+                                            <th style="width: 100px;">Phòng</th>
+                                            <th style="width: 40px; text-align: center;">Xóa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="confirmed-table-body">
+                                        <tr><td colspan="5" style="text-align:center;" class="text-muted">Đang tải lịch học...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Semester Export Card -->
+                            <div style="margin-top: 16px; padding: 12px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;">
+                                <strong style="color: #166534; font-size: 0.88rem; display: block; margin-bottom: 4px;">📅 Xuất lịch sang Google Calendar / Apple Calendar (.ics)</strong>
+                                <p style="font-size: 0.78rem; color: #166534; margin: 0 0 10px 0;">Nhập ngày bắt đầu và kết thúc học kỳ để tạo các sự kiện lặp lại hàng tuần (múi giờ Asia/Ho_Chi_Minh):</p>
+                                <form id="form-export-ics" style="display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap;">
+                                    <div>
+                                        <label for="export-start-date" style="font-size: 0.75rem; color: #166534; display: block; margin-bottom: 2px;">Ngày bắt đầu kỳ:</label>
+                                        <input type="date" id="export-start-date" required class="form-input" style="font-size: 0.82rem; padding: 4px 8px;">
+                                    </div>
+                                    <div>
+                                        <label for="export-end-date" style="font-size: 0.75rem; color: #166534; display: block; margin-bottom: 2px;">Ngày kết thúc kỳ:</label>
+                                        <input type="date" id="export-end-date" required class="form-input" style="font-size: 0.82rem; padding: 4px 8px;">
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-primary" style="background: #16a34a; border-color: #16a34a;">📥 Tải tệp .ics</button>
+                                </form>
+                                <p id="export-status" style="margin: 6px 0 0 0; font-size: 0.8rem;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="qa-panel" class="qa-panel" aria-label="Hỏi đáp dựa trên tài liệu">
+
+            <!-- Active Session Bar -->
+            <div id="session-bar" class="session-bar" style="display: none; padding: 8px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; align-items: center; justify-content: space-between; gap: 12px; font-size: 0.88rem;">
+                <div class="session-title-wrapper" style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;">
+                    <span style="color: #64748b;">💬</span>
+                    <strong id="session-active-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 420px; color: var(--text-primary);">Cuộc trò chuyện</strong>
+                    <button id="btn-rename-session" class="btn btn-sm btn-outline" style="padding: 1px 6px; font-size: 0.75rem;" title="Đổi tên cuộc trò chuyện">✏️</button>
+                </div>
+                <div class="session-controls" style="display: flex; align-items: center; gap: 8px;">
+                    <button id="btn-summarize-session" class="btn btn-sm btn-outline" style="padding: 3px 8px; font-size: 0.78rem;" title="Tổng hợp chủ đề chính">📝 Tóm tắt chủ đề</button>
+                </div>
+            </div>
+
+            <!-- Session Summary Box -->
+            <div id="session-summary-box" class="session-summary-box" style="display: none; margin: 10px 20px 0 20px; padding: 10px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-size: 0.85rem; color: #166534;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <strong>📋 Tóm tắt chủ đề:</strong>
+                    <button id="btn-close-summary" style="background: none; border: none; cursor: pointer; color: #166534; font-size: 1.1rem; line-height: 1;">&times;</button>
+                </div>
+                <p id="session-summary-text" style="margin: 0; line-height: 1.45;"></p>
+                <p style="margin: 8px 0 0; font-size: 0.75rem;">Với phiên dài, bản tóm tắt dựa trên 2 lượt đầu và 4 lượt gần nhất; nội dung gốc vẫn được lưu đầy đủ.</p>
+            </div>
+
+            <!-- Training / GPU Busy Banner -->
+            <div id="training-banner" class="training-banner" style="display: none; background: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 10px 16px; margin: 0 20px 10px 20px; border-radius: 8px; font-size: 0.9rem; display: none; align-items: center; gap: 8px;">
+                <span class="banner-icon">⚡</span>
+                <span id="training-banner-text" class="banner-text">Hệ thống đang huấn luyện mô hình MLX LoRA (GPU bận). Lịch sử tra cứu vẫn xem được; câu hỏi mới sẽ tạm chờ.</span>
+            </div>
+
+            <!-- Chat messages container -->
+            <div class="messages-container" id="messages-container">
+                <!-- Welcome greeting -->
+                <div class="message assistant welcome-card">
+                    <div class="message-avatar">🧠</div>
+                    <div class="message-body">
+                        <h3>Xin chào! Bạn muốn tìm hiểu hoặc tra cứu nội dung gì hôm nay?</h3>
+                        <p>Tôi tìm các đoạn phù hợp trong thư viện tài liệu (Đại số tuyến tính, Lập trình hướng đối tượng, Tâm lý học, Khoa học dữ liệu, v.v.) để hỗ trợ câu trả lời và dẫn nguồn rõ ràng. Bạn có thể mở chế độ Tra cứu tài liệu để đọc trực tiếp các đoạn gốc.</p>
+                        
+                        <div class="suggestion-chips">
+                            <span class="suggestion-title">Gợi ý câu hỏi đa lĩnh vực:</span>
+                            <button class="chip" data-query="Ánh xạ tuyến tính là gì? Nêu hai tính chất trong tài liệu Chương 4 Anh xa tuyen tinh.">Ánh xạ tuyến tính & 2 tính chất (Đại số)</button>
+                            <button class="chip" data-query="Đa kế thừa trong C++ được định nghĩa thế nào và hàm ảo hoạt động ra sao?">Đa kế thừa & Hàm ảo C++ (OOP)</button>
+                            <button class="chip" data-query="Hệ thống 1 và Hệ thống 2 trong cuốn Tư duy nhanh và chậm hoạt động như thế nào?">Hệ thống 1 & 2 (Tâm lý học nhận thức)</button>
+                            <button class="chip" data-query="Vòng lặp thói quen gồm những yếu tố nào trong Sức mạnh của thói quen?">Vòng lặp thói quen (Habit Loop)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="input-area">
+                <div id="qa-source-scope" hidden style="margin-bottom:8px; font-size:0.85rem;">
+                    <span id="qa-source-label"></span>
+                    <button type="button" id="qa-source-clear" class="btn btn-outline btn-sm">Tìm trong toàn bộ thư viện</button>
+                </div>
+                <form id="chat-form" class="chat-form">
+                    <textarea 
+                        id="user-input" 
+                        placeholder="Đặt câu hỏi học tập (VD: Ánh xạ tuyến tính là gì? / Đa kế thừa trong C++ là gì?)..." 
+                        rows="2"
+                        required
+                    ></textarea>
+                    <button type="submit" id="btn-send" class="btn btn-primary btn-send">
+                        <span class="send-icon">➤</span>
+                        <span class="send-text">Gửi</span>
+                    </button>
+                </form>
+                <div class="input-hint">
+                    <span>Nhấn <strong>Enter</strong> để gửi, <strong>Shift + Enter</strong> để xuống dòng</span>
+                </div>
+            </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Knowledge Base Modal -->
+    <div id="kb-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📚 Danh sách tài liệu</h2>
+                <button class="btn-close-modal" id="btn-close-kb">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Báo cáo tình trạng trích xuất từng file PDF. Các file scan dạng hình ảnh chưa có lớp chữ số (OCR) được ghi chú rõ ràng.</p>
+                <div class="table-responsive">
+                    <table class="kb-table" id="kb-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên sách / File</th>
+                                <th>Tổng số trang</th>
+                                <th>Trang đã trích xuất</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kb-table-body">
+                            <tr><td colspan="5" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reindex Progress Modal -->
+    <div id="reindex-modal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>🔄 Tiến trình Lập Chỉ Mục</h2>
+            </div>
+            <div class="modal-body text-center">
+                <div class="spinner" id="reindex-spinner"></div>
+                <p id="reindex-msg" class="mt-3">Đang phân tích và lập chỉ mục PDF trong thư viện...</p>
+                <p id="reindex-submsg" class="text-muted text-sm"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- OCR Review Modal -->
+    <div id="ocr-modal" class="modal">
+        <div class="modal-content" style="max-width: 850px;">
+            <div class="modal-header">
+                <h2>📝 Thẩm định & duyệt bản nhận diện chữ cục bộ</h2>
+                <button class="btn-close-modal" id="btn-close-ocr-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">
+                    Bản chép cần đối chiếu trang gốc trước khi dùng để huấn luyện. Vui lòng rà soát, sửa lỗi và xác nhận nội dung từng trang đối chiếu với ảnh chụp.
+                </p>
+                <form id="ocr-run-page-form" style="display: flex; gap: 8px; align-items: flex-end; margin-bottom: 14px; padding: 10px; background: #f8fafc; border-radius: 6px; border: 1px solid var(--border);">
+                    <div style="flex: 2;">
+                        <label for="ocr-run-filename" style="font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 3px;">Tài liệu nguồn:</label>
+                        <select id="ocr-run-filename" class="form-input" style="width: 100%; font-size: 0.82rem;"></select>
+                    </div>
+                    <div style="flex: 1; max-width: 90px;">
+                        <label for="ocr-run-page" style="font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 3px;">Trang:</label>
+                        <input type="number" id="ocr-run-page" min="1" value="1" class="form-input" style="width: 100%; font-size: 0.82rem;">
+                    </div>
+                    <div>
+                        <button type="submit" id="btn-run-ocr" class="btn btn-primary btn-sm">▶ Chạy OCR (qwen2.5vl:3b)</button>
+                    </div>
+                </form>
+                <div style="display: flex; gap: 8px; margin-bottom: 12px; justify-content: space-between; align-items: center;">
+                    <button id="btn-refresh-ocr-list" class="btn btn-secondary btn-sm">🔄 Tải danh sách cần duyệt</button>
+                    <span id="ocr-run-status-msg" style="font-size: 0.8rem; color: var(--text-muted);"></span>
+                </div>
+                <div id="ocr-list-container" class="table-responsive" style="margin-bottom: 16px;">
+                    <table class="kb-table" id="ocr-table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Nguồn</th>
+                                <th>Trang</th>
+                                <th>Backend</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ocr-table-body">
+                            <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Đang tải...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Review editor pane -->
+                <div id="ocr-editor-pane" style="display: none; border-top: 1px solid var(--border); padding-top: 14px;">
+                    <h3 style="font-size: 0.95rem; margin-bottom: 8px;">✏️ Soát lỗi & Xác nhận bản ghi</h3>
+                    <div style="margin-bottom: 8px;">
+                        <span id="ocr-editor-docinfo" style="font-weight: 600; font-size: 0.85rem;"></span>
+                    </div>
+                    <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+                        <div style="flex: 1; max-width: 45%; border: 1px solid var(--border); border-radius: 4px; padding: 4px; text-align: center; background: #fafafa;">
+                            <div style="font-size: 0.78rem; font-weight: 600; margin-bottom: 4px; color: var(--text-muted);">Ảnh trang gốc</div>
+                            <img id="ocr-preview-img" src="" alt="Ảnh trang gốc" style="max-width: 100%; max-height: 280px; object-fit: contain; border-radius: 2px;">
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="ocr-editor-text" style="font-size: 0.82rem; font-weight: 600; display: block; margin-bottom: 4px;">Văn bản OCR (Chỉnh sửa trực tiếp):</label>
+                            <textarea id="ocr-editor-text" rows="12" class="form-input" style="width: 100%; font-family: monospace; font-size: 0.82rem;"></textarea>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <div style="flex: 1;">
+                            <label for="ocr-editor-reviewer" style="font-size: 0.8rem;">Người thẩm định:</label>
+                            <input type="text" id="ocr-editor-reviewer" placeholder="Ví dụ: Codex / Nguyen" class="form-input" style="width: 100%; font-size: 0.82rem;">
+                        </div>
+                        <div style="flex: 2;">
+                            <label for="ocr-editor-notes" style="font-size: 0.8rem;">Ghi chú sửa đổi:</label>
+                            <input type="text" id="ocr-editor-notes" placeholder="Chi tiết sửa điều kiện vòng lặp, công thức..." class="form-input" style="width: 100%; font-size: 0.82rem;">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                        <button id="btn-cancel-ocr-edit" class="btn btn-secondary btn-sm">Hủy</button>
+                        <button id="btn-save-ocr-review" class="btn btn-primary btn-sm">💾 Lưu xác minh & Duyệt</button>
+                    </div>
+                    <p id="ocr-review-status" style="font-size: 0.8rem; margin-top: 6px;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js?v=6-source-images"></script>
+    <script src="/static/document-lookup.js?v=2-source-images"></script>
+    <script src="/static/timetable.js?v=5-literal-table"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+## Vấn đề và kết quả
+
+- Chức năng/phạm vi: lookup / QA / timetable / training / shared.
+- Issue, chủ trì và log cũ đã đọc:
+- Lỗi/mục tiêu, cách tái hiện, trước/sau:
+- File/phần thay đổi, ảnh hưởng các chức năng khác:
+
+## Phối hợp và kiểm chứng
+
+- Nếu ngoài phạm vi/phần chung: đã báo ai, hướng xử lý/tương thích, rollback:
+- Môi trường/Python/model/data version:
+- Test/thao tác đã chạy, kết quả; ca hồi quy bảo vệ sửa cũ:
+- Smoke ba luồng khi sửa chung; lỗi còn lại/NOT_RUN:
+- Reviewer khác tác giả và các chủ trì bị ảnh hưởng:
+
+## Nhật ký và tài sản
+
+- ID mục mới trong LICH_SU_DU_AN.md, có ngày giờ, trước/sau, phần sửa, ảnh hưởng và checks:
+- Log tóm tắt thay đổi ứng dụng, không chép prompt; không có nhật ký riêng cho từng người:
+- Không có src/data thật, DB/vector/weights, .env/bí mật hoặc cache/tích hợp cá nhân trong PR:

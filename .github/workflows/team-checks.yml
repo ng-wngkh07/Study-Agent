@@ -1,0 +1,49 @@
+name: Team feature checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  features:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-windows.txt
+      - run: python -m pip install -r requirements-windows.txt
+      - run: python scripts/dev.py demo
+      - run: python scripts/dev.py check
+      - if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          $errors = $null; $tokens = $null
+          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count) { throw ($errors | Out-String) }
+          }
+          .\tests\windows_setup_contract.ps1
+          .\setup_windows.ps1 -DemoOnly
+      - run: python -m pytest -c pytest.windows.ini
+  history:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/check_history.py --base "${{ github.event.pull_request.base.sha }}"

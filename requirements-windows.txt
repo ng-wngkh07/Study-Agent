@@ -1,0 +1,2 @@
+# Web/feature development only. MLX training dependencies stay on the Mac.
+-r requirements.txt

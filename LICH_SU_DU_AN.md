@@ -2,7 +2,7 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 09/10/2026 15:18 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T15:18:57.510882+07:00.
+- Cập nhật: 09/10/2026 15:23 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T15:23:47.104446+07:00.
 - Mục mới nhất: **[YC-173](#yc-173)**.
 - Nhật ký chung có **7 mục**: 3 môi trường/chức năng (YC-167/170/173), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 1 rà soát/nghiệm thu (YC-171).
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
@@ -211,11 +211,13 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   hội thoại đã giải quyết. Cấm force-push/xóa main; không cấp quyền người/app mới.
 - Kiểm chứng: RED trên mã gốc 2/3 kiểm giao diện thất bại đúng lỗi; GREEN 3/3 sau sửa.
   Python 3.12 feature 110 PASS; UI browser kiểm Markdown/PDF, chuyển QA và lịch, không lỗi
-  console; API PDF/ảnh nguồn và readback protection. CI mới được chạy theo PR, xem workflow.
+  console; API PDF/ảnh nguồn và readback protection. CI PR 37904316913 trên a6ca7ee
+  PASS Windows/Mac 110 feature + 3 UI mỗi OS và history; PowerShell/demo Windows PASS.
 - Review: Codex đọc diff/caller và kiểm riêng sau triển khai; không gọi là review độc lập
   của thành viên. Codex thực hiện trên bản sao độc quyền; corpus/model/GPU không đổi.
 - Trạng thái/phát hành: bản sửa qua nhánh fix/shared/yc173-khai và PR; main chờ reviewer
-  theo quy tắc nhóm, không tự merge. Nhật ký/báo cáo chung đi cùng mã; bằng chứng local giữ riêng.
+  theo quy tắc nhóm, không tự merge. PR: https://github.com/ng-wngkh07/Study-Agent/pull/1.
+  Readback 190 blob khớp commit a6ca7ee; nhật ký/báo cáo chung đi cùng mã, bằng chứng local giữ riêng.
 - Giới hạn: không khôi phục run/commit cũ đã mất. Full Windows install/model thật/476 ca/
   gói dữ liệu thật/training vẫn NOT_RUN hoặc chưa nghiệm thu; đây là giới hạn kiểm chứng,
-  không có bằng chứng cho phép huấn luyện. Cập nhật kết quả: 2026-10-09T15:18:57.510882+07:00.
+  không có bằng chứng cho phép huấn luyện. Cập nhật kết quả: 2026-10-09T15:23:47.104446+07:00.

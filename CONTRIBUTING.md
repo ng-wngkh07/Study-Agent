@@ -109,15 +109,21 @@ API/tokenizer/cổng đánh giá; cài thư viện không phải quyền trainin
 
 ## Review và merge
 
-Main đã có bảo vệ từ YC-173, đọc lại ở YC-174: checks `features (windows-latest)`,
-`features (macos-latest)`, `history` cần đạt; nhánh phải cập nhật, hội thoại đã giải quyết;
-**1 approval có quyền ghi, khác tác giả và người push cuối**, áp dụng cả admin.
-Approval cũ bị huỷ khi có thay đổi. Kiểm Settings/PR hiện tại nếu chính sách thay đổi sau mốc này.
+Main có bảo vệ: checks `features (windows-latest)`, `features (macos-latest)`,
+`history` cần đạt; nhánh phải cập nhật và hội thoại đã giải quyết. Đọc lại GitHub ngày
+09/10/2026 trong YC-176: **không còn bắt buộc approval** (`required_approving_review_count=0`,
+`require_last_push_approval=false`); áp dụng CI cả admin, cấm force-push/xóa main.
+Chính sách trước YC-173/174 yêu cầu 1 người khác duyệt đã thay đổi; PR #1 đã được merge.
+Kiểm Settings/PR trước merge vì quyền/chính sách có thể thay đổi.
 
-Nếu repo mới chỉ có tác giả: chủ repo vào **Settings → Collaborators → Add people**,
-mời thành viên nhận lời. Reviewer đọc Files changed và bằng chứng → Review changes →
-Approve → Submit review sau lần push cuối. Không dùng cùng tài khoản tác giả để tự duyệt;
-PR của Khải cũng cần người khác. [GitHub hướng dẫn approval](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews).
+Nhóm vẫn review chéo theo quy trình, kể cả khi GitHub không bắt buộc. Reviewer đọc
+Files changed và bằng chứng → Review changes → Approve → Submit review. Nếu sau này
+bật lại required reviews, tác giả không tự Approve PR; cần người khác có quyền ghi,
+và có thể cần duyệt lại sau push. [GitHub hướng dẫn approval](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews).
+
+Chủ repo mời thành viên qua **Settings → Collaborators → Add people** khi được nhóm
+thống nhất. Tại lần kiểm YC-176 đã có hai collaborator ngoài chủ repo có quyền ghi.
+Không công khai thông tin cá nhân của thành viên trong log/báo cáo.
 
 Quy định Khải merge là quy trình phối hợp nhóm, **không phải giới hạn quyền do GitHub
 cưỡng chế**: collaborator có quyền ghi cũng có thể merge khi thỏa bảo vệ nhánh. Bỏ yêu
@@ -125,7 +131,7 @@ cầu approval không biến quyền merge thành chỉ chủ repo. Nếu muốn
 người, nhóm phải chọn/cấu hình cơ chế quyền phù hợp riêng; hiện chưa áp dụng thay đổi đó.
 
 Reviewer kiểm đúng tiêu chí, test/giới hạn, log, ranh giới tài sản và ảnh hưởng; phần chung
-cần review chủ trì bị ảnh hưởng. Khải merge sau checks/review hợp lệ. TV6 kiểm tích hợp;
+cần review chủ trì bị ảnh hưởng. Khải merge theo quy trình nhóm sau checks/review hợp lệ. TV6 kiểm tích hợp;
 nhóm đồng bộ main bằng fast-forward khi checkout sạch. Không tự tắt bảo vệ review,
 push trực tiếp main, force-push hoặc xoá main để vượt blocker. Training là đợt riêng,
 không tự chạy vì PR mã đã merge.

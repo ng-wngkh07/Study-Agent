@@ -95,7 +95,7 @@ Liên kết lần chạy cũ `37882594844` hiện trả 404; kết quả của l
 
 Mỗi PR phải thêm mục vào `LICH_SU_DU_AN.md`, ghi môi trường/lệnh đã chạy và phần
 `NOT_RUN`. Khi sửa `app/server.py`, cấu hình, tìm kiếm hoặc JS/CSS chung, review chéo
-và smoke cả ba chức năng. Khải review PR thành viên/merge sau CI; reviewer hợp lệ cần khác tác giả và người push cuối, có quyền ghi. PR của Khải cần thành viên khác duyệt theo quy tắc main hiện tại. Xem [CONTRIBUTING](CONTRIBUTING.md); không tự ghi lên main.
+và smoke cả ba chức năng. Khải review PR thành viên/merge theo quy trình nhóm sau CI. Tại lần kiểm YC-176, GitHub không còn bắt buộc approval; người có quyền ghi cũng có thể merge khi checks đạt. Xem [CONTRIBUTING](CONTRIBUTING.md); không tự ghi lên main.
 
 ## Giới hạn hiện tại
 
@@ -123,6 +123,6 @@ CI Windows đã đạt kiểm cú pháp PowerShell, 8 ca kiểm hợp đồng v�
 | Ollama/model không sẵn sàng | Kiểm endpoint manifest/11434, ollama list và lệnh check; cài full thiếu model cần xử lý lỗi tải |
 | Nguồn mới không xuất hiện | Kiểm src/data đúng clone, bấm Đồng bộ thư viện, xem lỗi index; không coi start local là đã index |
 | .env Invalid setting | Dùng biến được .env.example/launcher hỗ trợ, giá trị không rỗng |
-| Merge bị chặn dù CI đạt | Kiểm review quyền ghi sau push cuối; mời reviewer nếu repo chỉ có tác giả |
+| Merge bị chặn dù CI đạt | Kiểm checks, nhánh cập nhật, hội thoại và policy hiện tại; approval chỉ là blocker khi bật yêu cầu duyệt |
 
 Ghi commit, Windows/Python/profile, lệnh, cách tái hiện và lỗi terminal khi báo Issue; che token/dữ liệu cá nhân. Xem [hướng dẫn đóng góp](CONTRIBUTING.md).

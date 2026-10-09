@@ -280,7 +280,8 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   producer-consumer riêng; không gọi đây là review độc lập bởi thành viên. Profile MLX
   theo JSONL local đã duyệt mà pipeline dùng; không kéo extra dataset loader ngoài phạm vi.
   Constraints phiên bản tách 3.12/3.13; không đổi app/backend/model đang hoạt động.
-- Phát hành: đẩy lên nhánh PR hiện hữu fix/shared/yc173-khai; kết quả CI/commit cập nhật
+- Phát hành: PR #1 được chủ repo merge trong lúc tác vụ đang chạy; chuyển bản mới sang
+  codex/fix-project-guides, đồng bộ origin/main fdd9adf; kết quả CI/commit cập nhật
   trong báo cáo dùng chung và evidence. Không tự merge hoặc thay protection/reviewer.
 - Giới hạn: full installer Windows mới, model QA/VLM/MLX thật, toàn suite/corpus
   readiness/training NOT_RUN; cài profile và test mock không nghiệm thu các phần này.
@@ -308,3 +309,10 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   với quy trình trong CONTRIBUTING. Không đổi GitHub policy/quyền hay mời tài khoản.
 - Kiểm thử triển khai/RED–GREEN/handoff N/A vì giải thích; API readback được kiểm.
   Trạng thái: hoàn tất làm rõ; cập nhật 2026-10-09T16:16:00.615613+07:00. Không tự coi câu hỏi là lệnh tắt review.
+
+- Readback bổ sung 2026-10-09T16:24:45.490701+07:00: PR #1 đã merge lúc 16:10:20 UTC+07 bởi chủ repo,
+  main fdd9adf. Approval count=0, last-push approval=false; CI/strict/conversation/admin
+  và cấm force-push/xóa giữ. Có hai collaborator ngoài chủ có quyền ghi, có thể merge
+  khi checks đạt. Thay đổi GitHub do chủ repo thực hiện trong lúc tác vụ này chạy;
+  Codex chỉ đọc lại/cập nhật hướng dẫn, không tự đổi policy hoặc merge. Mô tả ở trên
+  về thiếu review/duy nhất tác giả là trạng thái cũ YC-173/174, đã được thay thế bởi readback này.

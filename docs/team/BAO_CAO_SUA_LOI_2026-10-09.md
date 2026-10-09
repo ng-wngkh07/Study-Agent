@@ -63,3 +63,12 @@ Một approval từ người khác có quyền ghi là yêu cầu hiện tại; 
 Nếu bỏ approval và yêu cầu duyệt push cuối, PR đạt CI có thể merge bởi người có quyền ghi.
 Quy định Khải merge trong tài liệu là quy trình nhóm, chưa là giới hạn quyền được GitHub
 cưỡng chế. Hiện chưa thay protection/quyền/reviewer theo các câu hỏi làm rõ này.
+
+### Readback chính sách mới — 2026-10-09T16:24:45.490701+07:00
+
+PR #1 đã được chủ repo merge lúc 16:10:20 UTC+07, main fdd9adf. Required approvals đã
+về 0, last-push approval tắt; CI/nhánh cập nhật/hội thoại/admin/cấm force-push/xóa còn giữ.
+Đã có hai collaborator ngoài chủ có quyền ghi, có thể merge khi điều kiện đạt.
+Codex không đổi policy/quyền hoặc tự merge; bản README/dependency/CONTRIBUTING mới
+chuyển sang nhánh codex/fix-project-guides để mở PR riêng. Trạng thái review bắt buộc
+trong các mục YC-173/174 là lịch sử trước lần thay đổi này.

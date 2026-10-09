@@ -80,7 +80,7 @@ node --test tests/document_lookup_ui.test.cjs
 
 Node 22 dùng cho test giao diện, không cần để chạy web; cài từ [Node.js](https://nodejs.org/en/download). Windows dùng `test_windows.ps1` và lệnh Node tương tự. CI [Team feature checks](https://github.com/ng-wngkh07/Study-Agent/actions/workflows/team-checks.yml) kiểm Python 3.12 Windows/Mac, demo, feature tests, test giao diện; Windows thêm PowerShell/installer DemoOnly. PR kiểm nhật ký mới.
 
-Đọc [CONTRIBUTING.md](CONTRIBUTING.md) để báo lỗi, tạo branch/PR và review; [quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md), [PDF](output/pdf/PHAN_CHIA_NHIEM_VU_DO_AN_NHOM.pdf) và [nhật ký](LICH_SU_DU_AN.md) ghi trách nhiệm/lịch sử. Main cần reviewer khác tác giả và người push cuối có quyền ghi, cùng các checks bắt buộc. Khải merge sau review.
+Đọc [CONTRIBUTING.md](CONTRIBUTING.md) để báo lỗi, tạo branch/PR và review; [quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md), [PDF](output/pdf/PHAN_CHIA_NHIEM_VU_DO_AN_NHOM.pdf) và [nhật ký](LICH_SU_DU_AN.md) ghi trách nhiệm/lịch sử. Main cần các checks bắt buộc; cấu hình kiểm tại YC-176 không bắt buộc approval. Nhóm vẫn review chéo và Khải merge theo quy trình; người có quyền ghi cũng có khả năng merge trên GitHub.
 
 ## Giới hạn và giấy phép
 

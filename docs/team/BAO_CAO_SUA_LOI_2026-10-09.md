@@ -100,8 +100,10 @@ RED 8/16 ca thất bại trên baseline; vector thiếu và lỗi extraction tá
 suite: local 128 PASS, thêm 14 ca index/retention/backfill PASS và 3 UI PASS. Parser
 độc lập icalendar7.3.0 xác nhận timestamp/timezone/Unicode/TEXT roundtrip và không có
 property được chèn. Parser chỉ cài tmp, không đổi profile dependencies. CI chạy các
-ca mới trên Windows/Mac. CI 37913090332/e6d8425 đã PASS 127 feature +3 UI mỗi OS/history; phần bổ sung extraction (128 feature) tiếp tục kiểm trên PR2/checks.
+ca mới trên Windows/Mac. [CI 37913747551](https://github.com/ng-wngkh07/Study-Agent/actions/runs/37913747551) trên commit 37849e3 PASS: mỗi OS 128 feature +3 UI Node22, pip/demo PASS; Windows PowerShell hợp đồng/DemoOnly và history PASS. Đã đối chiếu 196 blob GitHub đúng bản đã kiểm; không chứa tài sản riêng. Hoàn tất xuất bản vào [PR #2](https://github.com/ng-wngkh07/Study-Agent/pull/2).
 
 Q-01 về nội dung model và các giới hạn full installer/model/corpus/training chưa
 nghiệm thu; ID nguồn hợp lệ chưa chứng minh câu đúng ngữ nghĩa. Không chạm dữ liệu
 riêng/job corpus hoặc sửa mốc audit 08/10 đã đóng. Không tự merge.
+
+Cập nhật kết quả phát hành: 2026-10-09T16:52:32.261905+07:00.

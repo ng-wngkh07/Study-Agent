@@ -2,7 +2,7 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 09/10/2026 16:49 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T16:49:15.112561+07:00.
+- Cập nhật: 09/10/2026 16:52 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T16:52:32.261905+07:00.
 - Mục mới nhất: **[YC-177](#yc-177)**.
 - Nhật ký chung có **11 mục**: 5 môi trường/chức năng (YC-167/170/173/175/177), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 2 rà soát/nghiệm thu (YC-171/174), 1 làm rõ quyền/quy trình (YC-176).
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
@@ -346,9 +346,9 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   Antigravity corpus còn hoạt động đợt48, không giao thêm/gửi trùng/đổi selection/
   dừng job; không tranh writer corpus/data/model. Tích hợp sau đối chiếu hash baseline.
 - Phát hành: tiếp tục nhánh codex/fix-project-guides và PR2 theo quyền push đã giao;
-  giữ sửa YC-175, không tự merge/chỉnh protection/quyền. CI e6d8425/37913090332 PASS Windows/Mac 127 feature +3 UI mỗi OS/history; bổ sung extraction (128 feature) đang phát hành.
+  giữ sửa YC-175, không tự merge/chỉnh protection/quyền. CI 37913747551 trên commit 37849e3 PASS: Windows/Mac mỗi OS 128 feature +3 UI Node22; pip/demo/Windows PowerShell hợp đồng/DemoOnly và history PASS. Link: https://github.com/ng-wngkh07/Study-Agent/actions/runs/37913747551.
 - Giới hạn: Q-01 nội dung model thiếu điều kiện chưa nghiệm thu; citation ID đúng không
   chứng minh mệnh đề đúng nguồn. Full installer Windows mới/model thật/full suite/
   corpus readiness/training NOT_RUN; các gate giữ. Không sửa báo cáo audit 08/10 đã đóng.
-- Trạng thái: local sửa/kiểm chứng xong, đang phát hành; cập nhật 2026-10-09T16:49:15.112561+07:00; bằng chứng
+- Trạng thái: hoàn tất sửa, xuất bản PR #2 và CI kiểm chứng; cập nhật 2026-10-09T16:52:32.261905+07:00; bằng chứng
   local docs/project/product-fixes-2026-10-09/.

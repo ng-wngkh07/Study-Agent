@@ -7,10 +7,9 @@ và [nhật ký chung](LICH_SU_DU_AN.md) trước thay đổi; quy tắc cụ th
 
 ## Trách nhiệm và phối hợp
 
-TV1 tra cứu, TV2 QA, TV3 lịch từ ảnh chịu UI/API/test theo chức năng. TV4 (Khải, Mac)
+TV1 tra cứu, TV2 QA, TV3 lịch từ ảnh chịu UI/API/test theo chức năng. TV4 (Mac)
 hợp nhất corpus/index/vector chính và training; TV5 giao diện/môi trường chung;
-TV6 kiểm thử/nghiệm thu/tài liệu. Năm người còn lại Windows. Hai vai trò hỗ trợ có
-đầu ra riêng, không tạo tính năng lớn chỉ để chia người.
+TV6 kiểm thử/nghiệm thu/tài liệu. Năm người còn lại Windows. Mỗi vai trò có đầu ra và tiêu chí nghiệm thu trong bản phân công.
 
 Chốt Issue, chủ trì, tiêu chí và phần chung bị ảnh hưởng. Đọc log theo lỗi/file/chức năng
 và main mới nhất để giữ các sửa lỗi đã nghiệm thu. Sửa phần chung/ngoài phạm vi phải báo
@@ -50,10 +49,10 @@ Sau khi nhận việc, từ checkout sạch đã giữ/cất thay đổi local:
 git fetch origin
 git switch main
 git pull --ff-only
-git switch -c fix/qa/12-sua-trich-dan-minh
+git switch -c fix/qa/12-sua-trich-dan-tv2
 ```
 
-Đổi tên nhánh theo việc của mình: `<loai>/<phamvi>/<ma-viec>-<ten>`;
+Đổi tên nhánh theo việc của mình: `<loai>/<phamvi>/<ma-viec>-<ma-vai-tro>`;
 loại feature/fix/refactor/test/docs/chore, phạm vi lookup/qa/timetable/training/shared.
 Không sao chép nguyên tên ví dụ cho nhiều việc. PR độc lập từ main; khi tiếp tục PR
 hiện hữu, làm trên đúng nhánh đã nhận, không tạo bản trùng. Không reset/hard checkout
@@ -97,7 +96,7 @@ API/tokenizer/cổng đánh giá; cài thư viện không phải quyền trainin
 
 1. Thêm mục vào **LICH_SU_DU_AN.md ở gốc**: ID duy nhất, ngày/giờ Asia/Ho_Chi_Minh,
    người/loại, lỗi/mục tiêu, trước/sau, file, ảnh hưởng, log liên quan, checks và giới hạn.
-   Thành viên dùng mẫu `LOG-YYYYMMDD-chucnang-maviec-ten` trong file; giữ ID/ngày cũ,
+   Thành viên dùng mẫu `LOG-YYYYMMDD-chucnang-maviec-tvN` trong file; giữ ID/ngày cũ,
    không copy prompt, không tạo log riêng hay ghi vào archive local docs/project.
 2. Kiểm `git diff`, `git status` và `git diff --check`. Stage đúng file thay đổi,
    kiểm `git diff --cached`; không `git add -f`. Commit mô tả kết quả cụ thể.
@@ -113,7 +112,6 @@ Main có bảo vệ: checks `features (windows-latest)`, `features (macos-latest
 `history` cần đạt; nhánh phải cập nhật và hội thoại đã giải quyết. Đọc lại GitHub ngày
 09/10/2026 trong YC-176: **không còn bắt buộc approval** (`required_approving_review_count=0`,
 `require_last_push_approval=false`); áp dụng CI cả admin, cấm force-push/xóa main.
-Chính sách trước YC-173/174 yêu cầu 1 người khác duyệt đã thay đổi; PR #1 đã được merge.
 Kiểm Settings/PR trước merge vì quyền/chính sách có thể thay đổi.
 
 Nhóm vẫn review chéo theo quy trình, kể cả khi GitHub không bắt buộc. Reviewer đọc
@@ -121,17 +119,18 @@ Files changed và bằng chứng → Review changes → Approve → Submit revie
 bật lại required reviews, tác giả không tự Approve PR; cần người khác có quyền ghi,
 và có thể cần duyệt lại sau push. [GitHub hướng dẫn approval](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews).
 
-Chủ repo mời thành viên qua **Settings → Collaborators → Add people** khi được nhóm
-thống nhất. Tại lần kiểm YC-176 đã có hai collaborator ngoài chủ repo có quyền ghi.
-Không công khai thông tin cá nhân của thành viên trong log/báo cáo.
+Chủ repo quản lý quyền tham gia qua **Settings → Collaborators** theo trách nhiệm đã chốt.
+Tài liệu phân công, Issue, PR và ví dụ giao việc dùng mã TV1-TV6; bảng ánh xạ tên thật/
+email/tài khoản liên hệ được quản lý riêng. Thông tin tác giả và bản quyền trong LICENSE
+và attribution Git được giữ nguyên.
 
-Quy định Khải merge là quy trình phối hợp nhóm, **không phải giới hạn quyền do GitHub
+Quy định TV4 merge là quy trình phối hợp nhóm, **không phải giới hạn quyền do GitHub
 cưỡng chế**: collaborator có quyền ghi cũng có thể merge khi thỏa bảo vệ nhánh. Bỏ yêu
 cầu approval không biến quyền merge thành chỉ chủ repo. Nếu muốn khóa merge theo một
 người, nhóm phải chọn/cấu hình cơ chế quyền phù hợp riêng; hiện chưa áp dụng thay đổi đó.
 
 Reviewer kiểm đúng tiêu chí, test/giới hạn, log, ranh giới tài sản và ảnh hưởng; phần chung
-cần review chủ trì bị ảnh hưởng. Khải merge theo quy trình nhóm sau checks/review hợp lệ. TV6 kiểm tích hợp;
+cần review chủ trì bị ảnh hưởng. TV4 merge theo quy trình nhóm sau checks/review hợp lệ. TV6 kiểm tích hợp;
 nhóm đồng bộ main bằng fast-forward khi checkout sạch. Không tự tắt bảo vệ review,
 push trực tiếp main, force-push hoặc xoá main để vượt blocker. Training là đợt riêng,
 không tự chạy vì PR mã đã merge.

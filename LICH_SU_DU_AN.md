@@ -2,9 +2,9 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 09/10/2026 16:52 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T16:52:32.261905+07:00.
-- Mục mới nhất: **[YC-177](#yc-177)**.
-- Nhật ký chung có **11 mục**: 5 môi trường/chức năng (YC-167/170/173/175/177), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 2 rà soát/nghiệm thu (YC-171/174), 1 làm rõ quyền/quy trình (YC-176).
+- Cập nhật: 09/10/2026 17:34 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T17:34:05.950966+07:00.
+- Mục mới nhất: **[YC-179](#yc-179)**.
+- Nhật ký chung có **13 mục**: 5 môi trường/chức năng (YC-167/170/173/175/177), 3 tổ chức/tài liệu (YC-168/172/179), 1 phát hành GitHub (YC-169), 3 rà soát/nghiệm thu (YC-171/174/178), 1 làm rõ quyền/quy trình (YC-176).
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
   [quy trình PR](CONTRIBUTING.md), [Windows](README_WINDOWS.md).
 
@@ -28,11 +28,13 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 | YC-164/167, YC-168 bổ sung PDF | Mã/UI/test/config/docs/log/metadata/PDF phân công qua Git; dữ liệu/model thật riêng | YC-169 cho phép đưa mã lên repo Study-Agent; dữ liệu thật giữ riêng. |
 | Cổng nguồn/model hiện có | Một writer chính; toàn nguồn review, audit live complete: true và đánh giá độc lập trước kích hoạt | Giữ nguyên; lượt YC-168 không index/train. |
 
+| YC-179 làm rõ YC-178 | Giữ tên/email tác giả và attribution Git; phân công/giao việc dùng TV1-TV6; bảng ánh xạ quản lý riêng | Đã áp dụng; thay đề xuất ẩn toàn bộ danh tính ở YC-178, không đổi lịch sử Git. |
+
 ## Mẫu mục mới
 
 ```markdown
 <a id="log-ID"></a>
-### <ID duy nhất, ví dụ LOG-YYYYMMDD-chucnang-maviec-ten> - DD/MM/YYYY HH:mm (UTC+07)
+### <ID duy nhất, ví dụ LOG-YYYYMMDD-chucnang-maviec-tvN> - DD/MM/YYYY HH:mm (UTC+07)
 - Người thực hiện / loại thay đổi:
 - Lỗi hoặc mục tiêu (ý chính):
 - Trước / sau thay đổi:
@@ -74,14 +76,14 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Người thực hiện: Codex; loại: tổ chức nhóm, tài liệu và quy tắc nhật ký.
 - Mục tiêu: nhóm mở rộng 4 lên 6; chỉ một người huấn luyện; giao việc rõ trên ba chức
   năng hiện có, bảo vệ phần chung và đổi log từ lịch sử prompt sang lịch sử ứng dụng.
-- Trước/sau: trước 3 chủ trì + Khải và log còn chứa prompt; sau giữ 4 nhiệm vụ gốc,
+- Trước/sau: trước 3 chủ trì + TV4 và log còn chứa prompt; sau giữ 4 nhiệm vụ gốc,
   thêm giao diện/môi trường và kiểm thử/nghiệm thu/tài liệu, log tóm tắt ý chính lỗi/sửa.
 - Phần sửa: PDF phân công 8 trang, docs/team/PHAN_CONG_6_NGUOI.md, README_QUY_TAC,
   CONTRIBUTING, README/Windows, template PR, AGENTS local, .gitignore và file log này.
   Bảng 4 người được đánh dấu mốc cũ, liên kết chuyển sang bảng 6 người.
 - Quy tắc bổ sung: đọc log trước sửa; chỉ sửa đúng phạm vi; báo/phối hợp khi chạm phần
   chung hoặc cần chỉnh local; giữ tương thích và kiểm các chức năng ảnh hưởng; tên branch
-  theo loại/phạm vi/mã việc/người; review chéo rồi Khải merge; một nhật ký chung có ngày giờ.
+  theo loại/phạm vi/mã việc/người; review chéo rồi TV4 điều phối merge; một nhật ký chung có ngày giờ.
 - Đề xuất: đánh dấu trang cục bộ và sao chép trích dẫn có nguồn; chưa chốt triển khai.
   .ics/xung đột lịch/hội thoại/tóm tắt đã có, không xem là tính năng mới.
 - Ảnh hưởng: chỉ tài liệu/quy tắc; không đổi mã sản phẩm, corpus/model, không chạy training.
@@ -298,12 +300,12 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Mục tiêu: phân biệt một người phê duyệt, không cần người khác duyệt và chỉ chủ repo
   được merge; liên quan bảo vệ main YC-173/174 và hướng dẫn đóng góp YC-175.
 - Giải thích theo bản kiểm YC-173/174: cần 1 approval từ người khác tác giả/người push cuối có
-  quyền ghi. Khải duyệt PR thành viên được; tác giả không tự Approve PR. Nếu chủ repo
+  quyền ghi. Điều phối viên duyệt PR thành viên được; tác giả không tự Approve PR. Nếu chủ repo
   quyết định cho tự merge PR của mình, cần bỏ Require approvals và Require approval
   of the most recent reviewable push, giữ PR/CI. Chỉ hướng dẫn, chưa chọn áp dụng.
 - Quyền merge: người có quyền ghi có thể merge khi thỏa bảo vệ nhánh; bỏ review không
   tự giới hạn merge cho chủ dự án. Repo hiện chỉ tài khoản chủ có quyền ghi; collaborator
-  được cấp quyền ghi sau này cũng có khả năng merge. Quy tắc Khải merge trong tài liệu
+  được cấp quyền ghi sau này cũng có khả năng merge. Quy tắc điều phối viên merge trong tài liệu
   là phối hợp nhóm, chưa là giới hạn quyền được GitHub cưỡng chế.
 - Phần đọc/bằng chứng: API protection/collaborators/PR hiện hành, CONTRIBUTING,
   README_QUY_TAC và GitHub Docs về required reviews. Ảnh hưởng thiết kế: nếu sau này
@@ -342,9 +344,8 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   PASS, 3 UI PASS. Parser độc lập icalendar7.3.0 PASS UTC/timezone/TEXT roundtrip/
   Unicode/fold/no injected property. Codex review diff/caller riêng; không gọi là review
   độc lập của thành viên. Vector rỗng và lỗi extraction tái hiện riêng rồi GREEN sau sửa.
-- Quyền ghi: Codex code trên snapshot riêng /private/tmp/study-agent-audit-yc171;
-  Antigravity corpus còn hoạt động đợt48, không giao thêm/gửi trùng/đổi selection/
-  dừng job; không tranh writer corpus/data/model. Tích hợp sau đối chiếu hash baseline.
+- Kiểm soát tích hợp: triển khai trong môi trường cô lập; đối chiếu hash phiên bản nền
+  trước tích hợp. Dữ liệu, chỉ mục và model chính giữ nguyên; không gián đoạn tác vụ dữ liệu.
 - Phát hành: tiếp tục nhánh codex/fix-project-guides và PR2 theo quyền push đã giao;
   giữ sửa YC-175, không tự merge/chỉnh protection/quyền. CI 37913747551 trên commit 37849e3 PASS: Windows/Mac mỗi OS 128 feature +3 UI Node22; pip/demo/Windows PowerShell hợp đồng/DemoOnly và history PASS. Link: https://github.com/ng-wngkh07/Study-Agent/actions/runs/37913747551.
 - Giới hạn: Q-01 nội dung model thiếu điều kiện chưa nghiệm thu; citation ID đúng không
@@ -352,3 +353,43 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   corpus readiness/training NOT_RUN; các gate giữ. Không sửa báo cáo audit 08/10 đã đóng.
 - Trạng thái: hoàn tất sửa, xuất bản PR #2 và CI kiểm chứng; cập nhật 2026-10-09T16:52:32.261905+07:00; bằng chứng
   local docs/project/product-fixes-2026-10-09/.
+
+<a id="yc-178"></a>
+### YC-178 - 09/10/2026 17:13 (UTC+07)
+
+- Người thực hiện: Codex; loại: rà soát bảo mật/thông tin riêng trước chia sẻ.
+- Mục tiêu: kiểm nội dung GitHub, toàn lịch sử reachable, PR/CI và artifact; liên quan ranh giới Git YC-169/171/175 và phát hành YC-177.
+- Baseline: main da566c4, PR2 đã được chủ repo merge lúc16:58:13; audit chỉ đọc, không sửa nguồn/quyền hoặc đẩy lại lịch sử.
+- Kiểm chứng: 196 file main, 3 branch/2 PR refs, 12 commit/237 blob; Gitleaks8.30.1 quét main/patch lịch sử/PR/log CI/text PDF không phát hiện secret; 19 log CI đọc được. Hai PDF và ảnh demo được xem metadata/nội dung; không .env/DB/vector/model/corpus/hồ sơ cá nhân trong refs.
+- Phát hiện còn mở: attribution tên thật trong11 file và email local-machine trong9 commit. Chưa đáp ứng yêu cầu ẩn toàn bộ danh tính; không nhầm metadata với API key. Không chép giá trị email/khóa vào nhật ký.
+- Trước/sau: hoàn tất audit và phương án duyệt; checkout xuất bản riêng dùng GitHub+noreply cho commit sau. Không đổi config global/.git gốc, không rewrite/force-push; nội dung công khai chưa ẩn danh.
+- Review/giới hạn: scanner + review scope không chứng minh tuyệt đối; SHA cũ không truy xuất được không bảo đảm purge cache. Rewrite có thể đổi SHA/mở force-push tạm/ảnh hưởng hai PR và bản clone; cần xác nhận trước bước này. Giấy phép/attribution cần xử lý có chủ đích.
+- Thực thi hành vi/RED–GREEN/handoff/training N/A do audit; không chạm writer corpus. File sửa local: hồ sơ này, STATE, báo cáo/scan evidence docs/project/security-audit-2026-10-09/ (giữ local).
+- Trạng thái: audit hoàn tất; privacy cleanup OPEN, chưa thực hiện rewrite/publish; cập nhật 2026-10-09T17:13:51.059577+07:00.
+
+
+<a id="yc-179"></a>
+### YC-179 - 09/10/2026 17:34 (UTC+07)
+
+- Người thực hiện: Codex; loại: tổ chức nhóm và chuẩn hóa tài liệu nghiệp vụ.
+- Mục tiêu: giữ tên/email tác giả phục vụ bản quyền; dùng mã vai trò trong phân công,
+  giao việc và ví dụ; hoàn thiện tài liệu theo phạm vi, đầu ra và tiêu chí nghiệm thu.
+- Trước/sau: tài liệu còn tên điều phối viên trong phần giao việc, mô tả trùng lặp
+  và nội dung bàn giao nội bộ; sau thống nhất TV1-TV6, trách nhiệm/review/nghiệm thu,
+  quy trình thay đổi, ranh giới tài sản, kế hoạch và điều kiện phát hành.
+- File sửa: README chính/Windows/Mac/quy tắc, CONTRIBUTING, corpus/README, mẫu PR,
+  phân công Markdown và PDF bản 1.1, báo cáo sửa lỗi, nhật ký chung.
+- Quyết định: thay đề xuất ẩn mọi danh tính ở YC-178 bằng giữ nguyên LICENSE và
+  metadata tác giả trong Git; bảng ánh xạ thành viên quản lý riêng. Không rewrite lịch sử.
+- Hiệu chỉnh các mục cũ theo YC-179: thay tên trong trách nhiệm vận hành bằng vai trò,
+  bỏ đường dẫn máy/metadata bàn giao khỏi YC-177; giữ ID, ngày và kết quả kiểm chứng cũ.
+- Kiểm chứng: PDF 5 trang đã render và xem đủ; tiếng Việt/bảng/phân trang đạt.
+  58 liên kết nội bộ và 13 ID lịch sử đạt; 196 file Git cùng văn bản PDF được quét
+  bằng Gitleaks 8.30.1: 0 phát hiện bí mật; ranh giới tài sản đạt.
+  LICENSE giữ nguyên byte; không đổi mã/app/test/dependency hoặc commit lịch sử.
+- Ảnh hưởng: chỉ tài liệu; sáu vai trò, ba chức năng và cổng nguồn/model giữ nguyên.
+  Test hành vi/RED-GREEN/huấn luyện N/A vì không sửa thực thi; CI kiểm trên PR xuất bản.
+- Trạng thái: hoàn tất tài liệu và kiểm tra cục bộ; xuất bản qua branch/PR riêng,
+  không tự merge hoặc đổi bảo vệ nhánh. Cập nhật 2026-10-09T17:34:05.950966+07:00.
+- Giới hạn: nghiệm thu model thật/Windows full installer/corpus và hiệu năng còn mở
+  theo YC-175/177; tài liệu không tự xác nhận các phần đó đã hoàn thành.

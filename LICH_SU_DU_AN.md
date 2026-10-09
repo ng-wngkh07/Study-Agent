@@ -394,8 +394,8 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Giới hạn: nghiệm thu model thật/Windows full installer/corpus và hiệu năng còn mở
   theo YC-175/177; tài liệu không tự xác nhận các phần đó đã hoàn thành.
 
-<a id="yc-174"></a>
-### YC-174 - 09/10/2026 21:38 (UTC+07)
+<a id="yc-180"></a>
+### YC-180 - 09/10/2026 21:45 (UTC+07)
 
 - Người thực hiện: Codex; loại: tài liệu phương án cải tiến và tài sản dự án.
 - Lỗi/mục tiêu: bổ sung tài liệu đề xuất 8 phương án cải tiến chức năng QA (Improvement_QA_Study_Agent.docx) nhằm nâng cao độ tin cậy và khả năng kiểm chứng cho sinh viên.

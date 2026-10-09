@@ -1,0 +1,4 @@
+# Shared feature-test environment for macOS and Windows, Python 3.12.
+-r requirements.txt
+httpx>=0.27,<1
+pytest>=8,<10

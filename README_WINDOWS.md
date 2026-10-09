@@ -32,7 +32,9 @@ Nếu đã clone, chỉ chạy hai lệnh setup/start cuối. `ExecutionPolicy B
 
 | File | Vai trò |
 | --- | --- |
-| requirements.txt, requirements-windows.txt | Cài thư viện Python bằng pip trong .venv |
+| requirements.txt | Thư viện web runtime |
+| requirements-dev.txt, requirements-windows.txt | Runtime và công cụ test, installer giữ wrapper Windows |
+| constraints-web-py312.txt | Cố định bộ phiên bản Python 3.12 dùng trên Windows/Mac |
 | requirements-windows-tools.json | Python 3.12, Git, Ollama qua WinGet; model QA, embedding, vision |
 | setup_windows.ps1, scripts/windows_setup.ps1 | Đọc danh sách, kiểm công cụ có sẵn, cài phần thiếu, kiểm lỗi, dựng demo |
 | start_windows.ps1, test_windows.ps1 | Chạy ứng dụng/kiểm thử bằng Python của .venv |
@@ -47,15 +49,39 @@ Cấu hình .env riêng trỏ endpoint/model khác sẽ được giữ nguyên. 
 
 Ollama Windows là bản phát triển; không đồng nhất chất lượng với adapter MLX Mac. VLM đảm nhiệm đọc ảnh theo cấu hình mặc định. Tesseract `vie+eng` là công cụ OCR tùy chọn của các script corpus Mac, không phải yêu cầu bắt buộc của bộ cài Windows. Không đoán chữ mờ: xem/chỉnh bản nháp và xác nhận trước khi lưu lịch.
 
-Nguồn riêng do bàn giao cần version/hash rồi đặt src/ local, chạy start với `-Profile local`; không push nguồn/index thử. Snapshot DB chứa đường dẫn Mac cần chuẩn bị riêng, không mặc định sao chép sang Windows sẽ hoạt động.
+Nguồn riêng do bàn giao cần version/hash/quyền trước khi đặt vào `src/` của clone riêng. Nếu chưa có `.env`, sao chép `.env.example`; giữ file đã có. Sửa các đường dẫn để tách index thử của thành viên:
+
+```dotenv
+AGENT_SRC_DIR=src
+AGENT_DATA_DIR=data/team-local
+HISTORY_DB_PATH=data/team-local/history.db
+TIMETABLE_DB_PATH=data/team-local/timetable.db
+TIMETABLE_IMAGES_DIR=data/team-local/timetable_images
+```
+
+Giữ endpoint/model trong manifest cho bộ cài full; launcher đọc `.env`, biến process đã có được ưu tiên. Chạy:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\start_windows.ps1 -Profile local
+```
+
+Trên web chọn **Đồng bộ thư viện**, đợi xong, kiểm lỗi/nguồn/trang/đoạn rồi tìm một cụm có trong nguồn. Profile local không tự index khi start. QA có nguồn cần model QA và embedding đã chuẩn bị; ảnh lịch cần model vision. Đọc/chỉnh bản nháp trước khi xác nhận lưu. Không push nguồn/index thử; Khải hợp nhất corpus chính sau review riêng. Snapshot DB chứa đường dẫn Mac cần chuẩn bị riêng, không mặc định sao chép sang Windows sẽ hoạt động.
+
+API tự mô tả tại `http://127.0.0.1:8000/docs`. Kiểm môi trường bằng `.venv\Scripts\python.exe scripts/dev.py check --profile local --require-model`; lỗi ứng dụng hiện trong terminal chạy start.
 
 Nguồn bộ cài: [Microsoft WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/), [WinGet install](https://learn.microsoft.com/en-us/windows/package-manager/winget/install), [Ollama Windows](https://docs.ollama.com/windows).
 
 ## Kiểm thử và PR
 
+Cài [Node 22](https://nodejs.org/en/download) nếu đóng góp UI; Node không cần cho chạy web. Từ gốc repo:
+
 ```powershell
+.venv\Scripts\python.exe -m pip check
 .\test_windows.ps1
+node --test tests/document_lookup_ui.test.cjs
 ```
+
+`test_windows.ps1` chạy tập Python; lệnh Node kiểm giao diện riêng. CI chạy cả hai. Bộ phiên bản Python được cố định bằng constraints; khi nâng thư viện phải cập nhật cùng kiểm chứng Windows/Mac. Không tự thêm MLX vào profile Windows.
 
 Tập `pytest.windows.ini` kiểm tra các tính năng với dữ liệu tạm/mock, khóa native và
 demo sạch; không cần corpus/model cá nhân. Các test cũ phụ thuộc thư viện sách,
@@ -69,7 +95,7 @@ Liên kết lần chạy cũ `37882594844` hiện trả 404; kết quả của l
 
 Mỗi PR phải thêm mục vào `LICH_SU_DU_AN.md`, ghi môi trường/lệnh đã chạy và phần
 `NOT_RUN`. Khi sửa `app/server.py`, cấu hình, tìm kiếm hoặc JS/CSS chung, review chéo
-và smoke cả ba chức năng. Khải review/merge; không tự ghi lên main.
+và smoke cả ba chức năng. Khải review PR thành viên/merge sau CI; reviewer hợp lệ cần khác tác giả và người push cuối, có quyền ghi. PR của Khải cần thành viên khác duyệt theo quy tắc main hiện tại. Xem [CONTRIBUTING](CONTRIBUTING.md); không tự ghi lên main.
 
 ## Giới hạn hiện tại
 
@@ -86,3 +112,17 @@ Tài liệu nền tảng: [Windows LockFileEx](https://learn.microsoft.com/en-us
 ## Kiểm bộ cài mới (YC-170)
 
 CI Windows đã đạt kiểm cú pháp PowerShell, 8 ca kiểm hợp đồng và chạy setup DemoOnly bằng công cụ có sẵn trên runner. Nhánh full cài WinGet/phần mềm khi thiếu, tải model và QA/ảnh thật chưa chạy trên máy Windows mới; cần nghiệm thu trên máy thành viên. Không coi CI demo là kiểm toàn bộ bộ cài full.
+
+
+## Xử lý lỗi thường gặp
+
+| Hiện tượng | Cách kiểm tra |
+| --- | --- |
+| Python sai phiên bản/import lỗi | Dùng đúng .venv Python3.12, chạy pip check, kiểm log setup; không cài gói vào Python toàn máy |
+| Cổng web 8000 đã dùng | Dừng đúng server của mình hoặc đổi PORT trong .env; không dừng dịch vụ của người khác |
+| Ollama/model không sẵn sàng | Kiểm endpoint manifest/11434, ollama list và lệnh check; cài full thiếu model cần xử lý lỗi tải |
+| Nguồn mới không xuất hiện | Kiểm src/data đúng clone, bấm Đồng bộ thư viện, xem lỗi index; không coi start local là đã index |
+| .env Invalid setting | Dùng biến được .env.example/launcher hỗ trợ, giá trị không rỗng |
+| Merge bị chặn dù CI đạt | Kiểm review quyền ghi sau push cuối; mời reviewer nếu repo chỉ có tác giả |
+
+Ghi commit, Windows/Python/profile, lệnh, cách tái hiện và lỗi terminal khi báo Issue; che token/dữ liệu cá nhân. Xem [hướng dẫn đóng góp](CONTRIBUTING.md).

@@ -2,9 +2,9 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 09/10/2026 15:23 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T15:23:47.104446+07:00.
-- Mục mới nhất: **[YC-173](#yc-173)**.
-- Nhật ký chung có **7 mục**: 3 môi trường/chức năng (YC-167/170/173), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 1 rà soát/nghiệm thu (YC-171).
+- Cập nhật: 09/10/2026 16:16 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T16:16:00.615613+07:00.
+- Mục mới nhất: **[YC-176](#yc-176)**.
+- Nhật ký chung có **10 mục**: 4 môi trường/chức năng (YC-167/170/173/175), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 2 rà soát/nghiệm thu (YC-171/174), 1 làm rõ quyền/quy trình (YC-176).
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
   [quy trình PR](CONTRIBUTING.md), [Windows](README_WINDOWS.md).
 
@@ -221,3 +221,90 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Giới hạn: không khôi phục run/commit cũ đã mất. Full Windows install/model thật/476 ca/
   gói dữ liệu thật/training vẫn NOT_RUN hoặc chưa nghiệm thu; đây là giới hạn kiểm chứng,
   không có bằng chứng cho phép huấn luyện. Cập nhật kết quả: 2026-10-09T15:23:47.104446+07:00.
+
+
+<a id="yc-174"></a>
+### YC-174 - 09/10/2026 15:54 (UTC+07)
+
+- Người thực hiện: Codex; loại: rà soát merge, tài liệu và dependency.
+- Mục tiêu/log liên quan: giải thích PR YC-173 bị chặn merge; đối chiếu toàn bộ README
+  và requirements đã upload với mã/cách cài thực tế. Không mở yêu cầu huấn luyện.
+- Trước/sau: CI bản a893eb3 đạt, nhưng PR chưa review; API xác nhận bảo vệ main yêu cầu
+  một approval khác tác giả/người push, áp dụng admin; repo chỉ có tài khoản tác giả có
+  quyền ghi. Đã hướng dẫn mời thành viên, review Approve sau push cuối rồi merge.
+  Không thay protection/quyền người dùng hoặc tự merge; thiếu review không phải lỗi CI.
+- File/module đã đọc: 5 README, 3 requirements, CONTRIBUTING/log, app/server/config/
+  pdf_extractor/trained_client/mlx_infer/fine_tune/token_auditor/vision_ocr, scripts/dev,
+  run.py, installer Windows, workflow và test API. README đủ nền demo/quy tắc nhưng
+  còn thiếu dựng Mac/local/MLX, nguồn→index→dùng, test Node; quy tắc main chưa cập nhật.
+- Chẩn đoán: requirements cho phép PyMuPDF1.24.0 thiếu module pymupdf; chưa khai Pydantic2
+  dù dùng field_validator; FastAPI0.110.0/Starlette0.36.3 với HTTPX0.28.1 hỏng TestClient.
+  Cài nguyên requirements với constraints hợp lệ và pip check PASS vẫn tái hiện 3 FAIL.
+- Kiểm chứng phương án riêng: Python3.12/Mac, FastAPI0.110.1/Pydantic2.7.4/PyMuPDF1.24.3/
+  Starlette0.37.2/HTTPX0.28.1: 3 ca tương thích + pip check PASS; 110 feature PASS/1 warning
+  trên snapshot a893eb3, nguồn/data tạm, không endpoint model thật. Chưa áp dụng dependency.
+- Ảnh hưởng thiết kế: cần yêu cầu API/version trực tiếp, bộ constraints đã kiểm và
+  profile MLX Mac tái tạo runtime; giữ Windows không MLX và ranh giới dữ liệu/model.
+  README thư mục corpus/fixture phù hợp vai trò, không coi cấu trúc quy ước là importer đã có.
+- Phần sửa: chỉ báo cáo local docs/project/readme-requirements-audit-2026-10-09/BAO_CAO.md,
+  nhật ký/checkpoint. Triển khai sản phẩm/RED–GREEN/handoff N/A vì kiểm tra; không đổi code,
+  corpus/GPU/provider/model, không push thêm. Windows candidate/full install/model thật/
+  full suite/readiness/training NOT_RUN; các hướng sửa tài liệu/dependency là đề xuất.
+- Trạng thái: hoàn tất kiểm tra; PR vẫn chờ reviewer hợp lệ, các thiếu sót mới chưa sửa.
+  Cập nhật kết quả: 2026-10-09T15:54:56.958075+07:00; bằng chứng runtime/API/CI và inventory trong cùng thư mục báo cáo.
+
+
+<a id="yc-175"></a>
+### YC-175 - 09/10/2026 16:16 (UTC+07)
+
+- Người thực hiện: Codex; loại: sửa dependency và hướng dẫn dự án/đóng góp.
+- Mục tiêu/log liên quan: xử lý các phát hiện YC-174, review CONTRIBUTING đúng vai trò
+  hướng dẫn đóng góp và đẩy bản sửa GitHub. Baseline PR a893eb3; giữ bản sửa YC-173.
+- Trước/sau: requirements từng cho phép 3 tổ hợp hỏng import/API test; sau khai Pydantic2,
+  nâng minimum PyMuPDF/FastAPI và cố định phiên bản/dependency graph. Tách runtime web,
+  dev/test và runtime MLX Mac; Windows wrapper vẫn cài đủ feature-test như trước.
+- File sửa: requirements.txt, requirements-dev.txt, requirements-windows.txt,
+  requirements-mlx.txt, constraints-web-py312.txt, constraints-mlx-py313.txt;
+  workflow thêm pip check/cache các file cấu hình; .gitignore chỉ cho phép 5 file mới.
+- Tài liệu: README chính thêm kiến trúc/sử dụng/profile/test/API/giấy phép; README_MAC
+  mới hướng dẫn Python3.12/Ollama/.env/local-index/MLX3.13/OCR/troubleshooting; Windows
+  thêm nguồn→index→dùng và test Node; quy tắc phản ánh main đã bảo vệ; corpus/fixture
+  giữ đúng vai trò, dẫn thao tác nguồn riêng. CONTRIBUTING trước đúng quy trình nhóm
+  nhưng thiếu onboarding/Issue/test/PR/review cụ thể; sau đủ các bước và ranh giới tài sản.
+- Kiểm chứng local: venv mới Python3.12 cài profile Windows/dev thành công, pip check
+  và 3 ca PDF/Pydantic/TestClient PASS; 110 feature PASS (6 cảnh báo dependency),
+  3 UI PASS trên Node24; CI dùng Node22 để kiểm Windows/Mac. Venv riêng Mac3.13
+  cài MLX0.32.2/MLX-LM0.31.3/Transformers5.17.0 và 34 phụ thuộc thành công,
+  pip check PASS; chỉ đọc metadata, không model inference hoặc training.
+- Review/ảnh hưởng: Codex triển khai trên checkout cách ly độc quyền và review diff/
+  producer-consumer riêng; không gọi đây là review độc lập bởi thành viên. Profile MLX
+  theo JSONL local đã duyệt mà pipeline dùng; không kéo extra dataset loader ngoài phạm vi.
+  Constraints phiên bản tách 3.12/3.13; không đổi app/backend/model đang hoạt động.
+- Phát hành: đẩy lên nhánh PR hiện hữu fix/shared/yc173-khai; kết quả CI/commit cập nhật
+  trong báo cáo dùng chung và evidence. Không tự merge hoặc thay protection/reviewer.
+- Giới hạn: full installer Windows mới, model QA/VLM/MLX thật, toàn suite/corpus
+  readiness/training NOT_RUN; cài profile và test mock không nghiệm thu các phần này.
+- Trạng thái tại cập nhật 2026-10-09T16:16:00.615613+07:00: local sửa xong, đang kiểm chứng/phát hành; hồ sơ local
+  docs/project/documentation-fixes-2026-10-09/; báo cáo chung docs/team/BAO_CAO_SUA_LOI_2026-10-09.md.
+
+<a id="yc-176"></a>
+### YC-176 - 09/10/2026 16:16 (UTC+07)
+
+- Người thực hiện: Codex; loại: làm rõ chính sách review và quyền merge.
+- Mục tiêu: phân biệt một người phê duyệt, không cần người khác duyệt và chỉ chủ repo
+  được merge; liên quan bảo vệ main YC-173/174 và hướng dẫn đóng góp YC-175.
+- Giải thích đã kiểm: hiện cần 1 approval từ người khác tác giả/người push cuối có
+  quyền ghi. Khải duyệt PR thành viên được; tác giả không tự Approve PR. Nếu chủ repo
+  quyết định cho tự merge PR của mình, cần bỏ Require approvals và Require approval
+  of the most recent reviewable push, giữ PR/CI. Chỉ hướng dẫn, chưa chọn áp dụng.
+- Quyền merge: người có quyền ghi có thể merge khi thỏa bảo vệ nhánh; bỏ review không
+  tự giới hạn merge cho chủ dự án. Repo hiện chỉ tài khoản chủ có quyền ghi; collaborator
+  được cấp quyền ghi sau này cũng có khả năng merge. Quy tắc Khải merge trong tài liệu
+  là phối hợp nhóm, chưa là giới hạn quyền được GitHub cưỡng chế.
+- Phần đọc/bằng chứng: API protection/collaborators/PR hiện hành, CONTRIBUTING,
+  README_QUY_TAC và GitHub Docs về required reviews. Ảnh hưởng thiết kế: nếu sau này
+  muốn chỉ chủ repo merge cần cơ chế quyền/gate riêng; chưa có yêu cầu triển khai đó.
+- Trước/sau/file sửa: ghi lời giải thích và giới hạn vào log; bổ sung phân biệt quyền
+  với quy trình trong CONTRIBUTING. Không đổi GitHub policy/quyền hay mời tài khoản.
+- Kiểm thử triển khai/RED–GREEN/handoff N/A vì giải thích; API readback được kiểm.
+  Trạng thái: hoàn tất làm rõ; cập nhật 2026-10-09T16:16:00.615613+07:00. Không tự coi câu hỏi là lệnh tắt review.

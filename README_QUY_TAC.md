@@ -44,7 +44,11 @@ local là điều kiện chạy/tái hiện lỗi, báo rõ và cập nhật c�
 
 Một repo toàn bộ mã. Không push trực tiếp main, force-push nhánh chung hoặc reset mã
 người khác. Không tự động merge các nhánh
-train cho các thành viên khác. Nên bật bảo vệ main khi tạo repo, chưa coi là đã bật. Tham khảo
+train cho các thành viên khác. Bảo vệ main đã bật ở YC-173, kiểm lại tại YC-174:
+CI features Windows/Mac và history phải đạt, nhánh cập nhật, hội thoại đã xử lý;
+cần 1 approval có quyền ghi, khác tác giả và người push cuối. Quy tắc áp dụng cả admin,
+review cũ bị huỷ khi có sửa mới; main không cho force-push/xoá. Đây là trạng thái tại mốc
+kiểm, không thay cho kiểm trực tiếp Settings/PR trước merge. Tham khảo
 [GitHub Docs về bảo vệ nhánh](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches).
 
 Tên nhánh: `<loai>/<phamvi>/<ma-viec>-<ten>`; chữ thường không dấu, không khoảng trắng.
@@ -54,7 +58,11 @@ Một branch/PR cho một việc rõ ràng; cập nhật main trước tạo và
 
 Vòng PR: đọc log → tái hiện/chốt tiêu chí → branch → sửa/test → thêm log → PR →
 review chéo → xử lý xung đột/kiểm lại → merge → đồng bộ main và kiểm tích hợp.
-Ít nhất một reviewer khác tác giả; phần chung có review của các chủ trì bị ảnh hưởng.
+Ít nhất một reviewer khác tác giả/người push cuối có quyền ghi; phần chung có review
+của các chủ trì bị ảnh hưởng. Repo chỉ có tác giả sẽ chưa merge được: chủ repo vào
+Settings → Collaborators → Add people, mời thành viên nhận lời rồi review Approve PR.
+Tác giả không tự Approve; PR của Khải cũng cần người khác duyệt. Hướng dẫn chi tiết ở
+[CONTRIBUTING](CONTRIBUTING.md). Không tự tắt quy tắc review chỉ để vượt blocker.
 PR ghi trước/sau, phạm vi/ảnh hưởng, dữ liệu/model version, checks và phần chưa chạy.
 
 ## Một nhật ký chung của ứng dụng

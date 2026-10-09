@@ -20,3 +20,46 @@ Các phần chưa nghiệm thu vẫn giữ rõ: cài đầy đủ trên Windows 
 [PR #1](https://github.com/ng-wngkh07/Study-Agent/pull/1), bản mã `a6ca7ee`: [CI 37904316913](https://github.com/ng-wngkh07/Study-Agent/actions/runs/37904316913) PASS. Windows và Mac đạt 110 feature + 3 kiểm giao diện mỗi hệ điều hành; history PR, PowerShell và demo Windows đều đạt. GitHub readback khớp toàn bộ 190 blob; không có dữ liệu/hồ sơ riêng.
 
 Main được bảo vệ và PR chờ reviewer khác tác giả; chưa merge. Kết quả trên thuộc SHA nêu rõ; cập nhật tài liệu sau đó không thay mã sản phẩm/test.
+
+
+## Bổ sung YC-175 — README, dependency và CONTRIBUTING
+
+Đối chiếu phát hiện YC-174; giữ nguyên kết quả sửa UI/giấy phép/CI của YC-173 ở trên.
+
+| Phát hiện | Thay đổi |
+| --- | --- |
+| PyMuPDF minimum chưa có module pymupdf | Minimum 1.24.3 và constraints dùng bộ đã kiểm |
+| Mã dùng Pydantic2 nhưng dependency chưa yêu cầu | Khai pydantic>=2,<3 trực tiếp |
+| FastAPI/Starlette cũ với HTTPX mới hỏng TestClient | Minimum FastAPI0.110.1, cố định dependency graph tương thích |
+| Thiếu phân biệt web/test/MLX | requirements runtime/dev, Windows wrapper và MLX Mac riêng; constraints Python3.12/3.13 |
+| README chưa đủ dựng/sử dụng dự án | Main có kiến trúc/profile/cấu hình/test/API/license; Mac guide mới, Windows thêm nguồn→index→dùng, quy tắc main được cập nhật |
+| CONTRIBUTING thiếu bước thực hành | Bổ sung Issue, onboarding, branch, test, log, commit/PR, reviewer đủ quyền, xử lý xung đột và tài sản |
+
+`CONTRIBUTING.md` giữ đúng vai trò hướng dẫn đóng góp, dẫn README cho cài/sử dụng
+và quy tắc dự án cho trách nhiệm. Corpus README/fixture README giữ đúng vai trò;
+không mô tả importer chưa có thành tính năng đã hoàn thành. File tools Windows hiện
+khớp installer/model nên không đổi; Node cho test UI được hướng dẫn cài riêng, không
+bắt người chạy web cài Node. `.gitignore` chỉ thêm ngoại lệ 5 file hướng dẫn/dependency mới.
+
+Kiểm chứng trước push: môi trường Python3.12 mới cài profile Windows/dev, pip check
+và ba ca import/Pydantic/API TestClient PASS; ba phiên bản lỗi cũ bị từ chối; runtime
+không kéo pytest/httpx/MLX. 110 feature PASS (6 cảnh báo dependency), 3 UI PASS trên
+Node24 local; CI chạy Node22 Windows/Mac. Venv Mac3.13 riêng cài 34 dependency của
+MLX0.32.2/MLX-LM0.31.3/Transformers5.17.0, pip check PASS, chỉ đọc metadata.
+Kiểm marker không cài MLX trên Windows và Git allow/deny PASS. Không sửa mã app/UI,
+không ghi corpus/model/adapter hoặc khởi chạy inference/training.
+
+Profile MLX theo JSONL local đã duyệt mà pipeline dùng; không kéo optional dataset-loader
+và gói phụ ngoài phạm vi. Constraints cố định phiên bản, không phải giấy chứng nhận chất
+lượng model hay bảo đảm mọi OS/Python khác. Nâng thư viện cần kiểm và cập nhật cùng profile.
+
+Giới hạn vẫn giữ: model thật, full installer máy Windows mới, toàn suite, corpus readiness
+và training chưa được nghiệm thu trong đợt này. CI hiện hành xem
+[Team feature checks](https://github.com/ng-wngkh07/Study-Agent/actions/workflows/team-checks.yml).
+
+## Làm rõ quyền merge — YC-176
+
+Một approval từ người khác có quyền ghi là yêu cầu hiện tại; tác giả không tự duyệt.
+Nếu bỏ approval và yêu cầu duyệt push cuối, PR đạt CI có thể merge bởi người có quyền ghi.
+Quy định Khải merge trong tài liệu là quy trình nhóm, chưa là giới hạn quyền được GitHub
+cưỡng chế. Hiện chưa thay protection/quyền/reviewer theo các câu hỏi làm rõ này.

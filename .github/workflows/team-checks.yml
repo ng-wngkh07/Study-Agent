@@ -22,7 +22,10 @@ jobs:
           cache-dependency-path: |
             requirements.txt
             requirements-windows.txt
+            requirements-dev.txt
+            constraints-web-py312.txt
       - run: python -m pip install -r requirements-windows.txt
+      - run: python -m pip check
       - run: python scripts/dev.py demo
       - run: python scripts/dev.py check
       - if: runner.os == 'Windows'

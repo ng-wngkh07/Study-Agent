@@ -1,2 +1,3 @@
-# Web/feature development only. MLX training dependencies stay on the Mac.
--r requirements.txt
+# Backwards-compatible team installer: web runtime + feature-test tools.
+# MLX has a separate Apple Silicon profile; it is not installed on Windows.
+-r requirements-dev.txt

@@ -397,11 +397,11 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 <a id="yc-174"></a>
 ### YC-174 - 09/10/2026 21:38 (UTC+07)
 
-- Người thực hiện: mtrstapcode; loại: tài liệu phương án cải tiến và tài sản dự án.
-- Lỗi/mục tiêu: bổ sung tài liệu đề xuất 8 phương án cải tiến chức năng QA (Improvement_QA_Study_Agent.docx) nhằm nâng cao độ tin cậy, khả năng kiểm chứng bằng chứng và trải nghiệm tự học cho sinh viên.
-- Trước/sau: trước chưa có tài liệu tổng hợp đánh giá công sức, rủi ro và các chỉ số đo lường gợi ý cho các phương án QA; sau có báo cáo phân tích chi tiết 8 phương án (A đến H) phục vụ định hướng phát triển và nghiệm thu.
-- Phần sửa: thêm mới file Improvement_QA_Study_Agent.docx vào thư mục gốc dự án, dùng git add -f để vượt qua chặn gitignore.
-- Kiểm thử tại mốc 09/10/2026: đã kiểm tra tính toàn vẹn của file .docx, xác nhận Git tracking đúng nhánh docs-qa-improvements và không ảnh hưởng tới các file mã nguồn hiện có.
+- Người thực hiện: Codex; loại: tài liệu phương án cải tiến và tài sản dự án.
+- Lỗi/mục tiêu: bổ sung tài liệu đề xuất 8 phương án cải tiến chức năng QA (Improvement_QA_Study_Agent.docx) nhằm nâng cao độ tin cậy và khả năng kiểm chứng cho sinh viên.
+- Trước/sau: trước chưa có tài liệu tổng hợp đánh giá công sức và rủi ro; sau có báo cáo phân tích chi tiết 8 phương án từ A đến H phục vụ định hướng phát triển.
+- Phần sửa: thêm mới file Improvement_QA_Study_Agent.docx vào thư mục gốc dự án.
+- Kiểm thử: kiểm tra tính toàn vẹn file docx, tracking đúng nhánh docs-qa-improvements và không ảnh hưởng mã nguồn.
 - Ảnh hưởng: thuần tài liệu tài sản, không can thiệp luồng runtime hay thay đổi mã nguồn hệ thống.
-- Trạng thái: PASS (đã push nhánh docs-qa-improvements và cập nhật nhật ký cho PR #4).
-- Liên quan: YC-173; PR #4 trên GitHub repo ng-wngkh07/Study-Agent.
+- Trạng thái: PASS.
+- Giới hạn, lỗi còn lại, rollback/bước tiếp: không có.

@@ -337,8 +337,8 @@ class PsychologyAgent:
         invalid_ids = [source_id for source_id in referenced_ids if f"S{int(source_id)}" not in citations_by_id]
         valid_ids = list(dict.fromkeys(f"S{int(source_id)}" for source_id in referenced_ids if f"S{int(source_id)}" in citations_by_id))
         answer = clean_answer(raw_answer)
-        if invalid_ids and not valid_ids:
-            logger.warning("Model emitted only unknown source ids: %s", invalid_ids)
+        if invalid_ids or not valid_ids:
+            logger.warning("Model answer lacks complete source attribution; unknown ids: %s", invalid_ids)
             answer = "Tôi chưa có đủ thông tin đáng tin cậy để trả lời chắc chắn. Bạn có thể hỏi cụ thể hơn không?"
             citations = []
         else:

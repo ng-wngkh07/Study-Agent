@@ -295,16 +295,15 @@ class KnowledgeIndexer:
                     )
                     all_chunks.extend(chunks)
 
-            # Save to Database
-            doc_id = self._save_document_record(
-                extract_res,
-                status="indexed",
-                is_scanned=False,
-                extracted_pages_count=extracted_pages_count
-            )
-
-            # Insert chunks & compute embeddings
-            chunks_inserted = self._save_chunks(doc_id, all_chunks, can_embed=can_embed, embed_model=resolved_embed_model)
+            # Prepare embeddings before touching the active document. Replace the
+            # metadata, chunks and trigger-maintained FTS in one transaction.
+            prepared = self._prepare_chunk_rows(all_chunks, can_embed, resolved_embed_model)
+            with self.get_connection() as conn:
+                doc_id = self._save_document_record(
+                    extract_res, status="indexed", is_scanned=False,
+                    extracted_pages_count=extracted_pages_count, connection=conn,
+                )
+                chunks_inserted = self._insert_chunk_rows(conn, doc_id, prepared)
 
             report["indexed_files"] += 1
             report["total_pages_indexed"] += extracted_pages_count
@@ -335,47 +334,53 @@ class KnowledgeIndexer:
         res: PDFExtractionResult,
         status: str,
         is_scanned: bool,
-        extracted_pages_count: int = 0
+        extracted_pages_count: int = 0,
+        *,
+        connection: Optional[sqlite3.Connection] = None
     ) -> int:
         """Upsert document record in DB and delete old chunks if re-indexing."""
-        with self.get_connection() as conn:
-            # Check existing
-            row = conn.execute("SELECT id FROM documents WHERE filename = ?", (res.filename,)).fetchone()
-            if row:
-                doc_id = row["id"]
-                conn.execute("DELETE FROM chunks WHERE doc_id = ?", (doc_id,))
-                conn.execute("""
-                UPDATE documents SET
-                    clean_title = ?,
-                    filepath = ?,
-                    file_size = ?,
-                    file_hash = ?,
-                    total_pages = ?,
-                    extracted_pages_count = ?,
-                    is_scanned = ?,
-                    status = ?,
-                    error_message = ?,
-                    updated_at = CURRENT_TIMESTAMP
-                WHERE id = ?
-                """, (
-                    res.clean_title, str(res.filepath), res.file_size_bytes,
-                    res.file_hash, res.total_pages, extracted_pages_count,
-                    1 if is_scanned else 0, status, res.error_message, doc_id
-                ))
-            else:
-                cursor = conn.execute("""
-                INSERT INTO documents (
-                    filename, clean_title, filepath, file_size, file_hash,
-                    total_pages, extracted_pages_count, is_scanned, status, error_message
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """, (
-                    res.filename, res.clean_title, str(res.filepath), res.file_size_bytes,
-                    res.file_hash, res.total_pages, extracted_pages_count,
-                    1 if is_scanned else 0, status, res.error_message
-                ))
-                doc_id = cursor.lastrowid
-            conn.commit()
-            return doc_id
+        if connection is None:
+            with self.get_connection() as conn:
+                return self._save_document_record(
+                    res, status, is_scanned, extracted_pages_count, connection=conn,
+                )
+        conn = connection
+        # Check existing
+        row = conn.execute("SELECT id FROM documents WHERE filename = ?", (res.filename,)).fetchone()
+        if row:
+            doc_id = row["id"]
+            conn.execute("DELETE FROM chunks WHERE doc_id = ?", (doc_id,))
+            conn.execute("""
+            UPDATE documents SET
+                clean_title = ?,
+                filepath = ?,
+                file_size = ?,
+                file_hash = ?,
+                total_pages = ?,
+                extracted_pages_count = ?,
+                is_scanned = ?,
+                status = ?,
+                error_message = ?,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?
+            """, (
+                res.clean_title, str(res.filepath), res.file_size_bytes,
+                res.file_hash, res.total_pages, extracted_pages_count,
+                1 if is_scanned else 0, status, res.error_message, doc_id
+            ))
+        else:
+            cursor = conn.execute("""
+            INSERT INTO documents (
+                filename, clean_title, filepath, file_size, file_hash,
+                total_pages, extracted_pages_count, is_scanned, status, error_message
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                res.filename, res.clean_title, str(res.filepath), res.file_size_bytes,
+                res.file_hash, res.total_pages, extracted_pages_count,
+                1 if is_scanned else 0, status, res.error_message
+            ))
+            doc_id = cursor.lastrowid
+        return doc_id
 
     def _save_chunks(
         self,
@@ -384,31 +389,35 @@ class KnowledgeIndexer:
         can_embed: bool = False,
         embed_model: Optional[str] = None
     ) -> int:
-        """Insert chunk records and optional embeddings."""
-        if not chunks:
-            return 0
-
+        """Insert chunk records and optional embeddings in one transaction."""
+        rows = self._prepare_chunk_rows(chunks, can_embed, embed_model)
         with self.get_connection() as conn:
-            for start in range(0, len(chunks), 32):
-                batch = chunks[start:start + 32]
-                vectors = (
-                    self.ollama.get_batch_embeddings(
-                        [c["text"] for c in batch], model=embed_model
-                    )
-                    if can_embed and embed_model else [None] * len(batch)
-                )
-                for c, vec in zip(batch, vectors):
-                    conn.execute("""
-                    INSERT INTO chunks (
-                        doc_id, book_title, filename, page_num, chunk_index, text, embedding
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
-                    """, (
-                        doc_id, c["book_title"], c["filename"],
-                        c["page_num"], c["chunk_index"], c["text"],
-                        pack_vector(vec) if vec else None,
-                    ))
-            conn.commit()
-        return len(chunks)
+            return self._insert_chunk_rows(conn, doc_id, rows)
+
+    def _prepare_chunk_rows(self, chunks, can_embed, embed_model):
+        rows = []
+        for start in range(0, len(chunks), 32):
+            batch = chunks[start:start + 32]
+            vectors = (
+                self.ollama.get_batch_embeddings([c["text"] for c in batch], model=embed_model)
+                if can_embed and embed_model else [None] * len(batch)
+            )
+            if len(vectors) != len(batch):
+                raise ValueError("Embedding count does not match chunk count")
+            if can_embed and embed_model and any(not vec for vec in vectors):
+                raise RuntimeError("Embedding backend did not return every requested vector")
+            for c, vec in zip(batch, vectors):
+                rows.append((c["book_title"], c["filename"], c["page_num"],
+                             c["chunk_index"], c["text"], pack_vector(vec) if vec else None))
+        return rows
+
+    @staticmethod
+    def _insert_chunk_rows(conn, doc_id, rows):
+        conn.executemany("""
+            INSERT INTO chunks (doc_id, book_title, filename, page_num, chunk_index, text, embedding)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, [(doc_id, *row) for row in rows])
+        return len(rows)
 
     def get_status(self) -> Dict[str, Any]:
         """Get summary statistics of the current knowledge base."""

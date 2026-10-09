@@ -13,7 +13,7 @@ corpus/
   releases/<ma-release>/manifest.json     # người điều phối công bố
 ```
 
-Hiện chỉ README này được tạo. Đường dẫn trên là quy ước cho gói thật; chưa tạo manifest/approval/release giả. Chưa có importer runtime đọc trực tiếp cấu trúc này. Khải điều phối triển khai và kiểm chứng adapter giao nhận giữ nguyên gate trước khi tự động nhập.
+Hiện chỉ README này được tạo. Đường dẫn trên là quy ước cho gói thật; chưa tạo manifest/approval/release giả. Chưa có importer runtime đọc trực tiếp cấu trúc này. TV4 điều phối triển khai và kiểm chứng adapter giao nhận giữ nguyên gate trước khi tự động nhập.
 
 ## Gói nộp phải có
 

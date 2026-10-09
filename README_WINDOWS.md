@@ -1,6 +1,6 @@
 # Phát triển Agent Học Tập trên Windows
 
-Năm thành viên dùng Windows: ba chủ trì tra cứu/QA/lịch ảnh, hai người hỗ trợ giao diện-môi trường và kiểm thử-tài liệu. Khải dùng Mac
+Năm thành viên dùng Windows: ba chủ trì tra cứu/QA/lịch ảnh, hai người hỗ trợ giao diện-môi trường và kiểm thử-tài liệu. TV4 dùng Mac
 để hợp nhất chỉ mục chính và huấn luyện. Đọc [quy tắc](README_QUY_TAC.md),
 [phân công](docs/team/PHAN_CONG_6_NGUOI.md) và [nhật ký](LICH_SU_DU_AN.md).
 
@@ -43,7 +43,7 @@ Mặc định setup đầy đủ: cài phần thiếu, chuẩn bị `qwen2.5:3b`
 
 Chỉ sửa UI/test nhẹ: dùng `setup_windows.ps1 -DemoOnly` để bỏ Ollama/model. Demo dùng tài liệu tổng hợp ở tests/fixtures và DB riêng data/team-demo. FTS/test mock không cần model. QA/ảnh thật cần cài full và đánh giá riêng; file model có mặt chưa chứng minh chất lượng.
 
-Cấu hình .env riêng trỏ endpoint/model khác sẽ được giữ nguyên. Bộ cài full báo dừng nếu lệch manifest để tránh tải/chạy nhầm; dùng DemoOnly hoặc thống nhất cấu hình với Khải. Nếu .venv cũ không phải Python 3.12, đổi tên sang .venv-backup rồi chạy lại. Có lỗi cài/mạng: giữ nội dung lỗi và gửi TV5; chạy lại setup sau xử lý, không tìm bản cài ngẫu nhiên.
+Cấu hình .env riêng trỏ endpoint/model khác sẽ được giữ nguyên. Bộ cài full báo dừng nếu lệch manifest để tránh tải/chạy nhầm; dùng DemoOnly hoặc thống nhất cấu hình với TV4. Nếu .venv cũ không phải Python 3.12, đổi tên sang .venv-backup rồi chạy lại. Có lỗi cài/mạng: giữ nội dung lỗi và gửi TV5; chạy lại setup sau xử lý, không tìm bản cài ngẫu nhiên.
 
 ## Nguồn thật và OCR
 
@@ -65,7 +65,7 @@ Giữ endpoint/model trong manifest cho bộ cài full; launcher đọc `.env`, 
 powershell -NoProfile -ExecutionPolicy Bypass -File .\start_windows.ps1 -Profile local
 ```
 
-Trên web chọn **Đồng bộ thư viện**, đợi xong, kiểm lỗi/nguồn/trang/đoạn rồi tìm một cụm có trong nguồn. Profile local không tự index khi start. QA có nguồn cần model QA và embedding đã chuẩn bị; ảnh lịch cần model vision. Đọc/chỉnh bản nháp trước khi xác nhận lưu. Không push nguồn/index thử; Khải hợp nhất corpus chính sau review riêng. Snapshot DB chứa đường dẫn Mac cần chuẩn bị riêng, không mặc định sao chép sang Windows sẽ hoạt động.
+Trên web chọn **Đồng bộ thư viện**, đợi xong, kiểm lỗi/nguồn/trang/đoạn rồi tìm một cụm có trong nguồn. Profile local không tự index khi start. QA có nguồn cần model QA và embedding đã chuẩn bị; ảnh lịch cần model vision. Đọc/chỉnh bản nháp trước khi xác nhận lưu. Không push nguồn/index thử; TV4 hợp nhất corpus chính sau review riêng. Snapshot DB chứa đường dẫn Mac cần chuẩn bị riêng, không mặc định sao chép sang Windows sẽ hoạt động.
 
 API tự mô tả tại `http://127.0.0.1:8000/docs`. Kiểm môi trường bằng `.venv\Scripts\python.exe scripts/dev.py check --profile local --require-model`; lỗi ứng dụng hiện trong terminal chạy start.
 
@@ -95,7 +95,7 @@ Liên kết lần chạy cũ `37882594844` hiện trả 404; kết quả của l
 
 Mỗi PR phải thêm mục vào `LICH_SU_DU_AN.md`, ghi môi trường/lệnh đã chạy và phần
 `NOT_RUN`. Khi sửa `app/server.py`, cấu hình, tìm kiếm hoặc JS/CSS chung, review chéo
-và smoke cả ba chức năng. Khải review PR thành viên/merge theo quy trình nhóm sau CI. Tại lần kiểm YC-176, GitHub không còn bắt buộc approval; người có quyền ghi cũng có thể merge khi checks đạt. Xem [CONTRIBUTING](CONTRIBUTING.md); không tự ghi lên main.
+và smoke cả ba chức năng. TV4 review PR thành viên/merge theo quy trình nhóm sau CI. Tại lần kiểm YC-176, GitHub không còn bắt buộc approval; người có quyền ghi cũng có thể merge khi checks đạt. Xem [CONTRIBUTING](CONTRIBUTING.md); không tự ghi lên main.
 
 ## Giới hạn hiện tại
 

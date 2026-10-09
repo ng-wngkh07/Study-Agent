@@ -58,7 +58,7 @@ Launcher chỉ nhận biến trong `.env.example` và các đường dẫn histo
 .venv/bin/python scripts/dev.py serve --profile local
 ```
 
-6. Trên web chọn **Đồng bộ thư viện**, đợi tác vụ xong rồi kiểm nguồn/trang/đoạn và tra cứu một cụm có trong nguồn. `serve --profile local` không tự index. Vector cần model embedding; OCR/model lỗi phải xem thông báo/log và xử lý, không đoán nội dung. Thử QA có trích dẫn và đối chiếu nguồn. Các thao tác trên clone riêng không thay việc Khải duyệt/hợp nhất corpus chính.
+6. Trên web chọn **Đồng bộ thư viện**, đợi tác vụ xong rồi kiểm nguồn/trang/đoạn và tra cứu một cụm có trong nguồn. `serve --profile local` không tự index. Vector cần model embedding; OCR/model lỗi phải xem thông báo/log và xử lý, không đoán nội dung. Thử QA có trích dẫn và đối chiếu nguồn. Các thao tác trên clone riêng không thay việc TV4 duyệt/hợp nhất corpus chính.
 
 ## Runtime MLX riêng
 
@@ -75,7 +75,7 @@ python3.13 -m venv .train-venv
 
 Runtime tách khỏi `.venv` web. Profile khai MLX, MLX-LM và Transformers cho runtime và JSONL local đã duyệt của dự án; constraints cố định bộ phiên bản, không tự cấp quyền training. Model nền nằm ở `data/models/qwen2.5-3b-4bit`, cần config/tokenizer/weights đầy đủ; model/revision theo `app/config.py`, tải/nhận qua gói có hash riêng. Registry chọn adapter đã được duyệt; không tự sửa registry hoặc bật adapter để làm cho demo chạy.
 
-Mac dùng mặc định model MLX khi không ghi đè `DEFAULT_CHAT_MODEL`; `.env.example` chọn Ollama để phát triển. Chọn backend theo môi trường dự án đã thống nhất, không đổi model đang hoạt động chỉ để chạy test. Có thư viện/model không đồng nghĩa corpus sẵn sàng: Khải chỉ training sau audit live `complete: true`, provenance/review/split/tokenizer đạt và đánh giá độc lập. Không chạy training theo việc cài môi trường này.
+Mac dùng mặc định model MLX khi không ghi đè `DEFAULT_CHAT_MODEL`; `.env.example` chọn Ollama để phát triển. Chọn backend theo môi trường dự án đã thống nhất, không đổi model đang hoạt động chỉ để chạy test. Có thư viện/model không đồng nghĩa corpus sẵn sàng: TV4 chỉ training sau audit live `complete: true`, provenance/review/split/tokenizer đạt và đánh giá độc lập. Không chạy training theo việc cài môi trường này.
 
 ## OCR tùy chọn
 

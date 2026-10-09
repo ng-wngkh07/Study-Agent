@@ -2,7 +2,7 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 09/10/2026 16:16 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T16:16:00.615613+07:00.
+- Cập nhật: 09/10/2026 16:28 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T16:28:28.217575+07:00.
 - Mục mới nhất: **[YC-176](#yc-176)**.
 - Nhật ký chung có **10 mục**: 4 môi trường/chức năng (YC-167/170/173/175), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 2 rà soát/nghiệm thu (YC-171/174), 1 làm rõ quyền/quy trình (YC-176).
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
@@ -268,7 +268,7 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   workflow thêm pip check/cache các file cấu hình; .gitignore chỉ cho phép 5 file mới.
 - Tài liệu: README chính thêm kiến trúc/sử dụng/profile/test/API/giấy phép; README_MAC
   mới hướng dẫn Python3.12/Ollama/.env/local-index/MLX3.13/OCR/troubleshooting; Windows
-  thêm nguồn→index→dùng và test Node; quy tắc phản ánh main đã bảo vệ; corpus/fixture
+  thêm nguồn→index→dùng và test Node; quy tắc/phân công phản ánh main đã bảo vệ và policy mới; corpus/fixture
   giữ đúng vai trò, dẫn thao tác nguồn riêng. CONTRIBUTING trước đúng quy trình nhóm
   nhưng thiếu onboarding/Issue/test/PR/review cụ thể; sau đủ các bước và ranh giới tài sản.
 - Kiểm chứng local: venv mới Python3.12 cài profile Windows/dev thành công, pip check
@@ -280,12 +280,15 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   producer-consumer riêng; không gọi đây là review độc lập bởi thành viên. Profile MLX
   theo JSONL local đã duyệt mà pipeline dùng; không kéo extra dataset loader ngoài phạm vi.
   Constraints phiên bản tách 3.12/3.13; không đổi app/backend/model đang hoạt động.
+- CI: PR run 37911184856 trên c879d02 PASS: Windows/Mac mỗi OS 110 feature +
+  3 UI Node22; pip check/demo, PowerShell parse/contract và installer DemoOnly Windows
+  PASS; history PASS. Link: https://github.com/ng-wngkh07/Study-Agent/actions/runs/37911184856.
 - Phát hành: PR #1 được chủ repo merge trong lúc tác vụ đang chạy; chuyển bản mới sang
   codex/fix-project-guides, đồng bộ origin/main fdd9adf; kết quả CI/commit cập nhật
-  trong báo cáo dùng chung và evidence. Không tự merge hoặc thay protection/reviewer.
+  trong báo cáo dùng chung và evidence. PR #2: https://github.com/ng-wngkh07/Study-Agent/pull/2. Không tự merge hoặc thay protection/reviewer.
 - Giới hạn: full installer Windows mới, model QA/VLM/MLX thật, toàn suite/corpus
   readiness/training NOT_RUN; cài profile và test mock không nghiệm thu các phần này.
-- Trạng thái tại cập nhật 2026-10-09T16:16:00.615613+07:00: local sửa xong, đang kiểm chứng/phát hành; hồ sơ local
+- Trạng thái tại cập nhật 2026-10-09T16:28:28.217575+07:00: hoàn tất sửa và xuất bản PR #2; hồ sơ local
   docs/project/documentation-fixes-2026-10-09/; báo cáo chung docs/team/BAO_CAO_SUA_LOI_2026-10-09.md.
 
 <a id="yc-176"></a>
@@ -294,7 +297,7 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Người thực hiện: Codex; loại: làm rõ chính sách review và quyền merge.
 - Mục tiêu: phân biệt một người phê duyệt, không cần người khác duyệt và chỉ chủ repo
   được merge; liên quan bảo vệ main YC-173/174 và hướng dẫn đóng góp YC-175.
-- Giải thích đã kiểm: hiện cần 1 approval từ người khác tác giả/người push cuối có
+- Giải thích theo bản kiểm YC-173/174: cần 1 approval từ người khác tác giả/người push cuối có
   quyền ghi. Khải duyệt PR thành viên được; tác giả không tự Approve PR. Nếu chủ repo
   quyết định cho tự merge PR của mình, cần bỏ Require approvals và Require approval
   of the most recent reviewable push, giữ PR/CI. Chỉ hướng dẫn, chưa chọn áp dụng.

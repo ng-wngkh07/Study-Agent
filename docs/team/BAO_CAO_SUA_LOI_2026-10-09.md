@@ -59,7 +59,7 @@ và training chưa được nghiệm thu trong đợt này. CI hiện hành xem
 
 ## Làm rõ quyền merge — YC-176
 
-Một approval từ người khác có quyền ghi là yêu cầu hiện tại; tác giả không tự duyệt.
+Tại bản kiểm YC-173/174 trước readback bên dưới, cần một approval từ người khác có quyền ghi; tác giả không tự duyệt.
 Nếu bỏ approval và yêu cầu duyệt push cuối, PR đạt CI có thể merge bởi người có quyền ghi.
 Quy định Khải merge trong tài liệu là quy trình nhóm, chưa là giới hạn quyền được GitHub
 cưỡng chế. Hiện chưa thay protection/quyền/reviewer theo các câu hỏi làm rõ này.
@@ -72,3 +72,14 @@ về 0, last-push approval tắt; CI/nhánh cập nhật/hội thoại/admin/c�
 Codex không đổi policy/quyền hoặc tự merge; bản README/dependency/CONTRIBUTING mới
 chuyển sang nhánh codex/fix-project-guides để mở PR riêng. Trạng thái review bắt buộc
 trong các mục YC-173/174 là lịch sử trước lần thay đổi này.
+
+### Kết quả phát hành YC-175 — 2026-10-09T16:28:28.217575+07:00
+
+Đã đẩy bản sửa lên [PR #2](https://github.com/ng-wngkh07/Study-Agent/pull/2),
+nhánh codex/fix-project-guides đồng bộ main fdd9adf.
+[CI PR 37911184856](https://github.com/ng-wngkh07/Study-Agent/actions/runs/37911184856)
+trên c879d02 PASS: Windows/Mac mỗi OS 110 feature và 3 UI trên Node22; pip check/demo
+PASS, Windows PowerShell parse/contract và installer DemoOnly PASS, history PASS.
+Giữ chính sách/quyền được đọc lại ở trên; không tự merge. File phân công nhóm cũng
+được cập nhật câu trạng thái bảo vệ nhánh; PDF phân công là bản chụp tại lần xuất cũ.
+Các giới hạn model/full installer/corpus/training vẫn NOT_RUN như đã nêu.

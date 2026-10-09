@@ -84,23 +84,23 @@ Giữ chính sách/quyền được đọc lại ở trên; không tự merge. F
 được cập nhật câu trạng thái bảo vệ nhánh; PDF phân công là bản chụp tại lần xuất cũ.
 Các giới hạn model/full installer/corpus/training vẫn NOT_RUN như đã nêu.
 
-## Tiếp tục sửa lỗi sản phẩm — YC-177 (2026-10-09T16:42:31.421351+07:00)
+## Tiếp tục sửa lỗi sản phẩm — YC-177 (2026-10-09T16:49:15.112561+07:00)
 
 Các mã dưới đây thuộc audit sản phẩm 08/10, khác F01–F04 GitHub ở đầu báo cáo.
 
 | Mục | Kết quả sửa |
 | --- | --- |
 | F-01 QA attribution | Chặn toàn bộ đáp án nếu lẫn ID không truy xuất hoặc thiếu citation; giữ nguồn hợp lệ và từ chối an toàn |
-| F-02 reindex | Chuẩn bị vector trước, metadata/chunks/FTS trong transaction; rollback giữ chỉ mục/hash/vector cũ, retry thay được; batch thiếu vector không được commit |
+| F-02 reindex | Chuẩn bị vector trước, metadata/chunks/FTS trong transaction; rollback giữ chỉ mục/hash/vector cũ, retry thay được; lỗi đọc nguồn không xóa chỉ mục cũ; batch thiếu vector không được commit |
 | F-03 ICS timestamp | DTSTAMP UTC dạng YYYYMMDDTHHMMSSZ |
 | F-04 ICS TEXT | Escape newline/backslash/comma/semicolon, fold theo 75 UTF8 octet; không thêm property từ nội dung |
 | F-05 giờ OCR | So sánh giờ theo phút, nhận 9:00/09:00, không nhận cùng/đảo/ngoài miền |
 
-RED 8/16 ca thất bại trên baseline. Sau sửa, 17 ca hồi quy mới được đưa vào feature
-suite: local 127 PASS, thêm 14 ca index/retention/backfill PASS và 3 UI PASS. Parser
+RED 8/16 ca thất bại trên baseline; vector thiếu và lỗi extraction tái hiện riêng trước sửa. Sau sửa, 18 ca hồi quy mới được đưa vào feature
+suite: local 128 PASS, thêm 14 ca index/retention/backfill PASS và 3 UI PASS. Parser
 độc lập icalendar7.3.0 xác nhận timestamp/timezone/Unicode/TEXT roundtrip và không có
 property được chèn. Parser chỉ cài tmp, không đổi profile dependencies. CI chạy các
-ca mới trên Windows/Mac; kết quả bản mới sẽ được ghi tại PR2/checks.
+ca mới trên Windows/Mac. CI 37913090332/e6d8425 đã PASS 127 feature +3 UI mỗi OS/history; phần bổ sung extraction (128 feature) tiếp tục kiểm trên PR2/checks.
 
 Q-01 về nội dung model và các giới hạn full installer/model/corpus/training chưa
 nghiệm thu; ID nguồn hợp lệ chưa chứng minh câu đúng ngữ nghĩa. Không chạm dữ liệu

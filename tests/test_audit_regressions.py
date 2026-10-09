@@ -150,3 +150,25 @@ def test_invalid_clock_range_stays_unresolved(start, end):
     result = parse_registered_table(table_lines(start, end))
     assert result['entries'][0]['start_time'] is None
     assert result['uncertainties']
+
+
+def test_extraction_failure_preserves_previous_index(tmp_path, monkeypatch):
+    src = tmp_path / 'src'; src.mkdir()
+    source = src / 'fixture.txt'
+    source.write_text('oldsentinel Synthetic text that must remain searchable. ' * 35)
+    index = KnowledgeIndexer(tmp_path / 'index.db', src)
+    index.index_all(embed_model=None)
+    before = snapshot(index)
+    source.write_text('Changed source that cannot be extracted in this controlled test.')
+    from app.pdf_extractor import PDFExtractor
+    real_extract = PDFExtractor.extract_file
+    def fail(path):
+        result = real_extract(path)
+        result.error_message = 'Controlled extraction failure'
+        return result
+    monkeypatch.setattr(PDFExtractor, 'extract_file', fail)
+    result = index.index_all(embed_model=None)
+    assert result['error_files'][0]['error'] == 'Controlled extraction failure'
+    assert snapshot(index) == before
+    monkeypatch.setattr(PDFExtractor, 'extract_file', real_extract)
+    assert index.index_all(embed_model=None)['indexed_files'] == 1

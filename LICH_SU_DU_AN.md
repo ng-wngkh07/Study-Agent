@@ -2,7 +2,7 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 09/10/2026 16:42 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T16:42:31.421351+07:00.
+- Cập nhật: 09/10/2026 16:49 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T16:49:15.112561+07:00.
 - Mục mới nhất: **[YC-177](#yc-177)**.
 - Nhật ký chung có **11 mục**: 5 môi trường/chức năng (YC-167/170/173/175/177), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 2 rà soát/nghiệm thu (YC-171/174), 1 làm rõ quyền/quy trình (YC-176).
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
@@ -333,22 +333,22 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Trước/sau: câu trả lời có ID sai hoặc không citation chuyển sang từ chối an toàn;
   vẫn bỏ marker khi hiển thị nguồn đúng. Chuẩn bị vector trước khi ghi; thay metadata/
   chunks/FTS chung transaction, rollback giữ cả vector cũ và retry được; batch thiếu
-  vector bị chặn. ICS dùng DTSTAMP UTC đúng, escape TEXT và fold 75 UTF8 octet;
+  vector bị chặn; lỗi đọc lại tài liệu giữ chỉ mục cũ và hash cũ để retry. ICS dùng DTSTAMP UTC đúng, escape TEXT và fold 75 UTF8 octet;
   giờ OCR so sánh theo phút rồi zero-pad, giữ giờ ngoài miền/đảo/cùng giờ unresolved.
 - File sửa: app/rag_agent.py, app/indexer.py, app/timetable_ics.py, app/timetable_table.py;
-  tests/test_audit_regressions.py (17 ca tổng hợp), pytest.windows.ini thêm ca vào CI;
+  tests/test_audit_regressions.py (18 ca tổng hợp), pytest.windows.ini thêm ca vào CI;
   nhật ký/báo cáo chung. Không thêm dependency runtime/dev; parser độc lập cài vào tmp.
-- Kiểm chứng local: 127 feature PASS/6 warning, 14 regression index/retention/backfill
+- Kiểm chứng local: 128 feature PASS/6 warning, 14 regression index/retention/backfill
   PASS, 3 UI PASS. Parser độc lập icalendar7.3.0 PASS UTC/timezone/TEXT roundtrip/
   Unicode/fold/no injected property. Codex review diff/caller riêng; không gọi là review
-  độc lập của thành viên. Vector rỗng tái hiện lỗi thêm rồi GREEN sau chặn.
+  độc lập của thành viên. Vector rỗng và lỗi extraction tái hiện riêng rồi GREEN sau sửa.
 - Quyền ghi: Codex code trên snapshot riêng /private/tmp/study-agent-audit-yc171;
   Antigravity corpus còn hoạt động đợt48, không giao thêm/gửi trùng/đổi selection/
   dừng job; không tranh writer corpus/data/model. Tích hợp sau đối chiếu hash baseline.
 - Phát hành: tiếp tục nhánh codex/fix-project-guides và PR2 theo quyền push đã giao;
-  giữ sửa YC-175, không tự merge/chỉnh protection/quyền. CI bản mới đang chờ phát hành.
+  giữ sửa YC-175, không tự merge/chỉnh protection/quyền. CI e6d8425/37913090332 PASS Windows/Mac 127 feature +3 UI mỗi OS/history; bổ sung extraction (128 feature) đang phát hành.
 - Giới hạn: Q-01 nội dung model thiếu điều kiện chưa nghiệm thu; citation ID đúng không
   chứng minh mệnh đề đúng nguồn. Full installer Windows mới/model thật/full suite/
   corpus readiness/training NOT_RUN; các gate giữ. Không sửa báo cáo audit 08/10 đã đóng.
-- Trạng thái: local sửa/kiểm chứng xong, đang phát hành; cập nhật 2026-10-09T16:42:31.421351+07:00; bằng chứng
+- Trạng thái: local sửa/kiểm chứng xong, đang phát hành; cập nhật 2026-10-09T16:49:15.112561+07:00; bằng chứng
   local docs/project/product-fixes-2026-10-09/.

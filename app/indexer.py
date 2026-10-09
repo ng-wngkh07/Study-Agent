@@ -262,7 +262,10 @@ class KnowledgeIndexer:
 
             if extract_res.error_message:
                 report["error_files"].append({"filename": rel_path, "error": extract_res.error_message})
-                self._save_document_record(extract_res, status="error", is_scanned=False)
+                # Extraction failures must not erase a previously usable index
+                # or advance its hash; the next scan must be able to retry.
+                if rel_path not in indexed_map:
+                    self._save_document_record(extract_res, status="error", is_scanned=False)
                 report["details"].append({
                     "filename": rel_path,
                     "status": "error",

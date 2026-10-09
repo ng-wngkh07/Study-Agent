@@ -2,9 +2,9 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 09/10/2026 11:13 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T11:13:38.451245+07:00.
-- Mục mới nhất: **[YC-170](#yc-170)**.
-- Nhật ký chung có **4 mục**: 2 môi trường/chức năng (YC-167/170), 1 tổ chức/tài liệu (YC-168), 1 phát hành GitHub (YC-169).
+- Cập nhật: 09/10/2026 15:18 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T15:18:57.510882+07:00.
+- Mục mới nhất: **[YC-173](#yc-173)**.
+- Nhật ký chung có **7 mục**: 3 môi trường/chức năng (YC-167/170/173), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 1 rà soát/nghiệm thu (YC-171).
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
   [quy trình PR](CONTRIBUTING.md), [Windows](README_WINDOWS.md).
 
@@ -141,3 +141,81 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Trạng thái: hoàn tất mã/bộ cài và xuất bản GitHub trong cùng đợt khởi tạo; bản cập nhật
   README/log ghi lại kết quả đã chạy. Full install trên máy Windows mới, model inference
   và MLX training NOT_RUN; không suy rộng CI demo thành nghiệm thu các phần này.
+
+<a id="yc-171"></a>
+### YC-171 - 09/10/2026 15:04 (UTC+07)
+
+- Người thực hiện: Codex; loại: rà soát và nghiệm thu tài sản GitHub.
+- Mục tiêu: đối chiếu các thư mục Study-Agent đã upload với phạm vi/yêu cầu YC-164–170
+  và phân công 6 người; phân biệt có mã, test demo đạt và nghiệm thu sản phẩm thật.
+- Trước/sau: trước checkpoint dựa mốc e0aac7a; kiểm trực tiếp xác nhận main hiện tại
+  871d4dc37f17e293b0dda54c017d579f84b5ade1 có 187 file. Không sửa mã sản phẩm;
+  bổ sung kết quả kiểm tra, các thiếu sót và giới hạn. Không suy nguyên nhân thay lịch sử remote.
+- Phần đọc: tree toàn repo, README/quy tắc/log/phân công, app server/config/lookup/lịch/
+  cổng corpus-training, static/document-lookup, scripts/dev/installer/CI và tests liên quan.
+- Kiểm chứng: clone riêng; Python3.12 110 feature + 29 corpus/provenance/adapter/balance PASS;
+  Python3.14 110 feature PASS (trùng ca, không cộng lại). CI run 37887196815 đúng SHA hiện tại
+  Windows/Mac 110 PASS mỗi hệ; Windows parse/8 hợp đồng/setup DemoOnly PASS. Toàn tập collect
+  476 ca, không chạy toàn bộ. Cú pháp 148 Python, shell, 24 ca Git boundary, links local PASS.
+  Demo 2 nguồn/5 đoạn/0 vector; browser nạp và chuyển ba chế độ, FTS hoạt động khi model bị cô lập.
+- Lỗi còn lại: UI tạo nút PDF cho study_demo.md dù API pdf_url=null, mở trả 404
+  (static/document-lookup.js:116–122/136); LICENSE gốc thiếu; main protected=false/rulesets rỗng.
+  Link CI cũ 37882594844 trả 404; checkpoint commit cũ không tìm được trên repo hiện tại.
+- Kết luận: phần chia sẻ mã/demo phần lớn đạt; chưa công nhận toàn ứng dụng/quy trình dữ liệu
+  hoàn tất. corpus mới README, chưa gói/manifest/importer giao nhận; full Windows install,
+  QA/VLM thật, corpus readiness live/training/release NOT_RUN hoặc chưa xác minh.
+  Thiếu src/data/DB/vector/model/.env/hồ sơ cá nhân trong Git là đúng ranh giới tài sản.
+- Ảnh hưởng: chỉ báo cáo/lịch sử/checkpoint local; không ghi corpus chính, dùng GPU thật,
+  thay provider/model, commit/push hoặc cấu hình quyền GitHub. Triển khai/sửa/handoff N/A vì audit.
+- Trạng thái: hoàn tất lượt kiểm tra; các thiếu sót đã ghi, chưa sửa. Hồ sơ local:
+  docs/project/github-audit-2026-10-09/BAO_CAO.md và verification.json.
+- Bằng chứng CI hiện hành: https://github.com/ng-wngkh07/Study-Agent/actions/runs/37887196815.
+- Cập nhật kết quả: 2026-10-09T15:04:58.296591+07:00. Cần sửa UI/khôi phục LICENSE/cập nhật link và áp dụng bảo vệ main,
+  sau đó nghiệm thu installer/model/dữ liệu theo tiêu chí; không coi test mock là chất lượng model.
+
+<a id="yc-172"></a>
+### YC-172 - 09/10/2026 15:10 (UTC+07)
+
+- Người thực hiện: Codex; loại: kiểm tra CI và sửa liên kết bằng chứng trong tài liệu.
+- Mục tiêu: kiểm lỗi CI; làm rõ liên kết CI cũ trả 404 theo phát hiện YC-171.
+- Chẩn đoán: workflow Team feature checks đang active; run 37887196815 trên main
+  871d4dc hoàn tất success, Windows/Mac 110 test đạt. Run 37882594844 trả 404:
+  GitHub không tìm thấy lần chạy được dẫn, chưa xác định nguyên nhân mất run;
+  không suy là CI/test hiện tại thất bại. History job skipped đúng điều kiện vì event push.
+- Trước/sau: README_WINDOWS dẫn run cũ không còn truy cập; sau dùng trang workflow
+  cho kết quả mới nhất, kèm run/SHA hiện hành đã kiểm và ghi chú về liên kết cũ.
+- Phần/file sửa: README_WINDOWS.md; bổ sung mục lịch sử này và checkpoint local.
+  Giữ nguyên YC-170 và kết quả lịch sử tại ngày cũ; không thay link cũ trong archive.
+- Kiểm chứng: API đọc runs/jobs/workflow và run cũ; trang workflow và run hiện tại truy cập được;
+  kiểm link, diff và bảo toàn mục cũ. Test sản phẩm/RED–GREEN/handoff N/A vì chỉ tài liệu,
+  không có CI đang đỏ cần sửa mã. Cảnh báo dependency không được báo thành test lỗi.
+- Ảnh hưởng/trạng thái: sửa tài liệu local hoàn tất; workflow/mã/model/corpus không đổi,
+  chưa commit/push. Cập nhật kết quả 2026-10-09T15:10:46.016993+07:00; hồ sơ local ci-link-repair-2026-10-09/.
+- Giới hạn: không tuyên bố đã phục hồi run cũ; có thể xem bằng chứng của run hiện tại tại
+  https://github.com/ng-wngkh07/Study-Agent/actions/runs/37887196815.
+
+<a id="yc-173"></a>
+### YC-173 - 09/10/2026 15:18 (UTC+07)
+
+- Người thực hiện: Codex; loại: sửa lỗi tra cứu, tài liệu/giấy phép và bảo vệ GitHub.
+- Mục tiêu/log liên quan: xử lý F01–F04 trong báo cáo YC-171, đưa bản sửa lên GitHub;
+  tiếp nối sửa link YC-172. Baseline main 871d4dc; triển khai trên bản sao cách ly.
+- Trước/sau: nguồn Markdown từng tạo nút PDF trả 404; sau chỉ tạo link khi có PDF,
+  nguồn văn bản hiện phần/trích đoạn mở sẵn và câu hỏi đúng đơn vị. PDF vẫn mở đúng trang,
+  link được tạo từ ID số để không dùng URL tùy ý trả về.
+- Phần sửa: static/document-lookup.js, tests/document_lookup_ui.test.cjs, CI bổ sung 3 kiểm
+  giao diện Windows/Mac; khôi phục LICENSE MIT gốc từ bản xuất bản đã giữ, byte khớp.
+  README_WINDOWS dùng trang workflow/link hiện hành; không thay kết quả lịch sử YC-170.
+- GitHub: main được bảo vệ, áp dụng cả admin; cần 1 approval khác tác giả, duyệt lại khi có
+  push mới, 3 check features Windows/Mac/history đúng GitHub Actions, nhánh cập nhật và
+  hội thoại đã giải quyết. Cấm force-push/xóa main; không cấp quyền người/app mới.
+- Kiểm chứng: RED trên mã gốc 2/3 kiểm giao diện thất bại đúng lỗi; GREEN 3/3 sau sửa.
+  Python 3.12 feature 110 PASS; UI browser kiểm Markdown/PDF, chuyển QA và lịch, không lỗi
+  console; API PDF/ảnh nguồn và readback protection. CI mới được chạy theo PR, xem workflow.
+- Review: Codex đọc diff/caller và kiểm riêng sau triển khai; không gọi là review độc lập
+  của thành viên. Codex thực hiện trên bản sao độc quyền; corpus/model/GPU không đổi.
+- Trạng thái/phát hành: bản sửa qua nhánh fix/shared/yc173-khai và PR; main chờ reviewer
+  theo quy tắc nhóm, không tự merge. Nhật ký/báo cáo chung đi cùng mã; bằng chứng local giữ riêng.
+- Giới hạn: không khôi phục run/commit cũ đã mất. Full Windows install/model thật/476 ca/
+  gói dữ liệu thật/training vẫn NOT_RUN hoặc chưa nghiệm thu; đây là giới hạn kiểm chứng,
+  không có bằng chứng cho phép huấn luyện. Cập nhật kết quả: 2026-10-09T15:18:57.510882+07:00.

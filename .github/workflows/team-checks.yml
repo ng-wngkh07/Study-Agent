@@ -36,6 +36,10 @@ jobs:
           .\tests\windows_setup_contract.ps1
           .\setup_windows.ps1 -DemoOnly
       - run: python -m pytest -c pytest.windows.ini
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/document_lookup_ui.test.cjs
   history:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest

@@ -60,9 +60,12 @@ Nguồn bộ cài: [Microsoft WinGet](https://learn.microsoft.com/en-us/windows/
 Tập `pytest.windows.ini` kiểm tra các tính năng với dữ liệu tạm/mock, khóa native và
 demo sạch; không cần corpus/model cá nhân. Các test cũ phụ thuộc thư viện sách,
 OCR feedback local, giám sát tiến trình POSIX và thử nghiệm MLX vẫn chạy riêng trên
-Mac; không được báo tập feature là toàn bộ test đã đạt. Ngày 09/10/2026,
-[CI Windows và Mac](https://github.com/ng-wngkh07/Study-Agent/actions/runs/37882594844)
+Mac; không được báo tập feature là toàn bộ test đã đạt. Xem kết quả mới nhất tại
+[CI Windows và Mac](https://github.com/ng-wngkh07/Study-Agent/actions/workflows/team-checks.yml).
+[Lần chạy ngày 09/10/2026 trên commit 871d4dc](https://github.com/ng-wngkh07/Study-Agent/actions/runs/37887196815)
 đã đạt 110 test feature trên mỗi hệ điều hành, cùng kiểm bộ cài demo Windows.
+Liên kết lần chạy cũ `37882594844` hiện trả 404; kết quả của lần chạy hiện tại
+được kiểm riêng, không suy từ liên kết cũ hoặc coi 404 là test thất bại.
 
 Mỗi PR phải thêm mục vào `LICH_SU_DU_AN.md`, ghi môi trường/lệnh đã chạy và phần
 `NOT_RUN`. Khi sửa `app/server.py`, cấu hình, tìm kiếm hoặc JS/CSS chung, review chéo

@@ -461,3 +461,19 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Kiểm chứng bản cuối: Python3.12.14 trên macOS, requirements-windows, full feature suite149 PASS/6 warning phụ thuộc; Node24.19.0:8 UI PASS; mọi static JS qua syntax check, git diff --check PASS. Browser demo: QA/tools/timetable chuyển đúng, ba tab hoạt động, tìm nguồn trí nhớ và bài tập mẫu trả nội dung fixture; sidebar thu gọn/mở lại, mobile390x844 không tràn ngang, sáng/tối đổi được và theme sáng ưu tiên khi OS dark. Console error0.
 - Trạng thái: triển khai và review local PASS lúc 10/10/2026 17:02 (UTC+07). CI Windows/Mac/history trên commit mới chưa chạy tại thời điểm ghi; sẽ kiểm sau push. Chưa merge PR.
 - Giới hạn: dữ liệu kiểm là demo tổng hợp, không nghiệm thu chất lượng QA/VLM/model thật hoặc corpus/huấn luyện; browser kiểm điều hướng/nguồn/theme, không gọi suy luận thật. Build/typecheck N/A vì repo không cấu hình. Không thay protection.
+
+<a id="yc-183"></a>
+### YC-183 - 10/10/2026 19:55 (UTC+07)
+
+- Người thực hiện: Antigravity; loại: tài liệu phân tích kỹ thuật toàn diện dự án.
+- Lỗi/mục tiêu: bổ sung bộ tài liệu phân tích chuyên sâu toàn bộ mã nguồn Study Agent gồm ý tưởng/mục tiêu/nghiệp vụ, cấu trúc mã nguồn/kiến trúc/schema CSDL và hướng dẫn triển khai/vận hành/troubleshooting thực tế.
+- Trước/sau: trước mới có tài liệu phân công và báo cáo sửa lỗi trong docs/team/; sau bổ sung 3 tài liệu chi tiết tại docs/:
+  + docs/01_Y_TUONG_DU_AN.md: Phân tích bài toán, triết lý Local-first, 4 luồng nghiệp vụ cốt lõi (Hybrid RAG, Document Lookup, Timetable Vision, Practice Engine), mô hình an toàn AI và bảng công nghệ.
+  + docs/02_CAU_TRUC_DU_AN.md: Kiểm kê toàn bộ repository, phân tích sâu các module backend trong app/, frontend, 3 schema SQLite (knowledge_base.db, history.db, timetable.db) và cơ chế GPU/File Lock.
+  + docs/03_CACH_TRIEN_KHAI_DU_AN.md: Hướng dẫn cài đặt Windows/macOS, biến môi trường, profiles demo/local, CLI run.py, quy trình kiểm thử tự động và ma trận xử lý 9 lỗi thường gặp.
+- Phần/file sửa: thêm docs/01_Y_TUONG_DU_AN.md, docs/02_CAU_TRUC_DU_AN.md, docs/03_CACH_TRIEN_KHAI_DU_AN.md và cập nhật LICH_SU_DU_AN.md.
+- Kiểm thử: kiểm tra liên kết nội bộ, tính toàn vẹn văn bản Markdown, chạy scripts/check_history.py PASS so với origin/main.
+- Ảnh hưởng: thuần tài liệu hệ thống, không thay đổi mã nguồn logic ứng dụng hay can thiệp luồng runtime.
+- Trạng thái: PASS.
+- Giới hạn, lỗi còn lại, rollback/bước tiếp: không có.
+

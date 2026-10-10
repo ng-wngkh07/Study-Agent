@@ -449,8 +449,8 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Cập nhật rà soát 10/10/2026 15:49 (UTC+07): nhãn ba tab khớp yêu cầu “Tạo câu hỏi”, “Ôn tập”, “Trích xuất bài tập mẫu”; câu ôn tập lưu cả lựa chọn người học và nội dung lựa chọn; bộ lọc bài tập chỉ nhận tiêu đề/nhãn câu rõ ràng để tránh coi câu phủ định như “không có bài tập” là nguồn bài tập. Kiểm chứng bổ sung: 16 test Python đặc thù và 8 test Node giao diện PASS; `py_compile`, `node --check` và `git diff --check` PASS. Chạy lại full suite không hoàn tất: lần mặc định 125 ca không tạo được thư mục `basetemp` ngoài sandbox; lần dùng thư mục tạm trong workspace dừng ở 7 ca không có tiến triển và được ngắt. Chạy riêng `test_document_lookup.py` cũng không có tiến triển; không ghi nhận kiểm chứng HTTP end-to-end mới sau rà soát. Không có cấu hình build/typecheck trong repo.
 
 
-  <a id="yc-183"></a>
-### YC-183 - 10/10/2026 19:54 (UTC+07)
+<a id="log-log-20261010-ui-pr6-fix-codex"></a>
+### LOG-20261010-ui-pr6-fix-codex - 10/10/2026 16:43 (UTC+07)
 
 - Người thực hiện: Codex điều phối/kiểm thử/review, Antigravity sửa HTML/CSS; loại: môi trường/chức năng giao diện.
 - Mục tiêu/log liên quan: sửa các lỗi chặn PR #6 sau cập nhật UI; giữ Công cụ học tập của PR #5, bố cục/sidebar/mobile và sáng/tối mới. Tiếp nối YC-181/182 trên main về công cụ học tập.

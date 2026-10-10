@@ -7,7 +7,7 @@ import re
 import sqlite3
 import unicodedata
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Optional, Set, Tuple
 from xml.sax.saxutils import escape
 
 import requests
@@ -115,6 +115,7 @@ def is_chunk_allowed_in_training(
     page_num: int,
     chunk_text: str,
     ocr_entries_by_page: Optional[Dict[int, dict]] = None,
+    excluded_pages: Optional[Set[Tuple[str, int]]] = None,
 ) -> bool:
     """Strict producer training gate:
     - Never allow holdout or forbidden sources.
@@ -146,6 +147,20 @@ def is_chunk_allowed_in_training(
     from app.pdf_extractor import PDFExtractor
     current_hash = PDFExtractor.calculate_file_hash(src_path)
     if current_hash != file_hash:
+        return False
+
+    # Block any chunk from an excluded page from entering training supervision
+    try:
+        fn = doc["filename"] if ("filename" in doc.keys() if hasattr(doc, "keys") else hasattr(doc, "__getitem__")) else getattr(doc, "filename", "")
+        if excluded_pages is not None:
+            if (fn, page_num) in excluded_pages:
+                return False
+        else:
+            from app.corpus_scope import is_page_excluded
+            if is_page_excluded(fn, page_num):
+                return False
+    except Exception:
+        # Fail closed on corrupt scope policy, invalid manifest, or broken exclusion validation
         return False
 
     # Determine if this specific page is genuine native (has actual text layer)

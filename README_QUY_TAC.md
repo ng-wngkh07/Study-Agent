@@ -46,7 +46,7 @@ Tuân thủ [.gitignore](.gitignore), kiểm staged và không dùng `git add -f
 
 - Xử lý nội dung cục bộ; không sửa PDF nguồn hoặc đoán trang/ô mờ. Người dùng xem/chỉnh/xác nhận lịch trước lưu; lịch/hội thoại không tự vào tập học.
 - TV4 giữ một writer/job cho corpus/index/vector/training chính; xác nhận kết thúc và bàn giao trước đổi bên ghi, không chạy GPU cạnh tranh.
-- Trước học: audit hiện hành `complete: true`, OCR review toàn bộ, provenance/hash nguồn-trang-chunk-vector, dedup/split/tokenizer/tài nguyên đạt. Demo/test xanh/số vector không cấp quyền học.
+- Trước học: audit hiện hành `complete: true` cho phạm vi nguồn đã được duyệt, provenance/hash nguồn-trang-chunk-vector, dedup/split/tokenizer/tài nguyên đạt. Mặc định phải OCR review toàn bộ. Theo YC-188, chỉ 13 trang chưa đọc đầy đủ trong manifest được người dùng duyệt và ràng buộc hash được loại khỏi dữ liệu học/kiểm tra; giữ PDF và trạng thái chưa hoàn chỉnh. Audit phải nêu `complete_all_sources`, số trang toàn nguồn/trong phạm vi/loại trừ; nguồn hoặc manifest đổi phải kiểm lại. Không dùng ngoại lệ để bỏ lỗi chỉ mục/vector/provenance. Demo/test xanh/số vector không cấp quyền học.
 - Candidate cần TV6 phối hợp TV1-TV3 đánh giá nguồn/holdout/retention độc lập; lưu revision/run ID/hash/rollback. Không kích hoạt chỉ vì loss giảm.
 - Không đổi provider/model/cấu hình toàn cục của người khác. Ollama phát triển không tự có chất lượng tương đương MLX/adapter.
 - Kiểm trên môi trường mục tiêu, ghi phần chưa chạy; test giả lập không chứng minh chất lượng suy luận/OCR thật. Ứng dụng hỗ trợ học tập, không chẩn đoán/kê đơn.

@@ -161,6 +161,7 @@ def train(data_dir: Path, iterations: int = 80, num_layers: int = 4,
             manifest = data_dir / "approved_manifest.jsonl"
             if not manifest.exists() or hashlib.sha256(manifest.read_bytes()).hexdigest() != approval["approved_manifest_sha256"]:
                 raise ValueError("Manifest đã thay đổi sau khi duyệt; cần đối chiếu nguồn và duyệt lại")
+
         summary_path = data_dir / "summary.json"
         if summary_path.exists():
             summary = json.loads(summary_path.read_text(encoding="utf-8"))
@@ -274,6 +275,8 @@ def train(data_dir: Path, iterations: int = 80, num_layers: int = 4,
         # Read the live corpus before preparing output or acquiring any GPU lock.
         from app.corpus_readiness import require_complete_corpus
         require_complete_corpus(BASE_DIR)
+        from app.corpus_scope import verify_dataset_scope
+        verify_dataset_scope(data_dir, root=BASE_DIR)
         from app.dataset_balance import require_balanced_dataset
         require_balanced_dataset(BASE_DIR, data_dir, model_dir)
 

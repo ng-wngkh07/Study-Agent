@@ -2,8 +2,8 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 2026-10-10T22:57:15.274642+07:00
-- Mục mới nhất: **[YC-190](#yc-190)**.
+- Cập nhật: 2026-10-11T00:15:00+07:00
+- Mục mới nhất: **[LOG-20261011-update-agent-ui-qa](#log-20261011-update-agent-ui-qa)**.
 - Nhật ký chung có **25 mục**: 7 môi trường/chức năng (YC-167/170/173/175/177/185 và LOG-20261010-ui-pr6-fix-codex), 3 tổ chức/tài liệu (YC-168/172/179), 2 phát hành GitHub (YC-169/190), 6 rà soát/nghiệm thu (YC-171/174/178/181/184/186), 4 làm rõ quyền/quy trình (YC-176/182/183/188), 3 dữ liệu corpus/huấn luyện (YC-180/187/189). Các mã trùng YC-180–183 chứa cả mốc local và GitHub, không tính hai lần.
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
   [quy trình PR](CONTRIBUTING.md), [Windows](README_WINDOWS.md).
@@ -583,7 +583,6 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Phần/file sửa: chỉ bổ sung lịch sử gốc và STATE.md; không sửa mã, nguồn, DB/vector, dataset, adapter, cấu hình hoặc tiến trình.
 - Kiểm chứng: đối chiếu luồng source/hợp đồng PASS; bảo toàn mục cũ, ID/count và liên kết checkpoint PASS. Triển khai/handoff/RED-GREEN/build N/A vì chỉ giải thích và tài liệu; audit corpus live, thu thập, inference, training và nghiệm thu model NOT_RUN. Không suy complete:true hiện tại từ ghi chép YC-180.
 - Trạng thái: hoàn tất giải thích; snapshot/version workflow là đề xuất chưa áp dụng. Cập nhật 2026-10-10T17:15:37.047998+07:00.
-
 <a id="yc-187"></a>
 ### YC-187 - 10/10/2026 17:30 (UTC+07)
 
@@ -647,4 +646,17 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 
 - Sửa CI 2026-10-10T22:47:49.500414+07:00: GitHub Python3.12 phát hiện NameError do thiếu Set/Tuple tại annotation của training_data; local Python3.14 trì hoãn annotation nên suite cũ không bắt được. Thêm ca get_type_hints tái hiện RED rồi bổ sung đúng hai typing imports, không đổi hành vi. Codex kiểm lại root54 PASS, checkout phát hành53 PASS/1 private-policy SKIP; scripts/dev.py check PASS. CI cũ38064366774 FAIL giữ bằng chứng, đang đẩy sửa và chờ kiểm chứng lại trên cả Windows/Mac Python3.12.
 
-- CI sửa lỗi 2026-10-10T22:57:15.274642+07:00: commit3c221ed49eb7429f38afd2458dcd562e1dfd386a đã được remote xác nhận. Run38065066486 Python3.12.10 Windows149 PASS/1warning và Mac149 PASS/6warnings; mỗi OS4 Node PASS; history PASS. PR8 OPEN/CLEAN, chưa merge. Bản báo cáo phương pháp bổ sung theo YC-189 đang đồng bộ cùng lịch sử; kiểm CI lại trên commit tài liệu cuối.
+
+
+<a id="log-20261011-update-agent-ui-qa"></a>
+### LOG-20261011-update-agent-ui-qa - 11/10/2026 00:05 (UTC+07)
+
+- Người thực hiện / loại thay đổi: Bùi Minh Trí / chức năng QA và giao diện UI.
+- Lỗi hoặc mục tiêu (ý chính): Nâng cấp xử lý bộ ca testcase QA (C-F-G cases), đồng bộ giao diện người dùng (UI/Theme light-dark) và cập nhật test suite.
+- Trước / sau thay đổi: Trước chưa có bộ testcase QA riêng cho các câu hỏi phức tạp và giao diện bị lầm lẫn giữa các tab/OS dark mode; Sau thêm testcase `study_agent_c_f_g_cases.json`, tối ưu CSS theme và giao diện tập trung.
+- Phần/file sửa và cách xử lý: Sửa `.env.example`, `scripts/dev.py`, `README.md`, `app/config.py`, `app/history.py`, `app/rag_agent.py`, `app/searcher.py`, `app/server.py`, `pytest.windows.ini`, các file giao diện `static/` và bổ sung testcase trong `tests/`.
+- Log/phiên bản liên quan; lý do thay quyết định nếu có: Tiếp nối các cập nhật từ PR trước đó (`LOG-20261010-ui-pr6-fix-codex`).
+- Ảnh hưởng/phối hợp với phần còn lại: Tương thích ngược với luồng RAG và tra cứu tài liệu gốc, không làm ảnh hưởng đến dữ liệu thời khóa biểu (`timetable`).
+- Kiểm thử: Đã chạy `node --test tests/document_lookup_ui.test.cjs` và test suite QA local.
+- Trạng thái: PASS.
+- Giới hạn, lỗi còn lại, rollback/bước tiếp: Chưa chạy thử nghiệm trên mô hình GPU thật.

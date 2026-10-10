@@ -2,12 +2,9 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 10/10/2026 15:49 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-10T15:49:49+07:00.
-- Mục mới nhất: **[YC-175](#yc-175)**.
-- Nhật ký chung có **9 mục**: 5 môi trường/chức năng (YC-167/170/173/174/175), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 1 rà soát/nghiệm thu (YC-171).
-- Cập nhật: 09/10/2026 17:34 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T17:34:05.950966+07:00.
-- Mục mới nhất: **[YC-179](#yc-179)**.
-- Nhật ký chung có **13 mục**: 5 môi trường/chức năng (YC-167/170/173/175/177), 3 tổ chức/tài liệu (YC-168/172/179), 1 phát hành GitHub (YC-169), 3 rà soát/nghiệm thu (YC-171/174/178), 1 làm rõ quyền/quy trình (YC-176).
+- Cập nhật: 10/10/2026 17:02 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-10T17:02:25.394988+07:00.
+- Mục mới nhất: **[LOG-20261010-ui-pr6-fix-codex](#log-log-20261010-ui-pr6-fix-codex)**.
+- Nhật ký chung có **17 mục**: 8 môi trường/chức năng (YC-167/170/173/175/177/181/182 và LOG-20261010-ui-pr6-fix-codex), 4 tổ chức/tài liệu (YC-168/172/179/180), 1 phát hành GitHub (YC-169), 3 rà soát/nghiệm thu (YC-171/174/178), 1 làm rõ quyền/quy trình (YC-176).
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
   [quy trình PR](CONTRIBUTING.md), [Windows](README_WINDOWS.md).
 
@@ -450,3 +447,17 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - API/giới hạn preview: Ollama thật không chạy; một lần tạo câu thật trả 422 và UI hiển thị lỗi an toàn, không lộ đáp án. Các endpoint search, examples, sessions, timetable và luồng mock practice/answer trả 200; `/favicon.ico` trả 404. Hai fixture không có bài tập gốc nên preview xác nhận trạng thái không có kết quả; kết quả có bài tập chỉ được kiểm qua Python/Node test với nguồn tổng hợp. Browser console không có API đọc qua connector nên chưa xác nhận log console trực tiếp; không thấy lỗi JS trên giao diện.
 - NOT_RUN: toàn bộ `pytest` gồm test Mac/POSIX/MLX/private corpus; typecheck/build (repo không cấu hình); đánh giá câu hỏi với Ollama/model thật hoặc bộ mẫu chấm thủ công; hiển thị bài tập thật từ corpus; giả lập trực quan theme sáng. Không đo và không tuyên bố đạt 95%. Local Preview còn mở trên `127.0.0.1:8000` bằng demo fixture, không dùng dữ liệu/corpus cá nhân; chưa commit/push.
 - Cập nhật rà soát 10/10/2026 15:49 (UTC+07): nhãn ba tab khớp yêu cầu “Tạo câu hỏi”, “Ôn tập”, “Trích xuất bài tập mẫu”; câu ôn tập lưu cả lựa chọn người học và nội dung lựa chọn; bộ lọc bài tập chỉ nhận tiêu đề/nhãn câu rõ ràng để tránh coi câu phủ định như “không có bài tập” là nguồn bài tập. Kiểm chứng bổ sung: 16 test Python đặc thù và 8 test Node giao diện PASS; `py_compile`, `node --check` và `git diff --check` PASS. Chạy lại full suite không hoàn tất: lần mặc định 125 ca không tạo được thư mục `basetemp` ngoài sandbox; lần dùng thư mục tạm trong workspace dừng ở 7 ca không có tiến triển và được ngắt. Chạy riêng `test_document_lookup.py` cũng không có tiến triển; không ghi nhận kiểm chứng HTTP end-to-end mới sau rà soát. Không có cấu hình build/typecheck trong repo.
+
+
+<a id="log-log-20261010-ui-pr6-fix-codex"></a>
+### LOG-20261010-ui-pr6-fix-codex - 10/10/2026 16:43 (UTC+07)
+
+- Người thực hiện: Codex điều phối/kiểm thử/review, Antigravity sửa HTML/CSS; loại: môi trường/chức năng giao diện.
+- Mục tiêu/log liên quan: sửa các lỗi chặn PR #6 sau cập nhật UI; giữ Công cụ học tập của PR #5, bố cục/sidebar/mobile và sáng/tối mới. Tiếp nối YC-181/182 trên main về công cụ học tập.
+- Trước/sau: trước nav/panel bị lồng trong vùng ẩn, trùng ID/title/stylesheet, CSS gradient trái hợp đồng và thiếu log. Sau một nav chính, panel trực tiếp trong main, mỗi asset nạp một lần và nền màu phẳng. Bảng màu trùng được bỏ; theme người dùng chọn ưu tiên trước chế độ OS, nền tab sáng không còn bị OS dark ghi đè.
+- Phần/file sửa: static/index.html, static/style.css, static/theme.css, tests/test_learning_tools_ui_contract.py, LICH_SU_DU_AN.md. Bản CSS dự phòng giữ để đối chiếu.
+- Ảnh hưởng: giữ hỏi đáp, tra cứu nguồn, luyện tập/ôn lại/bài tập mẫu và thời khóa biểu. Không sửa backend, corpus/index/model hoặc bỏ kiểm thử hiện hành.
+- Baseline: PR868233b/base6a50952; CI38041732751 mỗi Windows/Mac143 PASS/2 FAIL và history thiếu mục mới. Hai test cũ và hai test cấu trúc mới RED đúng lỗi; browser xác nhận qa-panel/mode-tools bị ẩn. Review tiếp phát hiện hai lỗi palette/theme; hai regression bổ sung cũng RED trước sửa.
+- Kiểm chứng bản cuối: Python3.12.14 trên macOS, requirements-windows, full feature suite149 PASS/6 warning phụ thuộc; Node24.19.0:8 UI PASS; mọi static JS qua syntax check, git diff --check PASS. Browser demo: QA/tools/timetable chuyển đúng, ba tab hoạt động, tìm nguồn trí nhớ và bài tập mẫu trả nội dung fixture; sidebar thu gọn/mở lại, mobile390x844 không tràn ngang, sáng/tối đổi được và theme sáng ưu tiên khi OS dark. Console error0.
+- Trạng thái: triển khai và review local PASS lúc 10/10/2026 17:02 (UTC+07). CI Windows/Mac/history trên commit mới chưa chạy tại thời điểm ghi; sẽ kiểm sau push. Chưa merge PR.
+- Giới hạn: dữ liệu kiểm là demo tổng hợp, không nghiệm thu chất lượng QA/VLM/model thật hoặc corpus/huấn luyện; browser kiểm điều hướng/nguồn/theme, không gọi suy luận thật. Build/typecheck N/A vì repo không cấu hình. Không thay protection.

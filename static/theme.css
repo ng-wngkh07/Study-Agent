@@ -80,6 +80,7 @@ html[data-theme="light"] {
     --bg-card: #ffffff;
     --bg-elev: #f3f0fb;
     --bg-input: #ffffff;
+    --bg-subtle: #f8f6fd;
     --text-primary: #323136;
     --text-secondary: #48484a;
     --text-muted: #8a8794;
@@ -91,8 +92,8 @@ html[data-theme="light"] {
     --primary-light: rgba(66, 37, 240, 0.08);
     --primary-border: rgba(66, 37, 240, 0.35);
     --accent: #8d63f5;
-    --grad: linear-gradient(180deg, #4225f0 0%, #8d63f5 100%);
-    --grad-soft: linear-gradient(135deg, #4225f0, #8d63f5);
+    --grad: #4225f0;
+    --grad-soft: #8d63f5;
 
     --success: #15803d;
     --warning: #b45309;
@@ -110,12 +111,10 @@ html[data-theme="light"] *::-webkit-scrollbar-thumb { background: #d6cfee; }
 html[data-theme="light"] *::-webkit-scrollbar-thumb:hover { background: #bdb2e6; }
 html[data-theme="light"] ::selection { background: rgba(141, 99, 245, 0.35); color: #1c1a2b; }
 
-/* Nền chính: quầng sáng tím nhạt ở phía dưới như hình mẫu thay cho vệt sáng chéo */
+/* Nền chính */
 html[data-theme="light"] .main-content::before {
-    background:
-        radial-gradient(55% 40% at 12% 100%, rgba(219, 206, 231, 0.75), transparent 70%),
-        radial-gradient(55% 40% at 88% 100%, rgba(224, 212, 252, 0.7), transparent 70%);
-    filter: blur(24px);
+    background: transparent;
+    filter: none;
     -webkit-mask-image: none;
     mask-image: none;
 }
@@ -125,19 +124,19 @@ html[data-theme="light"] .session-bar,
 html[data-theme="light"] .mode-switch { border-bottom-color: var(--border); }
 
 html[data-theme="light"] .input-area {
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 55%, transparent);
+    background: var(--bg-main);
+    border-top: 1px solid var(--border);
 }
 html[data-theme="light"] .chat-form {
-    background:
-        linear-gradient(var(--bg-input), var(--bg-input)) padding-box,
-        linear-gradient(180deg, #4225f0, #8d63f5) border-box;
+    border: 1px solid var(--primary-border);
+    background: var(--bg-input);
     box-shadow: 0 0 0 1px rgba(66, 37, 240, 0.06), 0 10px 40px -12px rgba(141, 99, 245, 0.45);
 }
 html[data-theme="light"] .chat-form:focus-within {
     box-shadow: 0 0 0 3px rgba(66, 37, 240, 0.14), 0 12px 44px -10px rgba(141, 99, 245, 0.6);
 }
 
-/* Nút chính: gradient dọc tím-xanh giống nút "Start for free" */
+/* Nút chính: màu tím-xanh phẳng */
 html[data-theme="light"] .btn-primary {
     background: var(--grad);
     color: #fff;
@@ -168,16 +167,16 @@ html[data-theme="light"] .mode-button:hover,
 html[data-theme="light"] .session-item:hover,
 html[data-theme="light"] .session-action-btn:hover { background: rgba(66, 37, 240, 0.06); }
 html[data-theme="light"] .mode-button.active {
-    background: linear-gradient(90deg, rgba(66, 37, 240, 0.12), rgba(141, 99, 245, 0.04));
+    background: rgba(66, 37, 240, 0.08);
     border-color: rgba(66, 37, 240, 0.25);
     box-shadow: inset 3px 0 0 var(--primary);
 }
 html[data-theme="light"] .new-chat-btn {
-    background: linear-gradient(135deg, rgba(66, 37, 240, 0.10), rgba(141, 99, 245, 0.06));
+    background: rgba(66, 37, 240, 0.08);
     color: var(--primary);
 }
 html[data-theme="light"] .new-chat-btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, rgba(66, 37, 240, 0.18), rgba(141, 99, 245, 0.12));
+    background: rgba(66, 37, 240, 0.16);
     box-shadow: 0 0 22px -8px rgba(66, 37, 240, 0.5);
 }
 
@@ -233,15 +232,11 @@ html[data-theme="light"] .btn[style*="#16a34a"] { background: var(--grad) !impor
 
 /* Màn hình chào: tiêu đề chữ tối như hình mẫu, thẻ gợi ý nền trắng */
 html[data-theme="light"] .welcome-card h3 {
-    background: linear-gradient(180deg, #323136 40%, #4225f0 190%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-primary);
+    -webkit-text-fill-color: initial;
 }
 html[data-theme="light"] .welcome-card .message-avatar {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.55), transparent 42%),
-        var(--grad);
+    background: var(--grad);
     box-shadow: 0 10px 40px rgba(141, 99, 245, 0.45), 0 0 80px rgba(141, 99, 245, 0.2);
 }
 html[data-theme="light"] .welcome-card .chip {
@@ -252,7 +247,7 @@ html[data-theme="light"] .welcome-card .chip {
 }
 html[data-theme="light"] .welcome-card .chip:hover {
     color: var(--primary);
-    background: linear-gradient(160deg, rgba(66, 37, 240, 0.08), #fff);
+    background: rgba(66, 37, 240, 0.08);
     border-color: var(--primary-border);
     box-shadow: 0 14px 34px -16px rgba(66, 37, 240, 0.5);
 }

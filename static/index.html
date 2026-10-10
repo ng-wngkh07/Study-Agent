@@ -15,10 +15,8 @@
             }
         })();
     </script>
-    <link rel="stylesheet" href="/static/style.css?v=7-layout">
-    <link rel="stylesheet" href="/static/theme.css?v=1-theme">
-    <title>Agent Học Tập - Hỏi đáp và công cụ học tập</title>
-    <link rel="stylesheet" href="/static/style.css?v=7-learning-tools">
+    <link rel="stylesheet" href="/static/style.css?v=9-learning-tools">
+    <link rel="stylesheet" href="/static/theme.css?v=2-theme">
 </head>
 <body>
     <div class="app-container">
@@ -39,7 +37,7 @@
 
             <nav class="mode-switch" aria-label="Chế độ ứng dụng">
                 <button id="mode-qa" class="mode-button active" aria-pressed="true" aria-controls="qa-panel">💬 Hỏi đáp dựa trên tài liệu</button>
-                <button id="mode-documents" class="mode-button" aria-pressed="false" aria-controls="documents-panel">📚 Tra cứu tài liệu</button>
+                <button id="mode-tools" class="mode-button" aria-pressed="false" aria-controls="learning-tools-panel">🧰 Công cụ học tập</button>
                 <button id="mode-timetable" class="mode-button" aria-pressed="false" aria-controls="timetable-panel">📅 Thời khóa biểu từ ảnh</button>
             </nav>
 
@@ -153,14 +151,6 @@
                 </div>
             </header>
 
-            <section id="documents-panel" class="documents-panel" aria-label="Tra cứu tài liệu" hidden>
-                <h2>Tra cứu tài liệu</h2>
-                <p class="lookup-description">Tìm trích đoạn gốc, xem tên sách và mở PDF đúng trang. Tra cứu từ khóa dùng được khi mô hình đang bận.</p>
-            <nav class="mode-switch" aria-label="Chế độ ứng dụng">
-                <button id="mode-qa" class="mode-button active" aria-pressed="true" aria-controls="qa-panel">💬 Hỏi đáp dựa trên tài liệu</button>
-                <button id="mode-tools" class="mode-button" aria-pressed="false" aria-controls="learning-tools-panel">🧰 Công cụ học tập</button>
-                <button id="mode-timetable" class="mode-button" aria-pressed="false" aria-controls="timetable-panel">📅 Thời khóa biểu từ ảnh</button>
-            </nav>
             <section id="learning-tools-panel" class="learning-tools-panel" aria-label="Công cụ học tập" hidden>
                 <nav class="tool-tabs" role="tablist" aria-label="Công cụ học tập">
                     <button id="btn-tool-tab-practice" class="tool-tab-button active" type="button" role="tab" tabindex="0" aria-label="Tạo câu hỏi" aria-selected="true" aria-controls="tool-tab-practice" data-tool-tab="practice">Tạo câu hỏi</button>

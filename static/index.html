@@ -3,117 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Học Tập - Hỏi đáp và công cụ học tập</title>
-    <link rel="stylesheet" href="/static/style.css?v=7-learning-tools">
+    <title>BaMiTiKa AI - Tra cứu tài liệu và hỏi đáp đa lĩnh vực</title>
+    <script>
+        /* Áp dụng giao diện đã lưu trước khi vẽ trang để không bị nháy màu */
+        (function () {
+            try {
+                var t = localStorage.getItem("theme");
+                document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
+            } catch (e) {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="/static/style.css?v=9-learning-tools">
+    <link rel="stylesheet" href="/static/theme.css?v=2-theme">
 </head>
 <body>
     <div class="app-container">
         <!-- Sidebar / Navigation -->
-        <aside class="sidebar">
-            <div class="brand">
-                <div class="brand-icon">📚</div>
-                <div class="brand-text">
-                    <h2>Agent Học Tập AI</h2>
-                    <span class="badge local">100% Cục bộ & Miễn phí</span>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <div class="brand">
+                    <div class="brand-icon">📚</div>
+                    <div class="brand-text">
+                        <h2>BaMiTiKa AI</h2>
+                        <span class="badge local">100% Cục bộ & Miễn phí</span>
+                    </div>
                 </div>
+                <button type="button" id="btn-collapse-sidebar" class="icon-btn" title="Thu gọn thanh bên" aria-label="Thu gọn thanh bên">‹</button>
             </div>
 
-            <!-- Knowledge base stats summary -->
-            <div class="sidebar-card">
-                <h3>📚 Thư viện tài liệu</h3>
-                <div class="stat-grid">
-                    <div class="stat-item">
-                        <span class="stat-num" id="stat-docs">-</span>
-                        <span class="stat-label">Tài liệu</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num" id="stat-pages">-</span>
-                        <span class="stat-label">Trang chữ</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num" id="stat-chunks">-</span>
-                        <span class="stat-label">Đoạn chỉ mục</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num" id="stat-scanned">-</span>
-                        <span class="stat-label">Tài liệu dạng ảnh</span>
-                    </div>
-                </div>
-                <button id="btn-open-kb" class="btn btn-secondary btn-sm w-full">Xem chi tiết thư viện</button>
-                <button id="btn-reindex" class="btn btn-outline btn-sm w-full mt-2">🔄 Đồng bộ thư viện</button>
-                <button id="btn-open-ocr-review" class="btn btn-outline btn-sm w-full mt-2">📝 Thẩm định OCR cục bộ</button>
-                <button id="btn-open-timetable" class="btn btn-outline btn-sm w-full mt-2">📅 Thời khóa biểu từ ảnh</button>
-            </div>
-
-            <div class="sidebar-card history-card">
-                <div class="history-heading">
-                    <h3>💬 Cuộc trò chuyện</h3>
-                    <div class="history-actions" style="display: flex; gap: 4px;">
-                        <button id="btn-new-chat-sidebar" class="btn btn-sm" style="padding: 2px 8px; font-size: 0.75rem; background: var(--primary); color: white;" title="Bắt đầu cuộc trò chuyện mới">➕ Mới</button>
-                        <button id="btn-clear-history" class="btn btn-sm" style="padding: 2px 6px; font-size: 0.75rem;" title="Xóa toàn bộ lịch sử đã lưu">Xóa hết</button>
-                    </div>
-                </div>
-                <div class="session-search-wrapper" style="margin: 8px 0 6px 0;">
-                    <input type="text" id="input-session-search" placeholder="🔍 Tìm cuộc trò chuyện..." class="form-input" style="width: 100%; font-size: 0.78rem; padding: 4px 8px; box-sizing: border-box;">
-                </div>
-                <p class="history-note" style="margin: 4px 0 8px 0;">Lưu trên máy này.</p>
-                <div id="history-list" class="history-list">Đang tải cuộc trò chuyện...</div>
-            </div>
-
-            <!-- Model Settings -->
-            <div class="sidebar-card">
-                <h3>⚙️ Cấu hình Mô hình</h3>
-                <div class="form-group">
-                    <label for="select-model">Mô hình suy luận:</label>
-                    <div class="input-with-status">
-                        <select id="select-model" class="form-select">
-                            <option value="" selected>Đang kiểm tra mô hình…</option>
-                        </select>
-                    </div>
-                    <small class="text-muted" style="display:block;margin-top:4px;font-size:0.78rem;">Mô hình được chọn theo cấu hình máy. Bản phát triển Ollama cần được kiểm thử riêng với bản MLX trên Mac.</small>
-                    <small id="ollama-status" class="status-indicator">Đang kiểm tra mô hình...</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="select-embed">Mô hình Embedding:</label>
-                    <select id="select-embed" class="form-select">
-                        <option value="bge-m3" selected>bge-m3 (Mặc định)</option>
-                        <option value="nomic-embed-text">nomic-embed-text</option>
-                        <option value="">Chỉ dùng Full-Text (FTS5 BM25)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="input-topk">Số đoạn trích (Top-K): <span id="topk-val">6</span></label>
-                    <input type="range" id="input-topk" min="2" max="15" value="6" class="form-range">
-                </div>
-            </div>
-
-            <!-- Disclaimer -->
-            <div class="sidebar-footer">
-                <div class="disclaimer-mini">
-                    ⚠️ <strong>Lưu ý quan trọng:</strong> Ứng dụng phục vụ học tập và tra cứu đa lĩnh vực. Khi gặp nội dung y tế hoặc sức khỏe, ứng dụng từ chối chẩn đoán, không kê đơn và khuyến cáo tham vấn chuyên gia.
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Chat Area -->
-        <main class="main-content">
-            <header class="chat-header">
-                <div class="header-info">
-                    <h1>Trợ Lý Học Tập Cục Bộ</h1>
-                    <p class="subtitle">Tra cứu nguồn và hỏi đáp đa lĩnh vực từ thư viện tài liệu</p>
-                </div>
-                <div class="header-actions">
-                    <button id="btn-clear-chat" class="btn btn-icon" title="Bắt đầu cuộc trò chuyện mới">＋ Chat mới</button>
-                </div>
-            </header>
+            <button id="btn-new-chat-sidebar" class="new-chat-btn" title="Bắt đầu cuộc trò chuyện mới">➕ Mới</button>
 
             <nav class="mode-switch" aria-label="Chế độ ứng dụng">
                 <button id="mode-qa" class="mode-button active" aria-pressed="true" aria-controls="qa-panel">💬 Hỏi đáp dựa trên tài liệu</button>
                 <button id="mode-tools" class="mode-button" aria-pressed="false" aria-controls="learning-tools-panel">🧰 Công cụ học tập</button>
                 <button id="mode-timetable" class="mode-button" aria-pressed="false" aria-controls="timetable-panel">📅 Thời khóa biểu từ ảnh</button>
             </nav>
+
+            <section class="sidebar-section history-card">
+                <div class="history-heading">
+                    <h3>💬 Cuộc trò chuyện</h3>
+                    <button id="btn-clear-history" class="btn btn-sm btn-ghost-danger" title="Xóa toàn bộ lịch sử đã lưu">Xóa hết</button>
+                </div>
+                <div class="session-search-wrapper">
+                    <input type="text" id="input-session-search" placeholder="🔍 Tìm cuộc trò chuyện..." class="form-input">
+                </div>
+                <p class="history-note">Lưu trên máy này.</p>
+                <div id="history-list" class="history-list">Đang tải cuộc trò chuyện...</div>
+            </section>
+
+            <div class="sidebar-bottom">
+                <!-- Knowledge base stats summary -->
+                <details class="sidebar-card collapsible">
+                    <summary>📚 Thư viện tài liệu</summary>
+                    <div class="collapsible-body">
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <span class="stat-num" id="stat-docs">-</span>
+                                <span class="stat-label">Tài liệu</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-num" id="stat-pages">-</span>
+                                <span class="stat-label">Trang chữ</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-num" id="stat-chunks">-</span>
+                                <span class="stat-label">Đoạn chỉ mục</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-num" id="stat-scanned">-</span>
+                                <span class="stat-label">Tài liệu dạng ảnh</span>
+                            </div>
+                        </div>
+                        <div class="tool-grid">
+                            <button id="btn-open-kb" class="tool-tile">Xem chi tiết thư viện</button>
+                            <button id="btn-reindex" class="tool-tile">🔄 Đồng bộ thư viện</button>
+                            <button id="btn-open-ocr-review" class="tool-tile">📝 Thẩm định OCR cục bộ</button>
+                            <button id="btn-open-timetable" class="tool-tile">📅 Thời khóa biểu từ ảnh</button>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Model Settings: ẩn khỏi giao diện (giữ trong DOM vì app.js đọc giá trị mặc định) -->
+                <details class="sidebar-card collapsible" hidden style="display:none" aria-hidden="true">
+                    <summary>⚙️ Cấu hình Mô hình</summary>
+                    <div class="collapsible-body">
+                        <div class="form-group">
+                            <label for="select-model">Mô hình suy luận:</label>
+                            <div class="input-with-status">
+                                <select id="select-model" class="form-select">
+                                    <option value="" selected>Đang kiểm tra mô hình…</option>
+                                </select>
+                            </div>
+                            <small class="text-muted field-hint">Mô hình được chọn theo cấu hình máy. Bản phát triển Ollama cần được kiểm thử riêng với bản MLX trên Mac.</small>
+                            <small id="ollama-status" class="status-indicator">Đang kiểm tra mô hình...</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="select-embed">Mô hình Embedding:</label>
+                            <select id="select-embed" class="form-select">
+                                <option value="bge-m3" selected>bge-m3 (Mặc định)</option>
+                                <option value="nomic-embed-text">nomic-embed-text</option>
+                                <option value="">Chỉ dùng Full-Text (FTS5 BM25)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-topk">Số đoạn trích (Top-K): <span id="topk-val">6</span></label>
+                            <input type="range" id="input-topk" min="2" max="15" value="6" class="form-range">
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Disclaimer -->
+                <div class="sidebar-footer">
+                    <div class="disclaimer-mini">
+                        ⚠️ <strong>Lưu ý quan trọng:</strong> Ứng dụng phục vụ học tập và tra cứu đa lĩnh vực. Khi gặp nội dung y tế hoặc sức khỏe, ứng dụng từ chối chẩn đoán, không kê đơn và khuyến cáo tham vấn chuyên gia.
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+        <!-- Main Chat Area -->
+        <main class="main-content">
+            <header class="chat-header">
+                <div class="header-left">
+                    <button type="button" id="btn-open-sidebar" class="icon-btn" title="Mở thanh bên" aria-label="Mở thanh bên">☰</button>
+                    <div class="header-info">
+                        <h1>Trợ Lý Học Tập Cục Bộ</h1>
+                        <p class="subtitle">Tra cứu nguồn và hỏi đáp đa lĩnh vực từ thư viện tài liệu</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button type="button" id="theme-toggle" class="theme-toggle" role="switch" aria-checked="false" aria-label="Chuyển giao diện sáng / tối" title="Chuyển giao diện sáng / tối">
+                        <span class="knob">
+                            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/>
+                                <path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.9 1.9M16.8 16.8l1.9 1.9M5.3 18.7l1.9-1.9M16.8 7.2l1.9-1.9"/>
+                            </svg>
+                            <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a.6.6 0 0 0-.8-.7A9.5 9.5 0 1 0 21.2 15a.6.6 0 0 0-.7-.8z"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </header>
+
             <section id="learning-tools-panel" class="learning-tools-panel" aria-label="Công cụ học tập" hidden>
                 <nav class="tool-tabs" role="tablist" aria-label="Công cụ học tập">
                     <button id="btn-tool-tab-practice" class="tool-tab-button active" type="button" role="tab" tabindex="0" aria-label="Tạo câu hỏi" aria-selected="true" aria-controls="tool-tab-practice" data-tool-tab="practice">Tạo câu hỏi</button>
@@ -381,29 +418,29 @@
             <section id="qa-panel" class="qa-panel" aria-label="Hỏi đáp dựa trên tài liệu">
 
             <!-- Active Session Bar -->
-            <div id="session-bar" class="session-bar" style="display: none; padding: 8px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; align-items: center; justify-content: space-between; gap: 12px; font-size: 0.88rem;">
-                <div class="session-title-wrapper" style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;">
-                    <span style="color: #64748b;">💬</span>
-                    <strong id="session-active-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 420px; color: var(--text-primary);">Cuộc trò chuyện</strong>
-                    <button id="btn-rename-session" class="btn btn-sm btn-outline" style="padding: 1px 6px; font-size: 0.75rem;" title="Đổi tên cuộc trò chuyện">✏️</button>
+            <div id="session-bar" class="session-bar" style="display: none;">
+                <div class="session-title-wrapper">
+                    <span class="session-bar-icon">💬</span>
+                    <strong id="session-active-title">Cuộc trò chuyện</strong>
+                    <button id="btn-rename-session" class="btn btn-sm btn-outline btn-mini" title="Đổi tên cuộc trò chuyện">✏️</button>
                 </div>
-                <div class="session-controls" style="display: flex; align-items: center; gap: 8px;">
-                    <button id="btn-summarize-session" class="btn btn-sm btn-outline" style="padding: 3px 8px; font-size: 0.78rem;" title="Tổng hợp chủ đề chính">📝 Tóm tắt chủ đề</button>
+                <div class="session-controls">
+                    <button id="btn-summarize-session" class="btn btn-sm btn-outline btn-mini" title="Tổng hợp chủ đề chính">📝 Tóm tắt chủ đề</button>
                 </div>
             </div>
 
             <!-- Session Summary Box -->
-            <div id="session-summary-box" class="session-summary-box" style="display: none; margin: 10px 20px 0 20px; padding: 10px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-size: 0.85rem; color: #166534;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <div id="session-summary-box" class="session-summary-box" style="display: none;">
+                <div class="summary-head">
                     <strong>📋 Tóm tắt chủ đề:</strong>
-                    <button id="btn-close-summary" style="background: none; border: none; cursor: pointer; color: #166534; font-size: 1.1rem; line-height: 1;">&times;</button>
+                    <button id="btn-close-summary" class="summary-close" aria-label="Đóng">&times;</button>
                 </div>
-                <p id="session-summary-text" style="margin: 0; line-height: 1.45;"></p>
-                <p style="margin: 8px 0 0; font-size: 0.75rem;">Với phiên dài, bản tóm tắt dựa trên 2 lượt đầu và 4 lượt gần nhất; nội dung gốc vẫn được lưu đầy đủ.</p>
+                <p id="session-summary-text"></p>
+                <p class="summary-note">Với phiên dài, bản tóm tắt dựa trên 2 lượt đầu và 4 lượt gần nhất; nội dung gốc vẫn được lưu đầy đủ.</p>
             </div>
 
             <!-- Training / GPU Busy Banner -->
-            <div id="training-banner" class="training-banner" style="display: none; background: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 10px 16px; margin: 0 20px 10px 20px; border-radius: 8px; font-size: 0.9rem; display: none; align-items: center; gap: 8px;">
+            <div id="training-banner" class="training-banner" style="display: none;">
                 <span class="banner-icon">⚡</span>
                 <span id="training-banner-text" class="banner-text">Hệ thống đang huấn luyện mô hình MLX LoRA (GPU bận). Lịch sử tra cứu vẫn xem được; câu hỏi mới sẽ tạm chờ.</span>
             </div>
@@ -592,6 +629,8 @@
     <script src="/static/app.js?v=8-learning-tools"></script>
     <script src="/static/document-lookup.js?v=3-learning-tools"></script>
     <script src="/static/timetable.js?v=5-literal-table"></script>
+    <script src="/static/layout.js?v=1"></script>
+    <script src="/static/theme.js?v=1-theme"></script>
     <script src="/static/practice.js?v=2-learning-tools"></script>
 </body>
 </html>

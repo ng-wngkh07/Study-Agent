@@ -18,6 +18,20 @@ def audit_corpus(root: Path, dimensions: int = 1024) -> dict:
     policy_path = root/'data/runtime/corpus_completion_policy.json'
     policy = json.loads(policy_path.read_text()) if policy_path.exists() else {}
     expected_model_digest = policy.get('embedding_model_digest')
+
+    excluded_page_set = set()
+    excluded_pages_list = []
+    exclusion_decision_id = None
+    manifest_entry = policy.get('page_exclusion_manifest')
+    if manifest_entry:
+        from app.corpus_scope import validate_page_exclusion_manifest
+        try:
+            scope_info = validate_page_exclusion_manifest(root, manifest_entry, files)
+            excluded_page_set = scope_info['page_set']
+            excluded_pages_list = scope_info['pages']
+            exclusion_decision_id = scope_info['decision_id']
+        except Exception as exc:
+            failures.append({'kind': 'invalid_page_exclusion_manifest', 'message': str(exc)})
     try:
         latest_reviews = latest_page_reviews(root)
     except (OSError, ValueError, KeyError) as exc:
@@ -91,8 +105,10 @@ def audit_corpus(root: Path, dimensions: int = 1024) -> dict:
                     if not record or record['source_sha256'] != digest:
                         failures.append({'kind': 'page_coverage_unverified', 'file': name, 'page': page})
                         continue
+                    is_excluded = (name, page) in excluded_page_set
                     if record['state'] not in ('text_verified', 'blank_verified', 'visual_verified'):
-                        failures.append({'kind': 'page_content_pending', 'file': name, 'page': page, 'state': record['state']})
+                        if not is_excluded:
+                            failures.append({'kind': 'page_content_pending', 'file': name, 'page': page, 'state': record['state']})
                     actual = chunk_groups.get((name, page), [])
                     text_hash = hashlib.sha256(json.dumps(actual, ensure_ascii=False).encode()).hexdigest()
                     if text_hash != record['chunks_sha256']:
@@ -115,13 +131,14 @@ def audit_corpus(root: Path, dimensions: int = 1024) -> dict:
                             review = json.loads(p.read_text())
                             try:
                                 validate_page_review(review, name, page, digest)
-                                if review['completeness'] != 'complete':
-                                    raise ValueError('Page review remains partial')
-                                if record['state'] != reviewed_page_state(review):
-                                    raise ValueError('Page state and reviewed content differ')
-                                expected = [c['text'] for c in TextChunker.chunk_page(doc['clean_title'], name, page, reviewed_page_text(review))]
-                                if actual != expected:
-                                    failures.append({'kind': 'review_text_not_indexed', 'file': name, 'page': page})
+                                if not is_excluded:
+                                    if review['completeness'] != 'complete':
+                                        raise ValueError('Page review remains partial')
+                                    if record['state'] != reviewed_page_state(review):
+                                        raise ValueError('Page state and reviewed content differ')
+                                    expected = [c['text'] for c in TextChunker.chunk_page(doc['clean_title'], name, page, reviewed_page_text(review))]
+                                    if actual != expected:
+                                        failures.append({'kind': 'review_text_not_indexed', 'file': name, 'page': page})
                             except (OSError, ValueError, KeyError):
                                 failures.append({'kind': 'review_not_complete_or_bound', 'file': name, 'page': page})
             result['indexed_documents'] = len(docs)
@@ -133,7 +150,14 @@ def audit_corpus(root: Path, dimensions: int = 1024) -> dict:
         db.close()
     except (sqlite3.Error, OSError, ValueError, KeyError) as exc:
         failures.append({'kind': 'audit_error', 'message': str(exc)})
+    total_pages = result.get('total_pages', 0)
+    result['total_pages'] = total_pages
     result['complete'] = not failures
+    result['excluded_page_count'] = len(excluded_page_set)
+    result['in_scope_pages'] = max(0, total_pages - len(excluded_page_set))
+    result['complete_all_sources'] = (len(excluded_page_set) == 0 and result['complete'] and total_pages > 0)
+    result['excluded_pages'] = excluded_pages_list
+    result['exclusion_decision_id'] = exclusion_decision_id
     return result
 
 

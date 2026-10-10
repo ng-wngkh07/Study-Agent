@@ -228,49 +228,6 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   không có bằng chứng cho phép huấn luyện. Cập nhật kết quả: 2026-10-09T15:23:47.104446+07:00.
 
 <a id="yc-174"></a>
-### YC-174 - 10/10/2026 08:49 (UTC+07)
-
-- Người thực hiện: Codex; loại: mở rộng QA với câu hỏi luyện tập và danh sách ôn lại cục bộ.
-- Mục tiêu/log liên quan: hỗ trợ tự kiểm tra nội dung đang học, giữ câu hỏi gắn với trang nguồn;
-  tiếp nối nguồn-trang từ YC-173 và ranh giới dữ liệu cá nhân ở YC-168.
-- Trước/sau: trước chỉ hỏi đáp từ trang được chọn; sau tạo tối đa 3 câu trắc nghiệm từ trang đó,
-  hiển thị đáp án/giải thích sau khi nộp câu trả lời. Trích dẫn nguyên văn phải khớp một đoạn đã chọn;
-  câu sai hoặc “Chưa chắc” có thể lưu để ôn lại, tự kiểm tra lại và xóa.
-- Phần/file sửa: app/practice.py, app/server.py; static/index.html, app.js, practice.js, style.css.
-  Phiên làm bài giữ đáp án trong bộ nhớ máy chủ tối đa 60 phút; tiến độ ôn lại giữ trong localStorage
-  của trình duyệt này, có thông báo nơi lưu và điều khiển xóa. Không thêm đồng bộ tài khoản hoặc
-  đưa lịch sử học vào training.
-- Ảnh hưởng/phối hợp: thêm hai API QA; không sửa tra cứu, lịch, corpus, index, cấu hình model hay dữ liệu
-  huấn luyện. Câu hỏi chỉ lấy tối đa 6 đoạn trên trang đã chọn; hỗ trợ link PDF đúng trang và dẫn nguồn
-  trong QA với tài liệu không phải PDF.
-- Kiểm thử: NOT_RUN; không chạy feature suite, browser, Windows native hay model thật trong lượt này.
-  Chưa làm bộ nghiệm thu thủ công hoặc đo ngưỡng 95%.
-- Trạng thái: triển khai mã trên nhánh feature/qa/174-practice-review; chưa commit, push hoặc mở PR. Chưa dùng feature này để kết luận chất lượng
-  model. Trích dẫn khớp nguyên văn không tự chứng minh câu hỏi có đáp án duy nhất; cần rà soát thủ công
-  bộ mẫu trước khi triển khai rộng.
-- Giới hạn: danh sách ôn lại gắn với trình duyệt/máy hiện tại và mất khi xóa dữ liệu trình duyệt;
-  phiên làm bài hết sau 60 phút hoặc khi máy chủ khởi động lại. Mức độ đúng của đáp án, độ rõ ràng và
-  thay đổi điểm trước/sau chưa được đo.
-
-<a id="yc-175"></a>
-### YC-175 - 10/10/2026 09:15 (UTC+07)
-
-- Người thực hiện: Codex; loại: tiếp tục hoàn thiện công cụ luyện tập, ôn lại và trích xuất bài tập mẫu.
-- Mục tiêu/log liên quan: tiếp nối YC-174 theo yêu cầu cập nhật, không dựng lại phần đã có; giữ một mục điều hướng duy nhất cho ba công cụ.
-- Trước/sau: tra cứu nguồn được đặt trong tab Luyện tập; người học có thể luyện từ một đoạn hoặc trang được chọn. Đáp án/giải thích vẫn nằm ở máy chủ đến khi gửi câu trả lời. Bài tập mẫu được lọc từ đoạn tài liệu có dấu hiệu bài tập và hiển thị nguyên văn với tài liệu/trang; phân biệt rõ nội dung trích nguồn với câu AI sinh.
-- Phần/file sửa: app/practice.py và server.py bổ sung kiểm tra hỗ trợ đáp án, giải thích, đáp án duy nhất và bảo toàn điều kiện bằng lượt kiểm định mô hình thứ hai, yêu cầu câu trích nguồn khớp nguyên văn, đọc bài tập nguồn theo trang/chủ đề và gắn cảnh báo OCR/công thức; static/index.html, app.js, document-lookup.js, practice.js, style.css chuyển ba tab vào Công cụ học tập, nối chọn đoạn, lưu/xóa phần ôn lại và hỗ trợ màu sáng/tối. Thêm tests/test_practice.py, tests/test_learning_tools_ui_contract.py và tests/practice_ui.test.cjs; mở rộng tests/document_lookup_ui.test.cjs.
-- Lưu trữ: câu sai/“Chưa chắc” lưu cùng câu trả lời, đáp án, giải thích và nguồn trong localStorage của trình duyệt hiện tại; có xóa từng câu hoặc toàn bộ, không đồng bộ tài khoản và không gửi lịch sử học vào dữ liệu huấn luyện. Phiên luyện tập giữ khóa đáp án trong bộ nhớ máy chủ tối đa 60 phút.
-- Kiểm thử: 14 kiểm thử Python mới/đặc thù qua; 6 kiểm thử giao diện Node qua; py_compile, `node --check` và `git diff --check` qua. Full pytest chưa thu thập được vì test hiện có nhập `fcntl` (Windows không cung cấp module này); khi thử tiếp test tra cứu dùng TestClient và một nhóm test cũ khác, tiến trình không hoàn tất trong môi trường này. Do đó chưa ghi nhận kết quả API HTTP end-to-end hoặc toàn bộ suite.
-- Trạng thái: triển khai tiếp trên `feature/qa/174-practice-review`, chưa commit/push. Không tuyên bố đạt ngưỡng 95%; chưa đánh giá thủ công bộ mẫu hoặc đo thay đổi điểm trước/sau.
-- Giới hạn: lượt kiểm định AI không thay thế đánh giá thủ công và có thể bỏ sót câu mơ hồ/sai. Trích xuất bài tập dựa vào các cụm từ đánh dấu nên có thể bỏ sót bài tập được trình bày khác cách; cảnh báo OCR/công thức là heuristic. Bản gốc và trang PDF vẫn là căn cứ đối chiếu.
-- Cập nhật kiểm chứng cuối: 10/10/2026 14:35:07 (UTC+07), nhánh `feature/qa/174-practice-review`, Windows (win32) / Python 3.14.8. Bộ `test_windows.ps1` (có `PYTEST_ADDOPTS` trỏ basetemp vào workspace) thu được 124 PASS, 1 SKIP; SKIP chỉ ca tạo symlink vì Windows trả WinError 1314 khi máy chưa bật Developer Mode/quyền tương ứng. Thêm `test_practice.py` và `test_learning_tools_ui_contract.py` vào `pytest.windows.ini`; làm test đường dẫn symlink, UTF-8 và subprocess tương thích Windows. Starlette phát cảnh báo deprecation cho tích hợp HTTPX/TestClient nhưng test không lỗi.
-- Kiểm chứng Node: 7 PASS (`practice_ui.test.cjs`, `document_lookup_ui.test.cjs`), gồm bộ lọc bài tập theo tài liệu/trang/chủ đề, giữ nguyên văn bản nguồn, nhãn trang, link PDF và cảnh báo OCR. `py_compile`, `node --check` cho JS ứng dụng/test và `git diff --check` đều PASS. Repo không có cấu hình build/typecheck hoặc công cụ mypy/pyright/ruff/tsc.
-- Preview: mở bằng profile demo với hai tài liệu fixture tổng hợp; search đoạn, trang PDF và API thời khóa biểu tải thành công. Cả ba tab nằm trong Công cụ học tập. Dùng test double Ollama chỉ trên localhost để kiểm luồng: đáp án ẩn trước khi nộp; câu sai/“Chưa chắc” lưu vào localStorage, còn sau reload, làm lại và xóa từng/toàn bộ được. Đã dọn các mục ôn lại tổng hợp sau kiểm thử và dừng test double. Ảnh giao diện đang ở chế độ tối; chưa giả lập chế độ sáng.
-- API/giới hạn preview: Ollama thật không chạy; một lần tạo câu thật trả 422 và UI hiển thị lỗi an toàn, không lộ đáp án. Các endpoint search, examples, sessions, timetable và luồng mock practice/answer trả 200; `/favicon.ico` trả 404. Hai fixture không có bài tập gốc nên preview xác nhận trạng thái không có kết quả; kết quả có bài tập chỉ được kiểm qua Python/Node test với nguồn tổng hợp. Browser console không có API đọc qua connector nên chưa xác nhận log console trực tiếp; không thấy lỗi JS trên giao diện.
-- NOT_RUN: toàn bộ `pytest` gồm test Mac/POSIX/MLX/private corpus; typecheck/build (repo không cấu hình); đánh giá câu hỏi với Ollama/model thật hoặc bộ mẫu chấm thủ công; hiển thị bài tập thật từ corpus; giả lập trực quan theme sáng. Không đo và không tuyên bố đạt 95%. Local Preview còn mở trên `127.0.0.1:8000` bằng demo fixture, không dùng dữ liệu/corpus cá nhân; chưa commit/push.
-- Cập nhật rà soát 10/10/2026 15:49 (UTC+07): nhãn ba tab khớp yêu cầu “Tạo câu hỏi”, “Ôn tập”, “Trích xuất bài tập mẫu”; câu ôn tập lưu cả lựa chọn người học và nội dung lựa chọn; bộ lọc bài tập chỉ nhận tiêu đề/nhãn câu rõ ràng để tránh coi câu phủ định như “không có bài tập” là nguồn bài tập. Kiểm chứng bổ sung: 16 test Python đặc thù và 8 test Node giao diện PASS; `py_compile`, `node --check` và `git diff --check` PASS. Chạy lại full suite không hoàn tất: lần mặc định 125 ca không tạo được thư mục `basetemp` ngoài sandbox; lần dùng thư mục tạm trong workspace dừng ở 7 ca không có tiến triển và được ngắt. Chạy riêng `test_document_lookup.py` cũng không có tiến triển; không ghi nhận kiểm chứng HTTP end-to-end mới sau rà soát. Không có cấu hình build/typecheck trong repo.
-
-<a id="yc-174"></a>
 ### YC-174 - 09/10/2026 15:54 (UTC+07)
 
 - Người thực hiện: Codex; loại: rà soát merge, tài liệu và dependency.
@@ -450,3 +407,46 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Ảnh hưởng: thuần tài liệu tài sản, không can thiệp luồng runtime hay thay đổi mã nguồn hệ thống.
 - Trạng thái: PASS.
 - Giới hạn, lỗi còn lại, rollback/bước tiếp: không có.
+
+<a id="yc-181"></a>
+### YC-181 - 10/10/2026 08:49 (UTC+07)
+
+- Người thực hiện: Codex; loại: mở rộng QA với câu hỏi luyện tập và danh sách ôn lại cục bộ.
+- Mục tiêu/log liên quan: hỗ trợ tự kiểm tra nội dung đang học, giữ câu hỏi gắn với trang nguồn;
+  tiếp nối nguồn-trang từ YC-173 và ranh giới dữ liệu cá nhân ở YC-168.
+- Trước/sau: trước chỉ hỏi đáp từ trang được chọn; sau tạo tối đa 3 câu trắc nghiệm từ trang đó,
+  hiển thị đáp án/giải thích sau khi nộp câu trả lời. Trích dẫn nguyên văn phải khớp một đoạn đã chọn;
+  câu sai hoặc “Chưa chắc” có thể lưu để ôn lại, tự kiểm tra lại và xóa.
+- Phần/file sửa: app/practice.py, app/server.py; static/index.html, app.js, practice.js, style.css.
+  Phiên làm bài giữ đáp án trong bộ nhớ máy chủ tối đa 60 phút; tiến độ ôn lại giữ trong localStorage
+  của trình duyệt này, có thông báo nơi lưu và điều khiển xóa. Không thêm đồng bộ tài khoản hoặc
+  đưa lịch sử học vào training.
+- Ảnh hưởng/phối hợp: thêm hai API QA; không sửa tra cứu, lịch, corpus, index, cấu hình model hay dữ liệu
+  huấn luyện. Câu hỏi chỉ lấy tối đa 6 đoạn trên trang đã chọn; hỗ trợ link PDF đúng trang và dẫn nguồn
+  trong QA với tài liệu không phải PDF.
+- Kiểm thử: NOT_RUN; không chạy feature suite, browser, Windows native hay model thật trong lượt này.
+  Chưa làm bộ nghiệm thu thủ công hoặc đo ngưỡng 95%.
+- Trạng thái: triển khai mã trên nhánh feature/qa/174-practice-review; chưa commit, push hoặc mở PR. Chưa dùng feature này để kết luận chất lượng
+  model. Trích dẫn khớp nguyên văn không tự chứng minh câu hỏi có đáp án duy nhất; cần rà soát thủ công
+  bộ mẫu trước khi triển khai rộng.
+- Giới hạn: danh sách ôn lại gắn với trình duyệt/máy hiện tại và mất khi xóa dữ liệu trình duyệt;
+  phiên làm bài hết sau 60 phút hoặc khi máy chủ khởi động lại. Mức độ đúng của đáp án, độ rõ ràng và
+  thay đổi điểm trước/sau chưa được đo.
+
+  <a id="yc-182"></a>
+### YC-182 - 10/10/2026 09:15 (UTC+07)
+
+- Người thực hiện: Codex; loại: tiếp tục hoàn thiện công cụ luyện tập, ôn lại và trích xuất bài tập mẫu.
+- Mục tiêu/log liên quan: tiếp nối YC-174 theo yêu cầu cập nhật, không dựng lại phần đã có; giữ một mục điều hướng duy nhất cho ba công cụ.
+- Trước/sau: tra cứu nguồn được đặt trong tab Luyện tập; người học có thể luyện từ một đoạn hoặc trang được chọn. Đáp án/giải thích vẫn nằm ở máy chủ đến khi gửi câu trả lời. Bài tập mẫu được lọc từ đoạn tài liệu có dấu hiệu bài tập và hiển thị nguyên văn với tài liệu/trang; phân biệt rõ nội dung trích nguồn với câu AI sinh.
+- Phần/file sửa: app/practice.py và server.py bổ sung kiểm tra hỗ trợ đáp án, giải thích, đáp án duy nhất và bảo toàn điều kiện bằng lượt kiểm định mô hình thứ hai, yêu cầu câu trích nguồn khớp nguyên văn, đọc bài tập nguồn theo trang/chủ đề và gắn cảnh báo OCR/công thức; static/index.html, app.js, document-lookup.js, practice.js, style.css chuyển ba tab vào Công cụ học tập, nối chọn đoạn, lưu/xóa phần ôn lại và hỗ trợ màu sáng/tối. Thêm tests/test_practice.py, tests/test_learning_tools_ui_contract.py và tests/practice_ui.test.cjs; mở rộng tests/document_lookup_ui.test.cjs.
+- Lưu trữ: câu sai/“Chưa chắc” lưu cùng câu trả lời, đáp án, giải thích và nguồn trong localStorage của trình duyệt hiện tại; có xóa từng câu hoặc toàn bộ, không đồng bộ tài khoản và không gửi lịch sử học vào dữ liệu huấn luyện. Phiên luyện tập giữ khóa đáp án trong bộ nhớ máy chủ tối đa 60 phút.
+- Kiểm thử: 14 kiểm thử Python mới/đặc thù qua; 6 kiểm thử giao diện Node qua; py_compile, `node --check` và `git diff --check` qua. Full pytest chưa thu thập được vì test hiện có nhập `fcntl` (Windows không cung cấp module này); khi thử tiếp test tra cứu dùng TestClient và một nhóm test cũ khác, tiến trình không hoàn tất trong môi trường này. Do đó chưa ghi nhận kết quả API HTTP end-to-end hoặc toàn bộ suite.
+- Trạng thái: triển khai tiếp trên `feature/qa/174-practice-review`, chưa commit/push. Không tuyên bố đạt ngưỡng 95%; chưa đánh giá thủ công bộ mẫu hoặc đo thay đổi điểm trước/sau.
+- Giới hạn: lượt kiểm định AI không thay thế đánh giá thủ công và có thể bỏ sót câu mơ hồ/sai. Trích xuất bài tập dựa vào các cụm từ đánh dấu nên có thể bỏ sót bài tập được trình bày khác cách; cảnh báo OCR/công thức là heuristic. Bản gốc và trang PDF vẫn là căn cứ đối chiếu.
+- Cập nhật kiểm chứng cuối: 10/10/2026 14:35:07 (UTC+07), nhánh `feature/qa/174-practice-review`, Windows (win32) / Python 3.14.8. Bộ `test_windows.ps1` (có `PYTEST_ADDOPTS` trỏ basetemp vào workspace) thu được 124 PASS, 1 SKIP; SKIP chỉ ca tạo symlink vì Windows trả WinError 1314 khi máy chưa bật Developer Mode/quyền tương ứng. Thêm `test_practice.py` và `test_learning_tools_ui_contract.py` vào `pytest.windows.ini`; làm test đường dẫn symlink, UTF-8 và subprocess tương thích Windows. Starlette phát cảnh báo deprecation cho tích hợp HTTPX/TestClient nhưng test không lỗi.
+- Kiểm chứng Node: 7 PASS (`practice_ui.test.cjs`, `document_lookup_ui.test.cjs`), gồm bộ lọc bài tập theo tài liệu/trang/chủ đề, giữ nguyên văn bản nguồn, nhãn trang, link PDF và cảnh báo OCR. `py_compile`, `node --check` cho JS ứng dụng/test và `git diff --check` đều PASS. Repo không có cấu hình build/typecheck hoặc công cụ mypy/pyright/ruff/tsc.
+- Preview: mở bằng profile demo với hai tài liệu fixture tổng hợp; search đoạn, trang PDF và API thời khóa biểu tải thành công. Cả ba tab nằm trong Công cụ học tập. Dùng test double Ollama chỉ trên localhost để kiểm luồng: đáp án ẩn trước khi nộp; câu sai/“Chưa chắc” lưu vào localStorage, còn sau reload, làm lại và xóa từng/toàn bộ được. Đã dọn các mục ôn lại tổng hợp sau kiểm thử và dừng test double. Ảnh giao diện đang ở chế độ tối; chưa giả lập chế độ sáng.
+- API/giới hạn preview: Ollama thật không chạy; một lần tạo câu thật trả 422 và UI hiển thị lỗi an toàn, không lộ đáp án. Các endpoint search, examples, sessions, timetable và luồng mock practice/answer trả 200; `/favicon.ico` trả 404. Hai fixture không có bài tập gốc nên preview xác nhận trạng thái không có kết quả; kết quả có bài tập chỉ được kiểm qua Python/Node test với nguồn tổng hợp. Browser console không có API đọc qua connector nên chưa xác nhận log console trực tiếp; không thấy lỗi JS trên giao diện.
+- NOT_RUN: toàn bộ `pytest` gồm test Mac/POSIX/MLX/private corpus; typecheck/build (repo không cấu hình); đánh giá câu hỏi với Ollama/model thật hoặc bộ mẫu chấm thủ công; hiển thị bài tập thật từ corpus; giả lập trực quan theme sáng. Không đo và không tuyên bố đạt 95%. Local Preview còn mở trên `127.0.0.1:8000` bằng demo fixture, không dùng dữ liệu/corpus cá nhân; chưa commit/push.
+- Cập nhật rà soát 10/10/2026 15:49 (UTC+07): nhãn ba tab khớp yêu cầu “Tạo câu hỏi”, “Ôn tập”, “Trích xuất bài tập mẫu”; câu ôn tập lưu cả lựa chọn người học và nội dung lựa chọn; bộ lọc bài tập chỉ nhận tiêu đề/nhãn câu rõ ràng để tránh coi câu phủ định như “không có bài tập” là nguồn bài tập. Kiểm chứng bổ sung: 16 test Python đặc thù và 8 test Node giao diện PASS; `py_compile`, `node --check` và `git diff --check` PASS. Chạy lại full suite không hoàn tất: lần mặc định 125 ca không tạo được thư mục `basetemp` ngoài sandbox; lần dùng thư mục tạm trong workspace dừng ở 7 ca không có tiến triển và được ngắt. Chạy riêng `test_document_lookup.py` cũng không có tiến triển; không ghi nhận kiểm chứng HTTP end-to-end mới sau rà soát. Không có cấu hình build/typecheck trong repo.

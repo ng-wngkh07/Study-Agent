@@ -2,7 +2,7 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 2026-10-10T22:47:49.500414+07:00
+- Cập nhật: 2026-10-10T22:57:15.274642+07:00
 - Mục mới nhất: **[YC-190](#yc-190)**.
 - Nhật ký chung có **25 mục**: 7 môi trường/chức năng (YC-167/170/173/175/177/185 và LOG-20261010-ui-pr6-fix-codex), 3 tổ chức/tài liệu (YC-168/172/179), 2 phát hành GitHub (YC-169/190), 6 rà soát/nghiệm thu (YC-171/174/178/181/184/186), 4 làm rõ quyền/quy trình (YC-176/182/183/188), 3 dữ liệu corpus/huấn luyện (YC-180/187/189). Các mã trùng YC-180–183 chứa cả mốc local và GitHub, không tính hai lần.
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
@@ -628,6 +628,9 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Trạng thái: đang nghiên cứu và áp dụng theo các cổng chất lượng hiện có. Inference, LoRA và kết quả chất lượng candidate mới NOT_RUN; không nhận số lượng/test xanh là dữ liệu đã duyệt.
 
 
+
+- Kết quả nghiên cứu/review 2026-10-10T22:57:15.274642+07:00: đã đối chiếu MLX-LM official source, TRL, QLoRA/LIMA/group split/forgetting papers và thảo luận LocalLLaMA/MLX issue. Báo cáo docs/team/PHUONG_PHAP_HUAN_LUYEN_YC189_2026-10-10.md phân biệt kinh nghiệm với bằng chứng và giới hạn máy16GB. Codex đọc đủ36 đoạn/216mẫu Data03 và từ chối: leakage4họ nguồn, target verifier cố định sai, summary khác runtime và nhiều fakequote/thông tin ngoài nguồn, gồm C++ createNode bị thay new Node và Rogers bị gán cognitive dissonance. Bốn regression ngữ nghĩa tái hiện RED; chưa sửa/học trên bản này. Đã xem đầy đủ2trang MIT vật lý mới, đang bổ sung có giới hạn và bảo toàn corpus cũ trước dataset tiếp theo.
+
 <a id="yc-190"></a>
 ### YC-190 - 10/10/2026 22:35 (UTC+07)
 
@@ -643,3 +646,5 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 
 
 - Sửa CI 2026-10-10T22:47:49.500414+07:00: GitHub Python3.12 phát hiện NameError do thiếu Set/Tuple tại annotation của training_data; local Python3.14 trì hoãn annotation nên suite cũ không bắt được. Thêm ca get_type_hints tái hiện RED rồi bổ sung đúng hai typing imports, không đổi hành vi. Codex kiểm lại root54 PASS, checkout phát hành53 PASS/1 private-policy SKIP; scripts/dev.py check PASS. CI cũ38064366774 FAIL giữ bằng chứng, đang đẩy sửa và chờ kiểm chứng lại trên cả Windows/Mac Python3.12.
+
+- CI sửa lỗi 2026-10-10T22:57:15.274642+07:00: commit3c221ed49eb7429f38afd2458dcd562e1dfd386a đã được remote xác nhận. Run38065066486 Python3.12.10 Windows149 PASS/1warning và Mac149 PASS/6warnings; mỗi OS4 Node PASS; history PASS. PR8 OPEN/CLEAN, chưa merge. Bản báo cáo phương pháp bổ sung theo YC-189 đang đồng bộ cùng lịch sử; kiểm CI lại trên commit tài liệu cuối.

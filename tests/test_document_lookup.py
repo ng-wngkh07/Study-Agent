@@ -120,22 +120,37 @@ def test_unicode_pdf_inline_and_unindexed_rejected(client):
     assert [d['id'] for d in client.get('/api/documents').json()['documents']] == [2, 1]
 
 
-def test_paths_symlinks_unsupported_and_traversal_fail_closed(client, lookup, tmp_path):
+def test_paths_unsupported_and_traversal_fail_closed(client, lookup, tmp_path):
     outside = tmp_path / 'outside.pdf'
     outside.write_bytes(b'%PDF-1.4 private')
-    (lookup.src_dir / 'escape.pdf').symlink_to(outside)
     (lookup.src_dir / 'notes.bin').write_bytes(b'private binary')
     with sqlite3.connect(lookup.db_path) as db:
-        for did, name in [(4, '../outside.pdf'), (5, 'escape.pdf'), (6, 'notes.bin')]:
+        for did, name in [(4, '../outside.pdf'), (6, 'notes.bin')]:
             db.execute('INSERT INTO documents VALUES(?,?,?,?,?)', (did, name, name, 1, 'indexed'))
-    for did in [4, 5, 6]:
+    for did in [4, 6]:
         assert client.get(f'/api/documents/{did}/pdf').status_code == 404
         assert client.get('/api/documents/search', params={'q': 'nhớ', 'document_id': did}).status_code == 404
     assert len(client.get('/api/documents').json()['documents']) == 2
 
 
+def test_symlink_paths_fail_closed(client, lookup, tmp_path):
+    outside = tmp_path / 'outside.pdf'
+    outside.write_bytes(b'%PDF-1.4 private')
+    link = lookup.src_dir / 'escape.pdf'
+    try:
+        link.symlink_to(outside)
+    except OSError as exc:
+        if getattr(exc, 'winerror', None) == 1314:
+            pytest.skip('Creating symlinks requires Windows Developer Mode or elevated privilege')
+        raise
+    with sqlite3.connect(lookup.db_path) as db:
+        db.execute('INSERT INTO documents VALUES(?,?,?,?,?)', (5, 'escape.pdf', 'escape.pdf', 1, 'indexed'))
+    assert client.get('/api/documents/5/pdf').status_code == 404
+    assert client.get('/api/documents/search', params={'q': 'nhớ', 'document_id': 5}).status_code == 404
+
+
 def test_multiformat_documents_are_available(client, lookup):
-    (lookup.src_dir / 'guide.txt').write_text('nội dung hướng dẫn học tập')
+    (lookup.src_dir / 'guide.txt').write_text('nội dung hướng dẫn học tập', encoding='utf-8')
     with sqlite3.connect(lookup.db_path) as db:
         db.execute('INSERT INTO documents VALUES(?,?,?,?,?)', (10, 'guide.txt', 'Hướng dẫn', 1, 'indexed'))
     docs = client.get('/api/documents').json()['documents']

@@ -25,6 +25,7 @@ from app.gpu_lock import gpu_coordinator, GPUBusyError
 from app.document_lookup import DocumentLookup
 from app.dialogue import dialogue_gate, DialogueBusyError, BUSY_TEXT
 from app import timetable_store, timetable_vision, timetable_ics
+from app.practice import PracticeGenerationError, PracticeService, PracticeSessionNotFound
 
 logger = logging.getLogger("psychology_agent")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -40,6 +41,7 @@ indexer = KnowledgeIndexer()
 searcher = HybridSearcher()
 document_lookup = DocumentLookup()
 agent = PsychologyAgent(searcher=searcher)
+practice_service = PracticeService(searcher=searcher, document_lookup=document_lookup)
 import os
 
 _history_store: Optional[HistoryStore] = None
@@ -82,6 +84,81 @@ class ChatRequest(BaseModel):
         if (self.source_document_id is None) != (self.source_page_num is None):
             raise ValueError('Chọn cả tài liệu và trang nguồn.')
         return self
+
+
+class PracticeGenerateRequest(BaseModel):
+    source_document_id: int = Field(ge=1)
+    source_page_num: int = Field(ge=1)
+    source_chunk_id: Optional[int] = Field(default=None, ge=1)
+    count: int = Field(default=3, ge=1, le=3)
+    model: Optional[str] = Field(default=DEFAULT_CHAT_MODEL, max_length=200)
+
+
+class PracticeAnswerRequest(BaseModel):
+    practice_id: str = Field(min_length=16, max_length=64)
+    question_id: str = Field(min_length=2, max_length=16)
+    answer: Optional[Literal["A", "B", "C", "D"]] = None
+
+
+@app.post("/api/practice/generate")
+async def generate_practice(req: PracticeGenerateRequest):
+    document = await run_in_threadpool(document_lookup.document, req.source_document_id)
+    if not document or req.source_page_num > document["total_pages"]:
+        raise HTTPException(status_code=404, detail="Không tìm thấy trang nguồn đã chọn.")
+
+    def run_generation():
+        with dialogue_gate.acquire(), gpu_coordinator.acquire_for_inference():
+            return practice_service.generate(
+                doc_id=req.source_document_id,
+                page_num=req.source_page_num,
+                count=req.count,
+                model=req.model or DEFAULT_CHAT_MODEL,
+                source_chunk_id=req.source_chunk_id,
+            )
+
+    try:
+        return await run_in_threadpool(run_generation)
+    except DialogueBusyError as exc:
+        raise HTTPException(status_code=409, detail=str(exc), headers={"Retry-After": "2"})
+    except GPUBusyError as exc:
+        raise HTTPException(status_code=503, detail=str(exc), headers={"Retry-After": "2"})
+    except PracticeGenerationError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+    except Exception as exc:
+        logger.exception("Không tạo được bộ câu hỏi luyện tập")
+        raise HTTPException(status_code=502, detail="Không tạo được câu hỏi lúc này. Hãy thử lại sau.") from exc
+
+
+@app.get("/api/practice/examples")
+async def list_practice_examples(
+    document_id: int = Query(..., ge=1),
+    page_from: int = Query(1, ge=1),
+    page_to: Optional[int] = Query(None, ge=1),
+    topic: str = Query("", max_length=120),
+    limit: int = Query(20, ge=1, le=50),
+):
+    document = await run_in_threadpool(document_lookup.document, document_id)
+    if not document:
+        raise HTTPException(status_code=404, detail="Không tìm thấy tài liệu.")
+    final_page = page_to or document["total_pages"]
+    if page_from > final_page or final_page > document["total_pages"]:
+        raise HTTPException(status_code=422, detail="Khoảng trang không hợp lệ với tài liệu đã chọn.")
+    try:
+        items = await run_in_threadpool(
+            practice_service.list_example_exercises,
+            document_id, page_from, final_page, topic.strip(), limit,
+        )
+    except PracticeGenerationError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+    return {"items": items, "origin": "source_document", "document": document, "page_from": page_from, "page_to": final_page}
+
+
+@app.post("/api/practice/answer")
+async def answer_practice(req: PracticeAnswerRequest):
+    try:
+        return practice_service.answer(req.practice_id, req.question_id, req.answer)
+    except PracticeSessionNotFound as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
 
 
 def requested_source_page(req):

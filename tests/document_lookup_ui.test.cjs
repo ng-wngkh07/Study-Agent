@@ -23,9 +23,19 @@ async function render(item) {
         focus() {}
     }
     const elements = new Map();
+    const events = [];
+    const documentListeners = {};
     let ready;
     const document = {
-        addEventListener(name, handler) { if (name === 'DOMContentLoaded') ready = handler; },
+        addEventListener(name, handler) {
+            if (name === 'DOMContentLoaded') ready = handler;
+            else (documentListeners[name] ||= []).push(handler);
+        },
+        dispatchEvent(event) {
+            events.push(event);
+            for (const handler of documentListeners[event.type] || []) handler(event);
+            return true;
+        },
         getElementById(id) {
             if (!elements.has(id)) elements.set(id, new Element('div'));
             return elements.get(id);
@@ -35,6 +45,7 @@ async function render(item) {
     const script = fs.readFileSync(path.join(__dirname, '../static/document-lookup.js'), 'utf8');
     vm.runInNewContext(script, {
         document, URLSearchParams,
+        CustomEvent: class CustomEvent { constructor(type, init = {}) { this.type = type; this.detail = init.detail; } },
         fetch: async () => ({ ok: true, json: async () => ({ results: [item], method: 'fts' }) }),
     });
     ready();
@@ -43,14 +54,14 @@ async function render(item) {
     const card = elements.get('document-results').children[0];
     assert.ok(card, 'Search must render a result, not swallow a rendering error');
     const descendants = node => [node, ...node.children.flatMap(descendants)];
-    return descendants(card);
+    return { nodes: descendants(card), events, elements };
 }
 
-const source = { doc_id: 2, page_num: 3, filename: 'study_demo.md', text: 'Trí nhớ là…' };
+const source = { chunk_id: 24, doc_id: 2, page_num: 3, filename: 'study_demo.md', text: 'Trí nhớ là…' };
 
 test('Markdown and missing PDF metadata keep text readable without a PDF action', async () => {
     for (const metadata of [{ pdf_url: null, page_image_url: null }, {}]) {
-        const nodes = await render({ ...source, ...metadata });
+        const { nodes } = await render({ ...source, ...metadata });
         assert.equal(nodes.filter(node => node.tagName === 'a').length, 0);
         assert.equal(nodes.find(node => node.className === 'document-page').textContent, 'Phần 3');
         assert.equal(nodes.find(node => node.tagName === 'details').open, true);
@@ -60,7 +71,7 @@ test('Markdown and missing PDF metadata keep text readable without a PDF action'
 });
 
 test('PDF retains source image and the correct numeric PDF page link', async () => {
-    const nodes = await render({ ...source, filename: 'book.pdf',
+    const { nodes } = await render({ ...source, filename: 'book.pdf',
         pdf_url: 'https://untrusted.example/wrong', page_image_url: 'https://untrusted.example/image' });
     const links = nodes.filter(node => node.tagName === 'a');
     assert.equal(links.length, 2);
@@ -74,7 +85,22 @@ test('PDF retains source image and the correct numeric PDF page link', async () 
 });
 
 test('A source image without PDF metadata does not create a broken PDF link', async () => {
-    const nodes = await render({ ...source, pdf_url: null, page_image_url: '/source-image' });
+    const { nodes } = await render({ ...source, pdf_url: null, page_image_url: '/source-image' });
     assert.equal(nodes.filter(node => node.tagName === 'a').length, 0);
     assert.equal(nodes.filter(node => node.tagName === 'img').length, 1);
+});
+
+test('A selected source can open the practice tab and start practice for that exact chunk', async () => {
+    const { nodes, events } = await render({ ...source, pdf_url: null, page_image_url: null });
+    const practice = nodes.find(node => node.tagName === 'button' && node.textContent === 'Tạo câu hỏi từ đoạn này');
+    assert.ok(practice, 'Each search result should offer source-grounded practice');
+    practice.listeners.click();
+    assert.deepEqual(events.map(event => event.type), [
+        'app-source-selected', 'app-open-tool-tab', 'app-start-practice',
+    ]);
+    assert.equal(events[0].detail.doc_id, 2);
+    assert.equal(events[0].detail.page_num, 3);
+    assert.equal(events[0].detail.chunk_id, 24);
+    assert.equal(events[0].detail.title, 'study_demo.md');
+    assert.equal(events[1].detail, 'practice');
 });

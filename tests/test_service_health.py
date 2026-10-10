@@ -121,7 +121,7 @@ def test_service_sh_foreign_pid_logic():
     # Test is_project_process logic directly via a subprocess running python script
     check_code = f"""
 import sys
-project_dir = "{project_dir}"
+project_dir = {str(project_dir)!r}
 
 def is_project(cmdline, cwd):
     return ("run.py serve" in cmdline) and (cwd == project_dir)

@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const qa = document.getElementById("qa-panel");
-    const docs = document.getElementById("documents-panel");
+    const tools = document.getElementById("learning-tools-panel");
     const qaButton = document.getElementById("mode-qa");
-    const docsButton = document.getElementById("mode-documents");
+    const toolsButton = document.getElementById("mode-tools");
     const query = document.getElementById("document-query");
     const book = document.getElementById("document-book");
     const method = document.getElementById("document-method");
@@ -10,6 +10,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const results = document.getElementById("document-results");
     const form = document.getElementById("document-search-form");
     let revision = 0;
+
+    function setToolTab(tab) {
+        const tabs = ["practice", "review", "examples"];
+        if (!tabs.includes(tab)) tab = "practice";
+        for (const name of tabs) {
+            const button = document.getElementById(`btn-tool-tab-${name}`);
+            const panel = document.getElementById(`tool-tab-${name}`);
+            if (button) {
+                const active = name === tab;
+                button.classList.toggle("active", active);
+                button.setAttribute("aria-selected", String(active));
+                button.setAttribute("tabindex", active ? "0" : "-1");
+            }
+            if (panel) panel.hidden = name !== tab;
+        }
+    }
 
     function setMode(mode) {
         const timetable = document.getElementById("timetable-panel");
@@ -19,25 +35,37 @@ document.addEventListener("DOMContentLoaded", () => {
             timetableBtn.classList.toggle("active", mode === "timetable");
             timetableBtn.setAttribute("aria-pressed", String(mode === "timetable"));
         }
-        const isDocs = mode === "documents";
+        const isTools = mode === "tools";
         const isQa = mode === "qa";
-        qa.hidden = !isQa;
-        docs.hidden = !isDocs;
-        qaButton.classList.toggle("active", isQa);
-        docsButton.classList.toggle("active", isDocs);
-        qaButton.setAttribute("aria-pressed", String(isQa));
-        docsButton.setAttribute("aria-pressed", String(isDocs));
+        if (qa) qa.hidden = !isQa;
+        if (tools) tools.hidden = !isTools;
+        if (qaButton) {
+            qaButton.classList.toggle("active", isQa);
+            qaButton.setAttribute("aria-pressed", String(isQa));
+        }
+        if (toolsButton) {
+            toolsButton.classList.toggle("active", isTools);
+            toolsButton.setAttribute("aria-pressed", String(isTools));
+        }
         const clearChat = document.getElementById("btn-clear-chat");
         if (clearChat) clearChat.hidden = !isQa;
     }
     qaButton.addEventListener("click", () => setMode("qa"));
-    docsButton.addEventListener("click", () => setMode("documents"));
+    toolsButton.addEventListener("click", () => setMode("tools"));
+    for (const name of ["practice", "review", "examples"]) {
+        const button = document.getElementById(`btn-tool-tab-${name}`);
+        if (button) button.addEventListener("click", () => setToolTab(name));
+    }
     const ttBtn = document.getElementById("mode-timetable");
     if (ttBtn) ttBtn.addEventListener("click", () => setMode("timetable"));
     const sidebarTtBtn = document.getElementById("btn-open-timetable");
     if (sidebarTtBtn) sidebarTtBtn.addEventListener("click", () => setMode("timetable"));
     document.addEventListener("app-show-qa", () => setMode("qa"));
     document.addEventListener("app-set-mode", (e) => setMode(e.detail));
+    document.addEventListener("app-open-tool-tab", (e) => {
+        setMode("tools");
+        setToolTab(e.detail);
+    });
 
     async function loadBooks() {
         try {
@@ -137,13 +165,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 ask.addEventListener("click", () => {
                     const input = document.getElementById("user-input");
                     const draft = `Hãy giải thích nội dung ${sourceUnit} ${item.page_num} trong tài liệu «${item.book_title || item.filename}».`;
-                    document.dispatchEvent(new CustomEvent("app-source-selected", {detail:{doc_id:Number(item.doc_id), page_num:Number(item.page_num), title:item.book_title || item.filename}}));
+                    document.dispatchEvent(new CustomEvent("app-source-selected", {detail:{doc_id:Number(item.doc_id), page_num:Number(item.page_num), chunk_id:Number(item.chunk_id), title:item.book_title || item.filename}}));
                     input.value = input.value.trim() ? `${input.value}\n\n${draft}` : draft;
                     setMode("qa");
                     input.dispatchEvent(new Event("input"));
                     input.focus();
                 });
                 actions.appendChild(ask);
+                const practice = document.createElement("button");
+                practice.type = "button";
+                practice.className = "btn btn-outline btn-sm";
+                practice.textContent = "Tạo câu hỏi từ đoạn này";
+                practice.addEventListener("click", () => {
+                    document.dispatchEvent(new CustomEvent("app-source-selected", {detail:{
+                        doc_id:Number(item.doc_id), page_num:Number(item.page_num), chunk_id:Number(item.chunk_id),
+                        title:item.book_title || item.filename,
+                    }}));
+                    document.dispatchEvent(new CustomEvent("app-open-tool-tab", {detail:"practice"}));
+                    document.dispatchEvent(new CustomEvent("app-start-practice"));
+                });
+                actions.appendChild(practice);
                 card.append(heading, page, passage, actions);
                 results.appendChild(card);
             }

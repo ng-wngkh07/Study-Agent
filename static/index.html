@@ -17,6 +17,8 @@
     </script>
     <link rel="stylesheet" href="/static/style.css?v=7-layout">
     <link rel="stylesheet" href="/static/theme.css?v=1-theme">
+    <title>Agent Học Tập - Hỏi đáp và công cụ học tập</title>
+    <link rel="stylesheet" href="/static/style.css?v=7-learning-tools">
 </head>
 <body>
     <div class="app-container">
@@ -154,6 +156,32 @@
             <section id="documents-panel" class="documents-panel" aria-label="Tra cứu tài liệu" hidden>
                 <h2>Tra cứu tài liệu</h2>
                 <p class="lookup-description">Tìm trích đoạn gốc, xem tên sách và mở PDF đúng trang. Tra cứu từ khóa dùng được khi mô hình đang bận.</p>
+            <nav class="mode-switch" aria-label="Chế độ ứng dụng">
+                <button id="mode-qa" class="mode-button active" aria-pressed="true" aria-controls="qa-panel">💬 Hỏi đáp dựa trên tài liệu</button>
+                <button id="mode-tools" class="mode-button" aria-pressed="false" aria-controls="learning-tools-panel">🧰 Công cụ học tập</button>
+                <button id="mode-timetable" class="mode-button" aria-pressed="false" aria-controls="timetable-panel">📅 Thời khóa biểu từ ảnh</button>
+            </nav>
+            <section id="learning-tools-panel" class="learning-tools-panel" aria-label="Công cụ học tập" hidden>
+                <nav class="tool-tabs" role="tablist" aria-label="Công cụ học tập">
+                    <button id="btn-tool-tab-practice" class="tool-tab-button active" type="button" role="tab" tabindex="0" aria-label="Tạo câu hỏi" aria-selected="true" aria-controls="tool-tab-practice" data-tool-tab="practice">Tạo câu hỏi</button>
+                    <button id="btn-tool-tab-review" class="tool-tab-button" type="button" role="tab" tabindex="-1" aria-label="Ôn tập" aria-selected="false" aria-controls="tool-tab-review" data-tool-tab="review">Ôn tập <span id="review-count">0</span></button>
+                    <button id="btn-tool-tab-examples" class="tool-tab-button" type="button" role="tab" tabindex="-1" aria-label="Trích xuất bài tập mẫu" aria-selected="false" aria-controls="tool-tab-examples" data-tool-tab="examples">Trích xuất bài tập mẫu</button>
+                </nav>
+                <section id="tool-tab-practice" class="tool-tab-panel" role="tabpanel" aria-labelledby="btn-tool-tab-practice">
+                    <div class="tool-practice-scope">
+                        <div>
+                            <h2>Tạo câu hỏi từ tài liệu</h2>
+                            <p class="text-muted">Câu hỏi do AI tạo từ nguồn đã chọn; từng câu có trang và trích dẫn để đối chiếu.</p>
+                            <p id="practice-scope-label" class="text-muted">Tìm và chọn một trích đoạn bên dưới, hoặc chọn một trang từ phần Hỏi đáp.</p>
+                        </div>
+                        <div class="tool-practice-actions">
+                            <button type="button" id="btn-clear-practice-scope" class="btn btn-outline btn-sm" disabled>Bỏ chọn nguồn</button>
+                            <button type="button" id="btn-practice-current" class="btn btn-primary btn-sm" disabled>📝 Tạo câu hỏi từ nội dung này</button>
+                        </div>
+                    </div>
+                    <section id="documents-panel" class="documents-panel" aria-label="Chọn nguồn để luyện tập">
+                <h2>Tìm đoạn nguồn</h2>
+                <p class="lookup-description">Tìm đoạn trong thư viện, xem nội dung gốc và chọn đúng đoạn/trang để luyện tập.</p>
                 <form id="document-search-form" class="document-search-form">
                     <label for="document-query">Từ khóa hoặc chủ đề</label>
                     <input id="document-query" class="form-input" maxlength="500" required placeholder="Ví dụ: trí nhớ, thói quen, attachment…">
@@ -165,6 +193,48 @@
                 </form>
                 <p id="document-search-status" role="status" aria-live="polite">Nhập từ khóa để bắt đầu. Trích đoạn được giữ nguyên ngôn ngữ của sách.</p>
                 <div id="document-results" class="document-results"></div>
+            </section>
+                </section>
+                <section id="tool-tab-review" class="tool-tab-panel" role="tabpanel" aria-labelledby="btn-tool-tab-review" hidden>
+                    <div class="tool-panel-header">
+                        <div>
+                            <h2>Phần cần ôn lại</h2>
+                            <p class="text-muted">Câu sai hoặc câu bạn chọn “Chưa chắc” được lưu cục bộ trong trình duyệt này. Không đồng bộ tài khoản và không gửi lịch sử học vào dữ liệu huấn luyện.</p>
+                        </div>
+                        <button type="button" id="btn-clear-review" class="btn btn-outline btn-sm">Xóa toàn bộ tiến độ</button>
+                    </div>
+                    <div id="review-list" class="review-list"></div>
+                </section>
+                <section id="tool-tab-examples" class="tool-tab-panel" role="tabpanel" aria-labelledby="btn-tool-tab-examples" hidden>
+                    <div class="tool-panel-header">
+                        <div>
+                            <h2>Bài tập trích từ tài liệu</h2>
+                            <p class="text-muted">Chỉ hiển thị đoạn bài tập có sẵn trong nguồn; nội dung không được AI viết lại. Lời giải AI chưa được bật.</p>
+                        </div>
+                    </div>
+                    <form id="practice-examples-form" class="practice-examples-form">
+                        <div>
+                            <label for="practice-examples-document">Tài liệu</label>
+                            <select id="practice-examples-document" class="form-select" required><option value="">Đang tải danh sách…</option></select>
+                        </div>
+                        <div>
+                            <label for="practice-examples-page-from">Từ trang</label>
+                            <input id="practice-examples-page-from" type="number" class="form-input" min="1" value="1" required>
+                        </div>
+                        <div>
+                            <label for="practice-examples-page-to">Đến trang</label>
+                            <input id="practice-examples-page-to" type="number" class="form-input" min="1" required>
+                        </div>
+                        <div class="practice-examples-topic">
+                            <label for="practice-examples-topic">Chủ đề (không bắt buộc)</label>
+                            <input id="practice-examples-topic" class="form-input" maxlength="120" placeholder="Ví dụ: trí nhớ, ánh xạ tuyến tính">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Tìm bài tập mẫu</button>
+                    </form>
+                    <p id="practice-examples-status" class="tool-status" role="status" aria-live="polite">Chọn tài liệu và khoảng trang để tìm bài tập có sẵn.</p>
+                    <p class="source-extraction-warning">Bản trích có thể mất định dạng OCR hoặc công thức. Hãy đối chiếu trang gốc nếu ký hiệu hay nội dung chưa rõ.</p>
+                    <div id="practice-examples-results" class="document-results"></div>
+                </section>
             </section>
             <section id="timetable-panel" class="timetable-panel" aria-label="Thời khóa biểu từ ảnh" hidden>
                 <div class="timetable-header">
@@ -392,7 +462,7 @@
                     <div class="message-avatar">🧠</div>
                     <div class="message-body">
                         <h3>Xin chào! Bạn muốn tìm hiểu hoặc tra cứu nội dung gì hôm nay?</h3>
-                        <p>Tôi tìm các đoạn phù hợp trong thư viện tài liệu (Đại số tuyến tính, Lập trình hướng đối tượng, Tâm lý học, Khoa học dữ liệu, v.v.) để hỗ trợ câu trả lời và dẫn nguồn rõ ràng. Bạn có thể mở chế độ Tra cứu tài liệu để đọc trực tiếp các đoạn gốc.</p>
+                        <p>Tôi tìm các đoạn phù hợp trong thư viện tài liệu (Đại số tuyến tính, Lập trình hướng đối tượng, Tâm lý học, Khoa học dữ liệu, v.v.) để hỗ trợ câu trả lời và dẫn nguồn rõ ràng. Mở Công cụ học tập để tạo câu hỏi, ôn tập hoặc tìm bài tập mẫu từ tài liệu gốc.</p>
                         
                         <div class="suggestion-chips">
                             <span class="suggestion-title">Gợi ý câu hỏi đa lĩnh vực:</span>
@@ -430,6 +500,17 @@
             </section>
         </main>
     </div>
+
+    <dialog id="practice-dialog" class="study-dialog" aria-labelledby="practice-dialog-title">
+        <div class="study-dialog-header">
+            <div>
+                <h2 id="practice-dialog-title">Luyện tập nội dung này</h2>
+                <p id="practice-dialog-subtitle" class="text-muted"></p>
+            </div>
+            <button type="button" id="btn-close-practice" class="btn-close-modal" aria-label="Đóng">&times;</button>
+        </div>
+        <div id="practice-body" class="study-dialog-body" aria-live="polite"></div>
+    </dialog>
 
     <!-- Knowledge Base Modal -->
     <div id="kb-modal" class="modal">
@@ -555,10 +636,11 @@
         </div>
     </div>
 
-    <script src="/static/app.js?v=6-source-images"></script>
-    <script src="/static/document-lookup.js?v=2-source-images"></script>
+    <script src="/static/app.js?v=8-learning-tools"></script>
+    <script src="/static/document-lookup.js?v=3-learning-tools"></script>
     <script src="/static/timetable.js?v=5-literal-table"></script>
     <script src="/static/layout.js?v=1"></script>
     <script src="/static/theme.js?v=1-theme"></script>
+    <script src="/static/practice.js?v=2-learning-tools"></script>
 </body>
 </html>

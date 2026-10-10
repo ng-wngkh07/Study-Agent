@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function clearSourceScope() {
         selectedSourcePage = null;
         if (sourceScope) sourceScope.hidden = true;
+        document.dispatchEvent(new Event("app-source-cleared"));
     }
     document.addEventListener("app-source-selected", event => {
         selectedSourcePage = event.detail;
@@ -12,6 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
             sourceScope.hidden = false;
             sourceLabel.textContent = `Nguồn đang chọn: ${event.detail.title} · trang ${event.detail.page_num}. `;
         }
+    });
+    document.addEventListener("app-source-cleared", () => {
+        selectedSourcePage = null;
+        if (sourceScope) sourceScope.hidden = true;
     });
     document.getElementById("qa-source-clear")?.addEventListener("click", clearSourceScope);
     document.addEventListener("app-show-qa", clearSourceScope);

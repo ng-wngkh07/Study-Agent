@@ -2,9 +2,9 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 2026-10-10T22:57:15.274642+07:00
-- Mục mới nhất: **[YC-190](#yc-190)**.
-- Nhật ký chung có **25 mục**: 7 môi trường/chức năng (YC-167/170/173/175/177/185 và LOG-20261010-ui-pr6-fix-codex), 3 tổ chức/tài liệu (YC-168/172/179), 2 phát hành GitHub (YC-169/190), 6 rà soát/nghiệm thu (YC-171/174/178/181/184/186), 4 làm rõ quyền/quy trình (YC-176/182/183/188), 3 dữ liệu corpus/huấn luyện (YC-180/187/189). Các mã trùng YC-180–183 chứa cả mốc local và GitHub, không tính hai lần.
+- Cập nhật: 2026-10-11T00:18:44.971807+07:00
+- Mục mới nhất: **[LOG-20261011-evaluation-execution05-codex](#log-log-20261011-evaluation-execution05-codex)**; mã YC mới nhất: **YC-190**.
+- Nhật ký chung có **26 mục**: 8 môi trường/chức năng (YC-167/170/173/175/177/185 và LOG-20261010-ui-pr6-fix-codex, LOG-20261011-evaluation-execution05-codex), 3 tổ chức/tài liệu (YC-168/172/179), 2 phát hành GitHub (YC-169/190), 6 rà soát/nghiệm thu (YC-171/174/178/181/184/186), 4 làm rõ quyền/quy trình (YC-176/182/183/188), 3 dữ liệu corpus/huấn luyện (YC-180/187/189). Các mã trùng YC-180–183 chứa cả mốc local và GitHub, không tính hai lần.
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
   [quy trình PR](CONTRIBUTING.md), [Windows](README_WINDOWS.md).
 
@@ -631,6 +631,14 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 
 - Kết quả nghiên cứu/review 2026-10-10T22:57:15.274642+07:00: đã đối chiếu MLX-LM official source, TRL, QLoRA/LIMA/group split/forgetting papers và thảo luận LocalLLaMA/MLX issue. Báo cáo docs/team/PHUONG_PHAP_HUAN_LUYEN_YC189_2026-10-10.md phân biệt kinh nghiệm với bằng chứng và giới hạn máy16GB. Codex đọc đủ36 đoạn/216mẫu Data03 và từ chối: leakage4họ nguồn, target verifier cố định sai, summary khác runtime và nhiều fakequote/thông tin ngoài nguồn, gồm C++ createNode bị thay new Node và Rogers bị gán cognitive dissonance. Bốn regression ngữ nghĩa tái hiện RED; chưa sửa/học trên bản này. Đã xem đầy đủ2trang MIT vật lý mới, đang bổ sung có giới hạn và bảo toàn corpus cũ trước dataset tiếp theo.
 
+- Cập nhật nguồn/dữ liệu 2026-10-10T23:23:57.464681+07:00: bổ sung 3 PDF MIT/Cornell mới có ảnh trang và bản trích được kiểm tra. Codex kiểm độc lập toàn bộ hàng cũ/byte vector với backup của từng đợt: không đổi; audit live157 nguồn/22.711 trang,22.698 trong phạm vi,13 ngoại lệ cố định, complete:true/complete_all_sources:false, FTS/FK đạt. Đợt MIT dùng khóa tương thích thay khóa chuẩn; ghi lệch quy trình, đợt Cornell dùng cả hai khóa, Codex xác nhận khóa rảnh trước bàn giao. PDF Cornell Sept23 bị loại khỏi bổ sung vì đáp án đạo hàm sai, giữ nguyên bản tải để truy nguyên.
+- Tiếp tục sửa builder/dữ liệu:11 kiểm thử hợp đồng tái hiện lỗi nhãn kiểm định, input thực tế practice/summary và kiểm hash base/suite trước đánh giá. Gói Data04 đang tạo216 mẫu/36context và36 ca chức năng nháp, chưa được duyệt nội dung. Huấn luyện/baseline mới NOT_RUN; không kích hoạt adapter. Bằng chứng local: data/evaluation/training-yc188-20261010/source-unit01/ và source-unit02/; data-review-draft03/semantic-and-evaluator-red02.log.
+
+- Hiệu chỉnh bằng chứng 2026-10-10T23:40:35.952731+07:00: hai lỗi practice trong log RED ban đầu là lỗi thiếu module ở checkout local, chưa chứng minh sai prompt. Codex đã dùng nguồn main có hash để tái hiện hai sai khác đầu vào thật (runtime-prompt-red03.log). Bản sửa bước đầu đạt12 test/1SKIP, chỉ là kiểm hợp đồng mã. Bổ sung5 ca RED đúng lỗi còn lại: thiếu nhãn kiểm định được tự điền, kiểu boolean sai, model rỗng được chấp nhận và luồng chạy chưa gọi hai cổng duyệt trước tài nguyên. Data04 vẫn đang triển khai; dữ liệu, baseline và huấn luyện chưa được duyệt.
+
+
+- Review dữ liệu và đường chạy 2026-10-11T00:02:35.539988+07:00: Data04 đã kết thúc, giữ snapshot mã/dữ liệu v17 bất biến. Codex kiểm đủ36 ngữ cảnh nguồn: tất cả offset/trích dẫn/hash PDF khớp, nhưng16 ngữ cảnh có nhãn tiếng Anh trái yêu cầu ứng dụng; nhãn kiểm định còn tự điền và thiếu đa dạng lỗi, một số điều kiện/phát biểu vượt đoạn nguồn. Bản v17 vẫn REJECT, không học. Kiểm độc lập46 ca:40 PASS/6 FAIL, gồm nhãn tự sinh, đầu vào đánh giá bị cắt/sửa, ngân sách/metrics sai và consumer từ chối verifier JSON/summary hội thoại hợp lệ. Đang sửa riêng scripts/evaluate_exact_base.py và app/dataset_balance.py; không thay cổng nguồn, prompt ứng dụng, provider hoặc chất lượng. Bằng chứng data-review-draft04/codex-terminal-tests.log, codex-initial-content-review-REJECT.json và terminal-snapshot/identity.json trong data/evaluation/training-yc188-20261010/. Baseline/học mới NOT_RUN; không kích hoạt adapter.
+
 <a id="yc-190"></a>
 ### YC-190 - 10/10/2026 22:35 (UTC+07)
 
@@ -648,3 +656,18 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Sửa CI 2026-10-10T22:47:49.500414+07:00: GitHub Python3.12 phát hiện NameError do thiếu Set/Tuple tại annotation của training_data; local Python3.14 trì hoãn annotation nên suite cũ không bắt được. Thêm ca get_type_hints tái hiện RED rồi bổ sung đúng hai typing imports, không đổi hành vi. Codex kiểm lại root54 PASS, checkout phát hành53 PASS/1 private-policy SKIP; scripts/dev.py check PASS. CI cũ38064366774 FAIL giữ bằng chứng, đang đẩy sửa và chờ kiểm chứng lại trên cả Windows/Mac Python3.12.
 
 - CI sửa lỗi 2026-10-10T22:57:15.274642+07:00: commit3c221ed49eb7429f38afd2458dcd562e1dfd386a đã được remote xác nhận. Run38065066486 Python3.12.10 Windows149 PASS/1warning và Mac149 PASS/6warnings; mỗi OS4 Node PASS; history PASS. PR8 OPEN/CLEAN, chưa merge. Bản báo cáo phương pháp bổ sung theo YC-189 đang đồng bộ cùng lịch sử; kiểm CI lại trên commit tài liệu cuối.
+
+- Xác nhận GitHub 2026-10-10T23:07:52.030355+07:00: f88b135 CI38065738016 tất cả3job PASS; báo cáo phương pháp đã push. Người dùng ng-wngkh07 merge PR8 lúc23:02:23 UTC+07, main5d399d527e0e44fda7c02232cebc2949bec48aa0; Codex chỉ push/cập nhật PR, không thực hiện merge. Bằng chứng docs/project/github-publish-yc190-20261010/pr8-final-readback.json và f88b135-ci-green.log.
+
+
+<a id="log-log-20261011-evaluation-execution05-codex"></a>
+### LOG-20261011-evaluation-execution05-codex - 11/10/2026 00:18 (UTC+07)
+
+- Người thực hiện: Codex kiểm thử/review/tích hợp, Antigravity sửa evaluator và balance; loại: môi trường/chức năng đánh giá và cổng dữ liệu.
+- Lỗi/mục tiêu: baseline từng bỏ câu hỏi/đổi SYSTEM và ngân sách sinh; thiếu lý do dừng/metric vẫn được coi hoàn chỉnh. Consumer balance kiểm PDF trực tiếp khiến nguồn JSON và hội thoại summary đúng runtime bị từ chối.
+- Trước/sau: giữ nguyên các message đầu vào, chỉ bỏ assistant tham chiếu cuối; dùng decoding đã đóng băng ở ca hoặc suite, chặn khi thiếu. Kiểm toàn bộ file base/tokenizer và hash suite đã review trước dùng tài nguyên. Ghi finish_reason, token và bộ nhớ thực từ stream; length là chưa hoàn chỉnh. Summary đối chiếu hai lượt giới hạn300/400 ký tự; verifier đối chiếu nguồn sau giải mã JSON.
+- Phần/file: scripts/evaluate_exact_base.py, app/dataset_balance.py; ba test_exact_evaluation_gate/execution và test_dataset_balance_input_binding; pytest.windows.ini thêm cả27 hồi quy vào CI. Đường dẫn evaluator tính theo checkout để chạy trên máy khác, không gắn thư mục cá nhân.
+- Kiểm chứng: 27 test độc lập PASS tại root sau RED đúng các lỗi; fixture chỉ giả lập ranh giới MLX/tokenizer, không chứng minh chất lượng inference. Dữ liệu v17 và hồ sơ Data04 được so hash và giữ nguyên. Kiểm tích hợp Python3.12.14 trên checkout main mới:176 test PASS/6 warning,4 Node PASS, dev check/diff/Gitleaks PASS. CI Windows/macOS chưa chạy tại thời điểm ghi.
+- Phiên bản/phối hợp: main5d399d5 sau PR8 được chủ repo merge; PR9/update-Agent còn mở khi kiểm, có thay đổi QA/UI riêng. Bộ dữ liệu mới v18 đang sửa nhãn và nguồn; chưa chọn chức năng mới làm mốc học khi chưa kiểm chứng. Không ghi đè việc root hoặc nhánh khác.
+- Trạng thái: mã cổng/đánh giá đã review local; phát hành chọn lọc đang làm theo YC-190. Dataset, baseline thực, LoRA và paired evaluation mới NOT_RUN; adapter chưa kích hoạt. Cập nhật 2026-10-11T00:18:44.971807+07:00.
+- Giới hạn/bước tiếp: sửa và review toàn bộ nhãn v18, đóng băng holdout đúng mốc ứng dụng, kiểm nguồn/tài nguyên live rồi chạy baseline và học có giới hạn. Phần này chưa có chạy mô hình thật và chưa có kết quả tăng chất lượng.

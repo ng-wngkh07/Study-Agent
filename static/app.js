@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // New Chat buttons
-    btnClear.addEventListener("click", startNewChat);
+    if (btnClear) btnClear.addEventListener("click", startNewChat);
     if (btnNewChatSidebar) {
         btnNewChatSidebar.addEventListener("click", startNewChat);
     }
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
         isGenerating = true;
         chatStatus.textContent = "Đang xử lý một câu hỏi. Bạn có thể soạn câu tiếp theo; câu đó chưa được gửi.";
         btnSend.disabled = true;
-        btnClear.disabled = true;
+        if (btnClear) btnClear.disabled = true;
         if (btnNewChatSidebar) btnNewChatSidebar.disabled = true;
 
         let accumulatedAnswer = "";
@@ -394,7 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 chatStatus.textContent = "";
             }
             btnSend.disabled = false;
-            btnClear.disabled = false;
+            if (btnClear) btnClear.disabled = false;
             if (btnNewChatSidebar) btnNewChatSidebar.disabled = false;
             userInput.focus();
         }

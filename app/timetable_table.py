@@ -94,7 +94,12 @@ def parse_registered_table(lines, room_reader=None):
             for mi,m in enumerate(matches):
                 st,et=m.group(2),m.group(3)
                 valid=lambda t:bool(re.fullmatch(r'(?:[01]?\d|2[0-3]):[0-5]\d',t))
-                if not valid(st) or not valid(et) or et<=st:
+                if not valid(st) or not valid(et):
+                    uncertainties.append(f'{course}: giờ đọc được chưa hợp lệ ({st}-{et}); không tự sửa giờ.')
+                    continue
+                start_minutes = sum(int(v) * factor for v, factor in zip(st.split(':'), (60, 1)))
+                end_minutes = sum(int(v) * factor for v, factor in zip(et.split(':'), (60, 1)))
+                if end_minutes <= start_minutes:
                     uncertainties.append(f'{course}: giờ đọc được chưa hợp lệ ({st}-{et}); không tự sửa giờ.')
                     continue
                 tail=text[m.end():matches[mi+1].start() if mi+1<len(matches) else len(text)]

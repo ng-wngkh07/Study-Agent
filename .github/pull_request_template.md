@@ -7,11 +7,11 @@
 
 ## Phối hợp và kiểm chứng
 
-- Nếu ngoài phạm vi/phần chung: đã báo ai, hướng xử lý/tương thích, rollback:
+- Nếu ngoài phạm vi/phần chung: vai trò đã phối hợp, hướng xử lý/tương thích, rollback:
 - Môi trường/Python/model/data version:
 - Test/thao tác đã chạy, kết quả; ca hồi quy bảo vệ sửa cũ:
 - Smoke ba luồng khi sửa chung; lỗi còn lại/NOT_RUN:
-- Reviewer khác tác giả và các chủ trì bị ảnh hưởng:
+- Reviewer và chủ trì bị ảnh hưởng (dùng mã vai trò, không ghi thông tin liên hệ cá nhân):
 
 ## Nhật ký và tài sản
 

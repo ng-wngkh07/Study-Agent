@@ -1,223 +1,139 @@
-# Phân chia nhiệm vụ đồ án nhóm
+# Phân công trách nhiệm và kế hoạch thực hiện
 
-Agent Học Tập - phương án nhóm 6 thành viên. Lập ngày 09/10/2026.
+**Dự án:** Agent Học Tập. **Phiên bản:** 1.1 - 09/10/2026.
+**Quản lý tài liệu:** TV6. **Điều phối:** TV4.
 
-## 1. Phân chia nhiệm vụ đồ án nhóm
+Tài liệu quy định phạm vi, đầu ra, tiêu chí nghiệm thu và trách nhiệm phối hợp của nhóm sáu thành viên. Mã TV1-TV6 đại diện cho vai trò; bảng ánh xạ với thành viên được quản lý riêng. Tên/email tác giả phục vụ bản quyền và attribution Git được giữ nguyên; tài liệu giao việc dùng mã vai trò.
 
-AGENT HỌC TẬP | NHÓM 6 THÀNH VIÊN
+## 1. Phạm vi nghiệp vụ
 
-Giữ 4 nhiệm vụ gốc: tra cứu tài liệu, QA, thời khoá biểu từ ảnh và lập chỉ mục - huấn luyện. Bổ sung 2 trách nhiệm hỗ trợ: giao diện/môi trường dùng chung và kiểm thử/nghiệm thu/tài liệu. Không tạo thêm chức năng lớn chỉ để đủ số người.
-
-| Chức năng của ứng dụng | Người dùng thực hiện gì? |
-| --- | --- |
-| Tra cứu tài liệu | Tìm theo từ khóa/chủ đề, chọn tài liệu, đọc trích đoạn và mở đúng nguồn/trang. |
-| QA dựa trên tài liệu | Đặt câu hỏi, hỏi tiếp trong hội thoại và xem nguồn dẫn cho câu trả lời. |
-| Thời khoá biểu từ ảnh | Tải ảnh, xem/chỉnh bản nháp, xác nhận lưu, kiểm xung đột và xuất lịch .ics. |
-
-Lập chỉ mục và huấn luyện là công việc kỹ thuật phục vụ ba chức năng trên; không phải chức năng thứ tư mà người dùng bắt buộc thao tác.
-
-| Thành viên | Nhiệm vụ | Môi trường |
+| Chức năng | Luồng sử dụng | Kết quả cần đạt |
 | --- | --- | --- |
-| TV1 | Chủ trì tra cứu tài liệu | Windows |
-| TV2 | Chủ trì QA và hội thoại | Windows |
-| TV3 | Chủ trì thời khoá biểu từ ảnh | Windows |
-| TV4 | Chỉ mục chính, dữ liệu và huấn luyện | Mac |
-| TV5 | Giao diện chung, tích hợp, môi trường chạy | Windows |
-| TV6 | Kiểm thử, nghiệm thu và tài liệu chung | Windows |
+| Tra cứu tài liệu | Nhập từ khóa/chủ đề, chọn tài liệu, đọc trích đoạn, mở nguồn | Kết quả gắn đúng tài liệu, trang hoặc phần văn bản; xử lý nguồn thiếu/kết quả rỗng |
+| Hỏi đáp có nguồn | Đặt câu hỏi, hỏi tiếp trong phiên, kiểm tra trích dẫn | Câu trả lời có căn cứ; từ chối khi thiếu nguồn; phiên và liên kết nguồn hoạt động đúng |
+| Thời khóa biểu từ ảnh | Tải ảnh, xem/chỉnh bản nháp, xác nhận lưu, xuất lịch | Ô chưa rõ được đánh dấu; chỉ lưu sau xác nhận; phát hiện xung đột và xuất ICS hợp lệ |
 
+Chỉ mục, dữ liệu và huấn luyện phục vụ ba chức năng trên. Giao diện, môi trường, kiểm thử và tài liệu là các công việc hỗ trợ tích hợp.
 
-## 2. Nhiệm vụ 1 và 2
+## 2. Cơ cấu trách nhiệm
 
-CHỦ TRÌ HAI CHỨC NĂNG TRA CỨU VÀ QA
+| Mã vai trò | Trách nhiệm chính | Môi trường | Phối hợp |
+| --- | --- | --- | --- |
+| TV1 | Tra cứu tài liệu | Windows | TV2, TV4, TV5, TV6 |
+| TV2 | QA và hội thoại | Windows | TV1, TV5, TV6 |
+| TV3 | Thời khóa biểu từ ảnh | Windows | TV2, TV5, TV6 |
+| TV4 | Dữ liệu, chỉ mục chính, huấn luyện, điều phối phát hành | Mac | TV1-TV3, TV6 |
+| TV5 | Giao diện chung, tích hợp, môi trường chạy | Windows | TV1-TV3, TV6 |
+| TV6 | Kiểm thử, nghiệm thu độc lập, quản lý tài liệu | Windows | TV1-TV5 |
+
+Chủ trì hoàn thành đầu ra và khắc phục lỗi trong phạm vi được giao. Reviewer kiểm tính đúng, tác động và bằng chứng. TV6 xác nhận nghiệm thu; TV4 điều phối tích hợp và quyết định phát hành. Quyền thao tác GitHub phụ thuộc phân quyền/bảo vệ nhánh, không được suy từ bảng phân công.
+
+## 3. Gói công việc và nghiệm thu
 
 ### TV1 - Tra cứu tài liệu
 
-- Tìm lỗi, tái hiện, sửa và nâng cấp trong luồng tìm tài liệu. Chủ trì giao diện tra cứu và logic/API liên quan; đảm bảo kết quả có đúng tên tài liệu và trang nguồn.
-
-- Kiểm tìm từ khóa tiếng Việt/thuật ngữ gốc, lọc sách, kết quả rỗng, nguồn bị thiếu, mở PDF/ảnh đúng trang và quay về từ khóa khi embedding hoặc GPU không khả dụng.
-
-- Phạm vi chính: app/document_lookup.py, static/document-lookup.js, tests tra cứu. searcher/indexer và API chung chỉ sửa sau phối hợp TV2, TV4, TV5.
-
-- Bàn giao: PR nhỏ theo lỗi/nâng cấp, ca tái hiện trước sửa, test phù hợp, kết quả sau sửa và mục nhật ký. Đạt khi tra cứu đúng nguồn và không làm QA hoặc lịch bị lỗi.
-
-- Review: TV2 review ảnh hưởng truy xuất; TV4 review thay đổi index/schema; TV6 kiểm lại ca lỗi độc lập.
+- **Phạm vi:** `app/document_lookup.py`, `static/document-lookup.js`, API và test tra cứu; phần searcher/indexer/API chung phối hợp TV2, TV4, TV5.
+- **Đầu ra:** PR theo lỗi/chức năng, ca tái hiện/hồi quy, kết quả có tham chiếu nguồn, mục nhật ký.
+- **Nghiệm thu:** tìm từ khóa tiếng Việt/thuật ngữ gốc; bộ lọc đúng; PDF mở đúng trang, văn bản mở đúng phần; xử lý nguồn mất/kết quả rỗng; FTS dùng được khi embedding không khả dụng.
+- **Review:** TV2 kiểm truy xuất; TV4 kiểm index/schema; TV6 tái kiểm độc lập.
 
 ### TV2 - QA và hội thoại
 
-- Tìm lỗi, sửa và nâng cấp hỏi đáp có nguồn; giữ ngữ cảnh nhiều lượt, lưu phiên và tóm tắt. Phân biệt câu trả lời có bằng chứng với nội dung không đủ nguồn.
+- **Phạm vi:** `app/rag_agent.py`, `app/dialogue.py`, `app/topic_summarizer.py`, phần QA của `static/app.js` và test liên quan.
+- **Đầu ra:** PR, bộ ca QA có nguồn, test phiên/hội thoại, kết quả gắn model/data revision, mục nhật ký.
+- **Nghiệm thu:** trích dẫn đúng nguồn và nội dung; từ chối khi thiếu căn cứ; câu nối tiếp giữ ngữ cảnh; lưu/tóm tắt phiên đúng; lỗi model, giới hạn ngữ cảnh và trạng thái bận được thông báo rõ. Test giả lập không thay nghiệm thu model thật.
+- **Review:** TV1 kiểm nguồn; TV5 kiểm UI/API; TV6 đánh giá trên bộ ca đã chốt.
 
-- Kiểm trích dẫn khớp nội dung nguồn, câu hỏi nối tiếp, lựa chọn model, model mất kết nối, giới hạn ngữ cảnh và trạng thái bận. Không tạo câu trả lời hoặc trích dẫn giả để che lỗi.
+### TV3 - Thời khóa biểu từ ảnh
 
-- Phạm vi chính: app/rag_agent.py, app/dialogue.py, app/topic_summarizer.py và phần QA trong static/app.js. API/server/config dùng chung cần phối hợp.
+- **Phạm vi:** `app/timetable_*.py`, `static/timetable.js`, OCR/VLM, chuẩn hóa và test lịch.
+- **Đầu ra:** ảnh thử tổng hợp, expected, PR, test bản nháp/lưu/xung đột/ICS, mục nhật ký.
+- **Nghiệm thu:** không đoán ô mờ; đánh dấu giờ/ngày/phòng chưa rõ; xác nhận trước lưu; phát hiện xung đột; dữ liệu lưu đúng; ICS được đọc độc lập, giữ múi giờ/ký tự tiếng Việt. Ảnh/lịch cá nhân không vào corpus QA hoặc tập học.
+- **Review:** TV2 kiểm API; TV5 kiểm UI; TV6 kiểm bằng ảnh/ca độc lập.
 
-- Bàn giao: PR, test chống tái phát lỗi, bộ ca QA có nguồn và ghi rõ model/data version. Đạt khi hội thoại hoạt động đúng và trích dẫn mở đúng nguồn; mock đạt chưa chứng minh chất lượng model thật.
+### TV4 - Dữ liệu, chỉ mục chính và huấn luyện
 
-- Review: TV1 kiểm nguồn/truy xuất; TV5 kiểm UI/API chung; TV6 nghiệm thu trên cùng bộ ca.
-
-## 3. Nhiệm vụ 3 và 4
-
-CHỨC NĂNG LỊCH TỪ ẢNH VÀ NGƯỜI HUẤN LUYỆN DUY NHẤT
-
-### TV3 - Thời khoá biểu từ ảnh
-
-- Tìm lỗi, sửa và nâng cấp tải ảnh, OCR/VLM, chuẩn hoá ngày/giờ/phòng, bản nháp và lưu lịch. Không đoán ô mờ hoặc thiếu dữ liệu.
-
-- Giữ bước người dùng xem/chỉnh/xác nhận trước khi lưu. Kiểm ngày/giờ sai, tiết học chưa ánh xạ, xung đột trong bản nháp hoặc với lịch đã lưu, ảnh lỗi và xuất .ics.
-
-- Phạm vi chính: app/timetable_*.py và static/timetable.js. Không đưa ảnh/lịch cá nhân vào corpus QA hoặc tập huấn luyện.
-
-- Bàn giao: ảnh mẫu tổng hợp, kết quả mong đợi, PR, test và log. Đạt khi ô chưa rõ được báo đúng, dữ liệu xác nhận được lưu đúng và tra cứu/QA vẫn hoạt động.
-
-- Review: TV2 review API liên quan; TV5 review giao diện; TV6 kiểm lại bằng ảnh/ca độc lập.
-
-### TV4 - dữ liệu, chỉ mục chính và huấn luyện
-
-- Là người phụ trách huấn luyện duy nhất. Thu nhận gói nguồn/review đã duyệt; hợp nhất nguồn, index/vector chính, chuẩn bị dataset, chạy trial và quản lý phiên bản model trên Mac.
-
-- Trước học: audit live complete: true, review OCR toàn bộ, kiểm provenance nguồn - trang - chunk - vector, hash, dedup/tách tập, tokenizer và tài nguyên. Không suy corpus sẵn sàng từ số lượng file/vector hoặc test xanh.
-
-- Chỉ một writer/job cho corpus/index/vector chính. Nếu đã giao job cho công cụ/agent, phải xác nhận kết thúc và bàn giao trước khi tự ghi; không chạy GPU training và suy luận cạnh tranh.
-
-- Phát hành gói riêng có corpus/model revision, hash, run ID, chỉ số và hướng rollback. Không merge DB/vector/weights qua Git; không tự kích hoạt candidate chỉ vì loss giảm.
-
-- TV6 chủ trì đánh giá độc lập candidate, có nguồn/holdout và ca giữ kiến thức cũ; phối hợp TV1-3 khi cần. Không đạt thì giữ candidate để phân tích, không thay model đang dùng.
-
-## 4. Nhiệm vụ 5 và 6
-
-HAI VAI TRÒ HỖ TRỢ CÓ ĐẦU RA CỤ THỂ
+- **Phạm vi:** nhận nguồn/review đã duyệt, hợp nhất corpus/index/vector chính, chuẩn bị dataset, chạy trial, quản lý model trên Mac; là đầu mối ghi và huấn luyện duy nhất của bộ dữ liệu chính.
+- **Đầu ra:** gói nguồn/model riêng có revision, hash, provenance, run ID, chỉ số và rollback; bản ghi thay đổi dữ liệu/model đã biên tập để chia sẻ.
+- **Nghiệm thu trước học:** audit hiện hành `complete: true`; OCR được review đầy đủ; nguồn-trang-chunk-vector có provenance/hash; dedup, tách tập, tokenizer và tài nguyên đạt. Một writer/job mỗi thời điểm; kết thúc và bàn giao trước khi đổi bên ghi, không chạy GPU cạnh tranh.
+- **Nghiệm thu phát hành:** TV6 đánh giá độc lập theo nguồn/holdout và ca giữ kiến thức cũ, phối hợp TV1-TV3. Candidate không đạt giữ để phân tích; không kích hoạt chỉ từ số vector, test xanh hoặc loss giảm. Không merge DB/vector/weights qua Git.
 
 ### TV5 - Giao diện chung và môi trường chạy
 
-- Chủ trì điều hướng ba chế độ, bố cục/CSS chung, thông báo trạng thái và tích hợp giao diện. Các thành viên TV1-3 vẫn sở hữu UI chức năng của mình; TV5 không sửa lại luồng nghiệp vụ của họ nếu chưa thống nhất.
-
-- Duy trì README_WINDOWS, launcher/config mẫu, demo và khả năng chạy trên Windows. Đường dẫn không hard-code theo máy; model theo cấu hình. Không thay provider, model huấn luyện hoặc cấu hình toàn cục của người khác.
-
-- Phạm vi: static/index.html, style.css, launcher/dev/config chung. server.py, file_lock.py và hợp đồng API chỉ sửa trong PR được các chủ trì ảnh hưởng review.
-
-- Bàn giao: kết quả chạy trên máy Windows, checklist tích hợp ba luồng, PR sửa lỗi môi trường/giao diện và hướng dẫn tái hiện. Ghi NOT_RUN nếu chưa kiểm thật, không dùng kết quả Mac để xác nhận Windows.
-
-- Phối hợp TV6 kiểm CI và bản demo; Khải là đầu mối merge. TV5 có thể hỗ trợ giải quyết xung đột nhưng không tự ghi đè logic hoặc dữ liệu của người khác.
+- **Phạm vi:** điều hướng ba chế độ, `static/index.html`, CSS chung, launcher/config mẫu, demo, hướng dẫn Windows/Mac. TV1-TV3 vẫn chủ trì UI nghiệp vụ.
+- **Đầu ra:** PR tích hợp, kết quả chạy trên môi trường mục tiêu, checklist ba luồng và hướng dẫn tái hiện lỗi môi trường.
+- **Nghiệm thu:** khởi động theo hướng dẫn; cấu hình không gắn máy cá nhân; ba chế độ hoạt động; trạng thái/lỗi rõ; phần chung không mất dữ liệu hoặc phá API. `server.py`, `config.py`, khóa file/API chung thống nhất trước sửa.
+- **Review:** chủ trì bị ảnh hưởng và TV6. Không đổi provider/model hoặc cấu hình toàn cục của người khác.
 
 ### TV6 - Kiểm thử, nghiệm thu và tài liệu
 
-- Thiết kế bộ ca hồi quy cho cả ba chức năng, test ranh giới và dữ liệu tổng hợp; lập báo lỗi có bước tái hiện, expected/actual, môi trường và mức ảnh hưởng.
+- **Phạm vi:** hồi quy ba chức năng, test ranh giới, nghiệm thu candidate, quản lý tài liệu nghiệp vụ.
+- **Đầu ra:** ma trận test, báo lỗi có bước tái hiện/expected/actual, báo cáo hồi quy/model, vấn đề còn lại, checklist phát hành.
+- **Nghiệm thu:** kết quả truy nguyên đến commit, OS, Python, model/data; lỗi được kiểm lại; phân biệt PASS/FAIL/NOT_RUN/N/A; tài liệu khớp thực thi. Mỗi tác giả PR vẫn tự ghi log thay đổi.
+- **Phối hợp:** chủ trì sửa lỗi sản phẩm, TV6 kiểm lại độc lập; suy luận Mac thống nhất lịch với TV4, không tự chạy training hoặc ghi corpus chính.
 
-- Review PR, kiểm log và tái kiểm ca lỗi sau sửa. Duy trì tiêu chí nghiệm thu, hướng dẫn nhóm và nhật ký chung; mỗi tác giả vẫn phải viết mục log cho thay đổi của mình, không đẩy toàn bộ việc ghi log sang TV6.
+## 4. Quy trình thực hiện và bàn giao
 
-- Đánh giá model theo nguồn/holdout độc lập và ca giữ kiến thức cũ trên phiên bản đã chốt. Nếu cần suy luận trên Mac, thống nhất thời gian với Khải; không tự chạy training hoặc writer corpus.
+| Bước | Chủ trì | Đầu ra/điều kiện chuyển bước |
+| --- | --- | --- |
+| Tiếp nhận | Chủ trì chức năng | Issue có mục tiêu/lỗi, phạm vi, mức ảnh hưởng, tiêu chí, log liên quan |
+| Chốt phương án | Chủ trì + vai trò bị ảnh hưởng | Phiên bản main, giải pháp, người ghi phần chung, tương thích/rollback |
+| Thực hiện | Chủ trì | Branch riêng, ca tái hiện, bản sửa, test phù hợp |
+| Review | Vai trò liên quan | Kiểm diff, tiêu chí, tác động, tài sản và nhật ký |
+| Nghiệm thu | TV6 + chủ trì | Kết quả đúng phiên bản/môi trường; ghi vấn đề còn lại |
+| Tích hợp/phát hành | TV4; TV5/TV6 hỗ trợ | Nhánh cập nhật, CI đạt, hội thoại xử lý, smoke sau merge, rollback |
 
-- Bàn giao: bộ ca kiểm thử có kết quả, báo cáo hồi quy/model, danh sách lỗi còn lại và checklist release. Không tự sửa rộng phần chức năng của TV1-3; xử lý test/tài liệu của mình hoặc phối hợp chủ trì khi lỗi chạm phần khác.
+Một branch/PR xử lý một đầu việc rõ ràng. Tên nhánh dùng `<loai>/<phamvi>/<ma-viec>-<ma-vai-tro>`, ví dụ `fix/lookup/12-sai-trang-tv1`. ID nhật ký thành viên: `LOG-YYYYMMDD-chucnang-maviec-tvN`; giữ ID/ngày cũ. Bảng ánh xạ, tên thật/email/liên hệ của thành viên không ghi trong phân công, Issue, PR hoặc ví dụ giao việc.
 
-- TV6 nghiệm thu, Khải quyết định merge/phát hành sau review và cổng chất lượng. Tác giả PR không tự duyệt PR của mình.
+Mỗi bàn giao có: mã việc/Issue; chủ trì/reviewer theo vai trò; mục tiêu/đầu vào/đầu ra; phạm vi/file/phiên bản nền; tiêu chí và kết quả trước/sau; test đã/chưa chạy; phụ thuộc/người ghi/rủi ro/rollback; PR/commit/log ID; trạng thái và việc còn lại.
 
-## 5. Quy tắc GitHub và tạo branch
+Cài đặt/test/branch/PR theo [CONTRIBUTING](../../CONTRIBUTING.md). Không push trực tiếp main, force-push nhánh chung hoặc ghi đè việc người khác. Nhóm review chéo dù GitHub hiện không bắt buộc approval; kiểm chính sách hiện hành trước merge.
 
-MỘT REPO MÃ CHUNG, MỘT NHÁNH MAIN ỔN ĐỊNH
+## 5. Kiểm soát chất lượng và thay đổi chung
 
-### Trước khi sửa
+Thay đổi ngoài phạm vi, API/schema/config/module chung cần Issue/PR và thống nhất với chủ trì bị ảnh hưởng trước ghi. Chốt một người ghi hoặc tách PR độc lập; giữ cả mục lịch sử khi xử lý xung đột. Sửa phần chung phải smoke tra cứu, QA và lịch.
 
-- Clone toàn bộ repo. Đọc quy tắc, nhật ký chung và các mục liên quan chức năng/file/lỗi; kiểm phiên bản main hiện tại. Không khôi phục mã cũ chỉ vì bản local dễ chạy hơn.
-
-- Mỗi việc có Issue hoặc mô tả đầu việc với chủ trì, phạm vi, tiêu chí và phần bị ảnh hưởng. Một branch cho một lỗi/nâng cấp rõ ràng; không gom nhiều chức năng không liên quan.
-
-- Tạo branch từ main mới nhất. Dùng mẫu <loai>/<phamvi>/<ma-viec>-<ten>; chữ thường không dấu, không khoảng trắng. Loại: feature, fix, refactor, test, docs, chore; phạm vi: lookup, qa, timetable, training, shared.
-
-- Ví dụ: fix/lookup/12-sai-trang-minh; feature/qa/18-cai-thien-trich-dan-lan; test/shared/21-hoi-quy-huy; docs/shared/25-cap-nhat-huong-dan-an. training là phạm vi công việc, không cấp quyền train cho người khác.
-
-### Một vòng branch - PR - merge
-
-- 1. Cập nhật main: git switch main; git pull --ff-only origin main. Tạo nhánh: git switch -c fix/lookup/12-sai-trang-minh. Các lệnh thực hiện lần lượt trong repo đã có remote.
-
-- 2. Sửa đúng phạm vi, kiểm thử và thêm log cùng PR. Trước commit, xem danh sách staged để loại .env, dữ liệu/model và file cá nhân.
-
-- 3. Push nhánh riêng: git push -u origin fix/lookup/12-sai-trang-minh. Mở PR vào main, mô tả lỗi trước/sau, file ảnh hưởng, log ID, kiểm thử và NOT_RUN.
-
-- 4. Trước merge: git fetch origin, rồi git merge origin/main trên nhánh của mình. Xử lý xung đột cùng chủ trì file; đọc log mới và kiểm lại sau thay đổi, không chọn toàn bộ ours/theirs để bỏ công việc người khác.
-
-- 5. Có ít nhất một reviewer khác tác giả; sửa phần chung cần reviewer từ từng chức năng bị ảnh hưởng. Khải merge sau các check áp dụng đạt; sau merge nhóm đồng bộ main.
-
-- Không push trực tiếp main, không force-push nhánh chung, không tự reset/ghi đè thay đổi của thành viên khác. Nên bật bảo vệ main và yêu cầu review/check; đây là quy tắc cần cấu hình khi có repo, chưa phải trạng thái GitHub đã bật.
-
-Tham khảo: [GitHub Docs - About protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches), [Git - git-switch](https://git-scm.com/docs/git-switch).
-
-## 6. Giới hạn thay đổi và tài sản Git
-
-LÀM ĐÚNG PHẦN VIỆC, BẢO VỆ HỢP ĐỒNG CHUNG
-
-### Không làm hỏng phần còn lại
-
-- Mỗi người chịu trách nhiệm hoàn thành phần được giao. Đọc caller, API, dữ liệu và log liên quan trước sửa; giữ hành vi đã được nghiệm thu. Chỉ refactor/đổi hợp đồng khi có lý do và phương án tương thích rõ.
-
-- Nếu cần sửa module ngoài phạm vi hoặc dùng chung: báo Issue/PR trước khi sửa, kèm lỗi tái hiện, file/chức năng ảnh hưởng, giải pháp nhỏ nhất, rủi ro, test cần chạy và rollback/migration nếu đổi schema.
-
-- Chủ trì liên quan và Khải thống nhất người ghi, thứ tự tích hợp và hướng xử lý. Có thể tách PR phần chung rồi PR chức năng. Không sửa ngầm, đổi API/format dữ liệu hoặc đè cả file để phần mình chạy được.
-
-- Chỉnh riêng máy qua .env/cấu hình local, không commit đường dẫn/token/settings cá nhân. Nếu thay đổi local là điều kiện để tái hiện hoặc chạy được, phải báo rõ và cập nhật cấu hình mẫu/hướng dẫn khi đã thống nhất.
-
-- Kiểm lại phần bị ảnh hưởng; sửa phần chung phải smoke tra cứu, QA và thời khoá biểu. Nếu chưa thể đảm bảo tương thích, ghi đang làm/NOT_RUN và chưa merge; không che lỗi bằng việc tắt test.
-
-| Đưa lên repo mã | Giữ ở kho/local riêng |
+| Nội dung | Bằng chứng nghiệm thu |
 | --- | --- |
-| app/, static/, scripts dùng chung, tests và mẫu tổng hợp | src/ nguồn thật; data/ DB, vector, model, adapter, dataset, lịch/hội thoại |
-| Dependency, launcher, config mẫu, CI, README, docs/team | Môi trường ảo, cache, log runtime, .env, khóa/token |
-| LICH_SU_DU_AN.md; metadata corpus; PDF phân công này | docs/project/ hồ sơ cá nhân, handoff và tích hợp công cụ riêng |
+| Mã/UI | Ca tái hiện/hồi quy, test phù hợp, smoke luồng bị ảnh hưởng |
+| Windows/Mac | Kiểm trực tiếp trên OS mục tiêu; OS khác không thay thế |
+| QA/OCR thật | Đối chiếu nguồn/ảnh và expected đã duyệt; mock chỉ kiểm hợp đồng |
+| Dữ liệu/model | Revision/hash/provenance, cổng trước học, holdout/retention, rollback |
+| Tài liệu | Vai trò/đầu ra/tiêu chí rõ; khớp mã, link đúng; không chứa dữ liệu riêng |
 
-Tuân thủ .gitignore; không dùng git add -f để vượt ranh giới. Nguồn/index/model thật chia sẻ bằng gói có phiên bản, hash và vị trí tải kiểm soát. Không merge SQLite/vector/weights giữa các branch.
+PR chỉ hoàn tất khi tiêu chí/review/kiểm liên quan đạt, nhật ký đầy đủ và phần chưa kiểm được nêu rõ. Chưa đủ thì giữ đang làm/chờ kiểm; không tắt test hoặc nới cổng để chuyển PASS.
 
-Giữ các nguyên tắc ban đầu: xử lý nội dung cục bộ; không sửa PDF nguồn để khớp OCR; không đoán phần nguồn không đọc được; lịch cá nhân không tự vào tập học; không nới cổng toàn corpus hay bỏ đánh giá độc lập để tuyên bố hoàn tất. Giữ giới hạn nội dung y tế: hỗ trợ học tập/tra cứu, không chẩn đoán hoặc kê đơn.
+## 6. Tài sản và hồ sơ
 
-## 7. Nhật ký thay đổi ứng dụng
+| Đưa lên Git | Quản lý riêng |
+| --- | --- |
+| Mã/UI/script dùng chung, test/mẫu tổng hợp | Nguồn thật; ảnh/lịch/hội thoại cá nhân |
+| Dependency, launcher/config mẫu, CI, README/docs nhóm | DB/vector/dataset/model/adapter, venv/cache/log, .env và khóa/token |
+| Nhật ký thay đổi, metadata corpus, PDF này | Hồ sơ nội bộ, bàn giao công cụ, bảng ánh xạ vai trò-thành viên |
 
-MỘT FILE CHUNG: LICH_SU_DU_AN.md Ở GỐC REPO
+Tuân thủ `.gitignore`, kiểm staged, không `git add -f`. Gói dữ liệu/model có version/hash/quyền/provenance. Xử lý nội dung cục bộ; không sửa PDF nguồn hoặc dựng phần không đọc được; lịch/hội thoại không tự vào tập học. Ứng dụng hỗ trợ học tập, không chẩn đoán/kê đơn.
 
-### Trước sửa và khi bàn giao
+`LICH_SU_DU_AN.md` là nhật ký thay đổi chung: ngày/giờ Asia/Ho_Chi_Minh, ID, vai trò/tác giả thay đổi, loại, trước/sau, file, tác động, kiểm chứng và giới hạn. Không chép prompt, hội thoại, đường dẫn máy hoặc metadata bàn giao cá nhân. Hiệu chỉnh giữ ID/ngày và lý do; hồ sơ nội bộ quản lý riêng.
 
-- Đọc lịch sử theo chức năng, file, lỗi hoặc quyết định liên quan. Chốt phiên bản/hành vi đang áp dụng; nếu thay quyết định cũ, dẫn log ID và lý do. Thêm ca hồi quy để không lặp lỗi hoặc ghi đè tính năng đã sửa.
+## 7. Kế hoạch và điều kiện phát hành
 
-- Nhật ký ghi ý chính của lỗi và thay đổi sản phẩm, không copy prompt, hội thoại hoặc log tool. Mỗi tác giả thêm mục mới trong cùng PR; không tạo nhật ký riêng cho từng người hoặc từng tính năng.
+| Giai đoạn | Công việc | Điều kiện hoàn tất |
+| --- | --- | --- |
+| Chuẩn bị | TV1-TV3 lập backlog; TV5 kiểm môi trường; TV6 lập test; TV4 chốt dữ liệu/model/quyền ghi | Việc có chủ trì, tiêu chí, phụ thuộc, mức ảnh hưởng |
+| Sửa/review | PR theo việc; thống nhất phần chung; TV6 tái kiểm; TV5 tích hợp | Review/test đạt, nhật ký đủ |
+| Tích hợp | Đồng bộ main, smoke ba luồng, kiểm Windows/Mac; TV4 hợp nhất gói dữ liệu duyệt | Có kết quả môi trường mục tiêu; phân loại vấn đề còn lại |
+| Phát hành | Đánh giá candidate độc lập, retention/rollback; TV4 quyết định | Cổng chất lượng đạt; lưu phiên bản/rollback |
 
-- Ghi ngày/tháng/năm và giờ, múi giờ Asia/Ho_Chi_Minh; người thực hiện; ID riêng; loại thay đổi; trước/sau; file/phần sửa; ảnh hưởng; kiểm thử; trạng thái và giới hạn. ID mẫu: LOG-20261009-qa-12-sua-trich-dan-minh.
+Training chỉ khi đủ cổng nguồn/tài nguyên. Phân công không xác nhận corpus sẵn sàng, model đạt hoặc mọi công việc hoàn tất.
 
-- Không xoá/đánh lại số các mục cũ. Hiệu chỉnh nội dung ghi sai bằng lý do và thời gian sửa; bảo toàn ID/ngày cũ. Nếu hai branch cùng thêm log, giữ cả hai mục hợp lệ và giải quyết ID trùng, không chọn bỏ một bên.
+Đánh dấu trang cục bộ và sao chép trích dẫn có nguồn là hai đề xuất sau ổn định, chưa giao triển khai. TV1 chủ trì; TV2/TV5 phối hợp theo phạm vi; TV6 kiểm nguồn/định dạng. Chốt Issue/tiêu chí trước làm. Xuất ICS, kiểm xung đột, lịch sử và tóm tắt đã có trong ứng dụng.
 
-- PASS chỉ cho kiểm chứng đã chạy. FAIL, đang làm, NOT_RUN hoặc N/A có lý do phải ghi rõ; không dùng green unit test để khẳng định chất lượng QA/OCR hoặc model.
+## 8. Tài liệu liên quan và phiên bản
 
-### Ví dụ cấu trúc mục log - minh hoạ, chưa triển khai
+- [Quy tắc dự án](../../README_QUY_TAC.md): phối hợp, ranh giới, cổng chất lượng.
+- [Đóng góp](../../CONTRIBUTING.md): môi trường, test, Issue, branch, PR, review.
+- [README](../../README.md), [Windows](../../README_WINDOWS.md), [Mac](../../README_MAC.md): cài đặt và sử dụng.
+- [Nhật ký](../../LICH_SU_DU_AN.md), [báo cáo](BAO_CAO_SUA_LOI_2026-10-09.md): kết quả đã/chưa nghiệm thu.
+- [PDF phân công](../../output/pdf/PHAN_CHIA_NHIEM_VU_DO_AN_NHOM.pdf): cập nhật cùng Markdown trong một PR.
 
-- Ngày: DD/MM/YYYY HH:mm (UTC+07). ID/người: LOG-<ngay>-<chucnang>-<viec>-<ten>. Loại: sửa lỗi / tính năng / cấu hình / dữ liệu-model / tài liệu.
-
-- Lỗi/mục tiêu: đường dẫn mở nguồn trỏ sai trang. Trước/sau: trước mở trang khác; sau mở đúng trang theo kết quả tra cứu. Phần sửa: file/API/UI cụ thể; không ghi lại câu người dùng đã hỏi.
-
-- Liên quan/ảnh hưởng: log cũ cần giữ, QA dùng chung link nguồn. Kiểm thử: ca tái hiện, ca hồi quy và môi trường/model/data version. Trạng thái/giới hạn: kết quả thật và phần chưa chạy.
-
-PR chỉ hoàn tất khi đúng phạm vi, review đạt, test liên quan đạt, nhật ký đầy đủ, phần chưa chạy được báo rõ và không phát sinh hồi quy chưa xử lý. Sau merge, TV6 kiểm tích hợp; Khải phát hành model khi các cổng độc lập đạt.
-
-Hồ sơ hội thoại cũ giữ local để truy nguyên, không phải nhật ký chung của ứng dụng. YC-167 được biên tập thành kết quả thay đổi sản phẩm; YC-168 ghi cập nhật nhóm 6 người và quy tắc mới. Không chép prompt vào các mục mới.
-
-## 8. Cải tiến nhỏ và lộ trình thực hiện
-
-ĐỀ XUẤT, CHƯA GIAO TRIỂN KHAI TÍNH NĂNG MỚI
-
-### Hai cải tiến có thể cân nhắc sau ổn định
-
-- Đánh dấu trang tài liệu cục bộ: lưu tham chiếu tài liệu/trang để mở lại nhanh; dùng định danh/hash nguồn và báo khi nguồn đổi/mất. Không sao chép nội dung sách, không thêm tài khoản hoặc đồng bộ cloud. TV1 chủ trì, TV5 hỗ trợ UI, TV6 kiểm nguồn thay đổi.
-
-- Sao chép trích dẫn có nguồn: nút copy trích đoạn kèm tên tài liệu và số trang để ghi chú học tập; giữ nguyên nội dung nguồn, không gọi LLM. TV1 và TV2 thống nhất định dạng dùng chung; TV6 kiểm copy không làm mất thông tin nguồn.
-
-- Chỉ triển khai sau khi nhóm chốt Issue và tiêu chí, xác nhận chưa trùng chức năng đang có ở nhánh mới nhất. Không mở thêm hệ thống flashcard, quản lý học tập, tài khoản/cloud hoặc microservice chỉ để chia người.
-
-- Xuất .ics, kiểm xung đột lịch, lịch sử hội thoại và tóm tắt đã có trong mã hiện tại; không ghi là tính năng mới. Tập trung sửa lỗi và kiểm chứng các chức năng này trước mở rộng.
-
-### Lộ trình gọn cho 6 người
-
-- Giai đoạn 1: TV1-3 lập backlog lỗi theo ba chức năng; TV5 thử chạy Windows và rà điểm dùng chung; TV6 lập ma trận test; Khải xác minh nguồn/corpus/job và bản model. Chốt trọng số đầu việc, không chia đều theo số feature.
-
-- Giai đoạn 2: làm PR nhỏ có log, reviewer và test; phần chung thống nhất trước. TV6 tái kiểm lỗi và chống hồi quy; TV5 tích hợp UI/môi trường.
-
-- Giai đoạn 3: đồng bộ main, smoke cả ba chức năng, nghiệm thu trực tiếp Windows/Mac. Khải hợp nhất dữ liệu theo gói đã duyệt; training chỉ khi đủ cổng nguồn và tài nguyên.
-
-- Giai đoạn 4: đánh giá candidate độc lập, giữ kiến thức cũ và rollback; Khải quyết định phát hành. Chỉ sau đó cân nhắc hai cải tiến nhỏ bằng Issue riêng.
-
-Tài liệu này phân công và đặt quy tắc, không xác nhận đã sửa mọi lỗi, đã chạy Windows/CI hay đã huấn luyện model. Môi trường Windows và suy luận thật cần kết quả kiểm trực tiếp; mỗi PR ghi kết quả của chính phiên bản đó.
-
-Tài liệu dùng chung trong repo: README_QUY_TAC.md, CONTRIBUTING.md, README_WINDOWS.md, LICH_SU_DU_AN.md và docs/team/PHAN_CONG_6_NGUOI.md. PDF lập ngày 09/10/2026; cập nhật PDF và bản Markdown trong cùng PR nếu phân công thay đổi.
+TV6 tăng phiên bản khi trách nhiệm/quy trình/tiêu chí đổi; TV4 và chủ trì bị ảnh hưởng review. Bản 1.1 chuẩn hóa giao việc theo YC-179, giữ sáu vai trò, ba chức năng và các cổng nguồn/model đã chốt.

@@ -5,6 +5,9 @@
 - Cập nhật: 10/10/2026 15:49 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-10T15:49:49+07:00.
 - Mục mới nhất: **[YC-175](#yc-175)**.
 - Nhật ký chung có **9 mục**: 5 môi trường/chức năng (YC-167/170/173/174/175), 2 tổ chức/tài liệu (YC-168/172), 1 phát hành GitHub (YC-169), 1 rà soát/nghiệm thu (YC-171).
+- Cập nhật: 09/10/2026 17:34 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-09T17:34:05.950966+07:00.
+- Mục mới nhất: **[YC-179](#yc-179)**.
+- Nhật ký chung có **13 mục**: 5 môi trường/chức năng (YC-167/170/173/175/177), 3 tổ chức/tài liệu (YC-168/172/179), 1 phát hành GitHub (YC-169), 3 rà soát/nghiệm thu (YC-171/174/178), 1 làm rõ quyền/quy trình (YC-176).
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
   [quy trình PR](CONTRIBUTING.md), [Windows](README_WINDOWS.md).
 
@@ -28,20 +31,22 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 | YC-164/167, YC-168 bổ sung PDF | Mã/UI/test/config/docs/log/metadata/PDF phân công qua Git; dữ liệu/model thật riêng | YC-169 cho phép đưa mã lên repo Study-Agent; dữ liệu thật giữ riêng. |
 | Cổng nguồn/model hiện có | Một writer chính; toàn nguồn review, audit live complete: true và đánh giá độc lập trước kích hoạt | Giữ nguyên; lượt YC-168 không index/train. |
 
-## Mẫu mục mới
+| YC-179 làm rõ YC-178 | Giữ tên/email tác giả và attribution Git; phân công/giao việc dùng TV1-TV6; bảng ánh xạ quản lý riêng | Đã áp dụng; thay đề xuất ẩn toàn bộ danh tính ở YC-178, không đổi lịch sử Git. |
 
-```markdown
-<a id="log-ID"></a>
-### <ID duy nhất, ví dụ LOG-YYYYMMDD-chucnang-maviec-ten> - DD/MM/YYYY HH:mm (UTC+07)
-- Người thực hiện / loại thay đổi:
-- Lỗi hoặc mục tiêu (ý chính):
-- Trước / sau thay đổi:
-- Phần/file sửa và cách xử lý:
-- Log/phiên bản liên quan; lý do thay quyết định nếu có:
-- Ảnh hưởng/phối hợp với phần còn lại:
-- Kiểm thử: môi trường/model/data version, ca tái hiện/hồi quy, kết quả:
-- Trạng thái: PASS / FAIL / đang làm / NOT_RUN / N/A có lý do:
-- Giới hạn, lỗi còn lại, rollback/bước tiếp:
+  ## Mẫu mục mới
+
+  ```markdown
+  <a id="log-ID"></a>
+  ### <ID duy nhất, ví dụ LOG-YYYYMMDD-chucnang-maviec-tvN> - DD/MM/YYYY HH:mm (UTC+07)
+  - Người thực hiện / loại thay đổi:
+  - Lỗi hoặc mục tiêu (ý chính):
+  - Trước / sau thay đổi:
+  - Phần/file sửa và cách xử lý:
+  - Log/phiên bản liên quan; lý do thay quyết định nếu có:
+  - Ảnh hưởng/phối hợp với phần còn lại:
+  - Kiểm thử: môi trường/model/data version, ca tái hiện/hồi quy, kết quả:
+  - Trạng thái: PASS / FAIL / đang làm / NOT_RUN / N/A có lý do:
+  - Giới hạn, lỗi còn lại, rollback/bước tiếp:
 ```
 
 ## Nhật ký chung
@@ -74,14 +79,14 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Người thực hiện: Codex; loại: tổ chức nhóm, tài liệu và quy tắc nhật ký.
 - Mục tiêu: nhóm mở rộng 4 lên 6; chỉ một người huấn luyện; giao việc rõ trên ba chức
   năng hiện có, bảo vệ phần chung và đổi log từ lịch sử prompt sang lịch sử ứng dụng.
-- Trước/sau: trước 3 chủ trì + Khải và log còn chứa prompt; sau giữ 4 nhiệm vụ gốc,
+- Trước/sau: trước 3 chủ trì + TV4 và log còn chứa prompt; sau giữ 4 nhiệm vụ gốc,
   thêm giao diện/môi trường và kiểm thử/nghiệm thu/tài liệu, log tóm tắt ý chính lỗi/sửa.
 - Phần sửa: PDF phân công 8 trang, docs/team/PHAN_CONG_6_NGUOI.md, README_QUY_TAC,
   CONTRIBUTING, README/Windows, template PR, AGENTS local, .gitignore và file log này.
   Bảng 4 người được đánh dấu mốc cũ, liên kết chuyển sang bảng 6 người.
 - Quy tắc bổ sung: đọc log trước sửa; chỉ sửa đúng phạm vi; báo/phối hợp khi chạm phần
   chung hoặc cần chỉnh local; giữ tương thích và kiểm các chức năng ảnh hưởng; tên branch
-  theo loại/phạm vi/mã việc/người; review chéo rồi Khải merge; một nhật ký chung có ngày giờ.
+  theo loại/phạm vi/mã việc/người; review chéo rồi TV4 điều phối merge; một nhật ký chung có ngày giờ.
 - Đề xuất: đánh dấu trang cục bộ và sao chép trích dẫn có nguồn; chưa chốt triển khai.
   .ics/xung đột lịch/hội thoại/tóm tắt đã có, không xem là tính năng mới.
 - Ảnh hưởng: chỉ tài liệu/quy tắc; không đổi mã sản phẩm, corpus/model, không chạy training.
@@ -264,3 +269,184 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - API/giới hạn preview: Ollama thật không chạy; một lần tạo câu thật trả 422 và UI hiển thị lỗi an toàn, không lộ đáp án. Các endpoint search, examples, sessions, timetable và luồng mock practice/answer trả 200; `/favicon.ico` trả 404. Hai fixture không có bài tập gốc nên preview xác nhận trạng thái không có kết quả; kết quả có bài tập chỉ được kiểm qua Python/Node test với nguồn tổng hợp. Browser console không có API đọc qua connector nên chưa xác nhận log console trực tiếp; không thấy lỗi JS trên giao diện.
 - NOT_RUN: toàn bộ `pytest` gồm test Mac/POSIX/MLX/private corpus; typecheck/build (repo không cấu hình); đánh giá câu hỏi với Ollama/model thật hoặc bộ mẫu chấm thủ công; hiển thị bài tập thật từ corpus; giả lập trực quan theme sáng. Không đo và không tuyên bố đạt 95%. Local Preview còn mở trên `127.0.0.1:8000` bằng demo fixture, không dùng dữ liệu/corpus cá nhân; chưa commit/push.
 - Cập nhật rà soát 10/10/2026 15:49 (UTC+07): nhãn ba tab khớp yêu cầu “Tạo câu hỏi”, “Ôn tập”, “Trích xuất bài tập mẫu”; câu ôn tập lưu cả lựa chọn người học và nội dung lựa chọn; bộ lọc bài tập chỉ nhận tiêu đề/nhãn câu rõ ràng để tránh coi câu phủ định như “không có bài tập” là nguồn bài tập. Kiểm chứng bổ sung: 16 test Python đặc thù và 8 test Node giao diện PASS; `py_compile`, `node --check` và `git diff --check` PASS. Chạy lại full suite không hoàn tất: lần mặc định 125 ca không tạo được thư mục `basetemp` ngoài sandbox; lần dùng thư mục tạm trong workspace dừng ở 7 ca không có tiến triển và được ngắt. Chạy riêng `test_document_lookup.py` cũng không có tiến triển; không ghi nhận kiểm chứng HTTP end-to-end mới sau rà soát. Không có cấu hình build/typecheck trong repo.
+
+<a id="yc-174"></a>
+### YC-174 - 09/10/2026 15:54 (UTC+07)
+
+- Người thực hiện: Codex; loại: rà soát merge, tài liệu và dependency.
+- Mục tiêu/log liên quan: giải thích PR YC-173 bị chặn merge; đối chiếu toàn bộ README
+  và requirements đã upload với mã/cách cài thực tế. Không mở yêu cầu huấn luyện.
+- Trước/sau: CI bản a893eb3 đạt, nhưng PR chưa review; API xác nhận bảo vệ main yêu cầu
+  một approval khác tác giả/người push, áp dụng admin; repo chỉ có tài khoản tác giả có
+  quyền ghi. Đã hướng dẫn mời thành viên, review Approve sau push cuối rồi merge.
+  Không thay protection/quyền người dùng hoặc tự merge; thiếu review không phải lỗi CI.
+- File/module đã đọc: 5 README, 3 requirements, CONTRIBUTING/log, app/server/config/
+  pdf_extractor/trained_client/mlx_infer/fine_tune/token_auditor/vision_ocr, scripts/dev,
+  run.py, installer Windows, workflow và test API. README đủ nền demo/quy tắc nhưng
+  còn thiếu dựng Mac/local/MLX, nguồn→index→dùng, test Node; quy tắc main chưa cập nhật.
+- Chẩn đoán: requirements cho phép PyMuPDF1.24.0 thiếu module pymupdf; chưa khai Pydantic2
+  dù dùng field_validator; FastAPI0.110.0/Starlette0.36.3 với HTTPX0.28.1 hỏng TestClient.
+  Cài nguyên requirements với constraints hợp lệ và pip check PASS vẫn tái hiện 3 FAIL.
+- Kiểm chứng phương án riêng: Python3.12/Mac, FastAPI0.110.1/Pydantic2.7.4/PyMuPDF1.24.3/
+  Starlette0.37.2/HTTPX0.28.1: 3 ca tương thích + pip check PASS; 110 feature PASS/1 warning
+  trên snapshot a893eb3, nguồn/data tạm, không endpoint model thật. Chưa áp dụng dependency.
+- Ảnh hưởng thiết kế: cần yêu cầu API/version trực tiếp, bộ constraints đã kiểm và
+  profile MLX Mac tái tạo runtime; giữ Windows không MLX và ranh giới dữ liệu/model.
+  README thư mục corpus/fixture phù hợp vai trò, không coi cấu trúc quy ước là importer đã có.
+- Phần sửa: chỉ báo cáo local docs/project/readme-requirements-audit-2026-10-09/BAO_CAO.md,
+  nhật ký/checkpoint. Triển khai sản phẩm/RED–GREEN/handoff N/A vì kiểm tra; không đổi code,
+  corpus/GPU/provider/model, không push thêm. Windows candidate/full install/model thật/
+  full suite/readiness/training NOT_RUN; các hướng sửa tài liệu/dependency là đề xuất.
+- Trạng thái: hoàn tất kiểm tra; PR vẫn chờ reviewer hợp lệ, các thiếu sót mới chưa sửa.
+  Cập nhật kết quả: 2026-10-09T15:54:56.958075+07:00; bằng chứng runtime/API/CI và inventory trong cùng thư mục báo cáo.
+
+
+<a id="yc-175"></a>
+### YC-175 - 09/10/2026 16:16 (UTC+07)
+
+- Người thực hiện: Codex; loại: sửa dependency và hướng dẫn dự án/đóng góp.
+- Mục tiêu/log liên quan: xử lý các phát hiện YC-174, review CONTRIBUTING đúng vai trò
+  hướng dẫn đóng góp và đẩy bản sửa GitHub. Baseline PR a893eb3; giữ bản sửa YC-173.
+- Trước/sau: requirements từng cho phép 3 tổ hợp hỏng import/API test; sau khai Pydantic2,
+  nâng minimum PyMuPDF/FastAPI và cố định phiên bản/dependency graph. Tách runtime web,
+  dev/test và runtime MLX Mac; Windows wrapper vẫn cài đủ feature-test như trước.
+- File sửa: requirements.txt, requirements-dev.txt, requirements-windows.txt,
+  requirements-mlx.txt, constraints-web-py312.txt, constraints-mlx-py313.txt;
+  workflow thêm pip check/cache các file cấu hình; .gitignore chỉ cho phép 5 file mới.
+- Tài liệu: README chính thêm kiến trúc/sử dụng/profile/test/API/giấy phép; README_MAC
+  mới hướng dẫn Python3.12/Ollama/.env/local-index/MLX3.13/OCR/troubleshooting; Windows
+  thêm nguồn→index→dùng và test Node; quy tắc/phân công phản ánh main đã bảo vệ và policy mới; corpus/fixture
+  giữ đúng vai trò, dẫn thao tác nguồn riêng. CONTRIBUTING trước đúng quy trình nhóm
+  nhưng thiếu onboarding/Issue/test/PR/review cụ thể; sau đủ các bước và ranh giới tài sản.
+- Kiểm chứng local: venv mới Python3.12 cài profile Windows/dev thành công, pip check
+  và 3 ca PDF/Pydantic/TestClient PASS; 110 feature PASS (6 cảnh báo dependency),
+  3 UI PASS trên Node24; CI dùng Node22 để kiểm Windows/Mac. Venv riêng Mac3.13
+  cài MLX0.32.2/MLX-LM0.31.3/Transformers5.17.0 và 34 phụ thuộc thành công,
+  pip check PASS; chỉ đọc metadata, không model inference hoặc training.
+- Review/ảnh hưởng: Codex triển khai trên checkout cách ly độc quyền và review diff/
+  producer-consumer riêng; không gọi đây là review độc lập bởi thành viên. Profile MLX
+  theo JSONL local đã duyệt mà pipeline dùng; không kéo extra dataset loader ngoài phạm vi.
+  Constraints phiên bản tách 3.12/3.13; không đổi app/backend/model đang hoạt động.
+- CI: PR run 37911184856 trên c879d02 PASS: Windows/Mac mỗi OS 110 feature +
+  3 UI Node22; pip check/demo, PowerShell parse/contract và installer DemoOnly Windows
+  PASS; history PASS. Link: https://github.com/ng-wngkh07/Study-Agent/actions/runs/37911184856.
+- Phát hành: PR #1 được chủ repo merge trong lúc tác vụ đang chạy; chuyển bản mới sang
+  codex/fix-project-guides, đồng bộ origin/main fdd9adf; kết quả CI/commit cập nhật
+  trong báo cáo dùng chung và evidence. PR #2: https://github.com/ng-wngkh07/Study-Agent/pull/2. Không tự merge hoặc thay protection/reviewer.
+- Giới hạn: full installer Windows mới, model QA/VLM/MLX thật, toàn suite/corpus
+  readiness/training NOT_RUN; cài profile và test mock không nghiệm thu các phần này.
+- Trạng thái tại cập nhật 2026-10-09T16:28:28.217575+07:00: hoàn tất sửa và xuất bản PR #2; hồ sơ local
+  docs/project/documentation-fixes-2026-10-09/; báo cáo chung docs/team/BAO_CAO_SUA_LOI_2026-10-09.md.
+
+<a id="yc-176"></a>
+### YC-176 - 09/10/2026 16:16 (UTC+07)
+
+- Người thực hiện: Codex; loại: làm rõ chính sách review và quyền merge.
+- Mục tiêu: phân biệt một người phê duyệt, không cần người khác duyệt và chỉ chủ repo
+  được merge; liên quan bảo vệ main YC-173/174 và hướng dẫn đóng góp YC-175.
+- Giải thích theo bản kiểm YC-173/174: cần 1 approval từ người khác tác giả/người push cuối có
+  quyền ghi. Điều phối viên duyệt PR thành viên được; tác giả không tự Approve PR. Nếu chủ repo
+  quyết định cho tự merge PR của mình, cần bỏ Require approvals và Require approval
+  of the most recent reviewable push, giữ PR/CI. Chỉ hướng dẫn, chưa chọn áp dụng.
+- Quyền merge: người có quyền ghi có thể merge khi thỏa bảo vệ nhánh; bỏ review không
+  tự giới hạn merge cho chủ dự án. Repo hiện chỉ tài khoản chủ có quyền ghi; collaborator
+  được cấp quyền ghi sau này cũng có khả năng merge. Quy tắc điều phối viên merge trong tài liệu
+  là phối hợp nhóm, chưa là giới hạn quyền được GitHub cưỡng chế.
+- Phần đọc/bằng chứng: API protection/collaborators/PR hiện hành, CONTRIBUTING,
+  README_QUY_TAC và GitHub Docs về required reviews. Ảnh hưởng thiết kế: nếu sau này
+  muốn chỉ chủ repo merge cần cơ chế quyền/gate riêng; chưa có yêu cầu triển khai đó.
+- Trước/sau/file sửa: ghi lời giải thích và giới hạn vào log; bổ sung phân biệt quyền
+  với quy trình trong CONTRIBUTING. Không đổi GitHub policy/quyền hay mời tài khoản.
+- Kiểm thử triển khai/RED–GREEN/handoff N/A vì giải thích; API readback được kiểm.
+  Trạng thái: hoàn tất làm rõ; cập nhật 2026-10-09T16:16:00.615613+07:00. Không tự coi câu hỏi là lệnh tắt review.
+
+- Readback bổ sung 2026-10-09T16:24:45.490701+07:00: PR #1 đã merge lúc 16:10:20 UTC+07 bởi chủ repo,
+  main fdd9adf. Approval count=0, last-push approval=false; CI/strict/conversation/admin
+  và cấm force-push/xóa giữ. Có hai collaborator ngoài chủ có quyền ghi, có thể merge
+  khi checks đạt. Thay đổi GitHub do chủ repo thực hiện trong lúc tác vụ này chạy;
+  Codex chỉ đọc lại/cập nhật hướng dẫn, không tự đổi policy hoặc merge. Mô tả ở trên
+  về thiếu review/duy nhất tác giả là trạng thái cũ YC-173/174, đã được thay thế bởi readback này.
+
+<a id="yc-177"></a>
+### YC-177 - 09/10/2026 16:42 (UTC+07)
+
+- Người thực hiện: Codex; loại: tiếp tục sửa lỗi sản phẩm từ rà soát.
+- Mục tiêu/log liên quan: tiếp nối bản sửa YC-173/175 và các lỗi phần mềm F-01–F-05
+  của audit ngày 08/10 (khác F01–F04 GitHub); PR2/2eae3af vẫn OPEN, CI đạt.
+- Chẩn đoán/RED: 8/16 ca mới thất bại đúng hành vi: QA nhận ID nguồn sai lẫn đúng
+  hoặc không citation; reindex mất metadata/chunks khi lỗi embedding/SQL; timestamp ICS
+  sai, TEXT không escape/fold, giờ chuỗi một chữ số bị loại hoặc nhận khoảng đảo.
+  Harness cũ QA bị gate cấu hình trước khi sinh; test mới dùng stub theo hợp đồng suite.
+- Trước/sau: câu trả lời có ID sai hoặc không citation chuyển sang từ chối an toàn;
+  vẫn bỏ marker khi hiển thị nguồn đúng. Chuẩn bị vector trước khi ghi; thay metadata/
+  chunks/FTS chung transaction, rollback giữ cả vector cũ và retry được; batch thiếu
+  vector bị chặn; lỗi đọc lại tài liệu giữ chỉ mục cũ và hash cũ để retry. ICS dùng DTSTAMP UTC đúng, escape TEXT và fold 75 UTF8 octet;
+  giờ OCR so sánh theo phút rồi zero-pad, giữ giờ ngoài miền/đảo/cùng giờ unresolved.
+- File sửa: app/rag_agent.py, app/indexer.py, app/timetable_ics.py, app/timetable_table.py;
+  tests/test_audit_regressions.py (18 ca tổng hợp), pytest.windows.ini thêm ca vào CI;
+  nhật ký/báo cáo chung. Không thêm dependency runtime/dev; parser độc lập cài vào tmp.
+- Kiểm chứng local: 128 feature PASS/6 warning, 14 regression index/retention/backfill
+  PASS, 3 UI PASS. Parser độc lập icalendar7.3.0 PASS UTC/timezone/TEXT roundtrip/
+  Unicode/fold/no injected property. Codex review diff/caller riêng; không gọi là review
+  độc lập của thành viên. Vector rỗng và lỗi extraction tái hiện riêng rồi GREEN sau sửa.
+- Kiểm soát tích hợp: triển khai trong môi trường cô lập; đối chiếu hash phiên bản nền
+  trước tích hợp. Dữ liệu, chỉ mục và model chính giữ nguyên; không gián đoạn tác vụ dữ liệu.
+- Phát hành: tiếp tục nhánh codex/fix-project-guides và PR2 theo quyền push đã giao;
+  giữ sửa YC-175, không tự merge/chỉnh protection/quyền. CI 37913747551 trên commit 37849e3 PASS: Windows/Mac mỗi OS 128 feature +3 UI Node22; pip/demo/Windows PowerShell hợp đồng/DemoOnly và history PASS. Link: https://github.com/ng-wngkh07/Study-Agent/actions/runs/37913747551.
+- Giới hạn: Q-01 nội dung model thiếu điều kiện chưa nghiệm thu; citation ID đúng không
+  chứng minh mệnh đề đúng nguồn. Full installer Windows mới/model thật/full suite/
+  corpus readiness/training NOT_RUN; các gate giữ. Không sửa báo cáo audit 08/10 đã đóng.
+- Trạng thái: hoàn tất sửa, xuất bản PR #2 và CI kiểm chứng; cập nhật 2026-10-09T16:52:32.261905+07:00; bằng chứng
+  local docs/project/product-fixes-2026-10-09/.
+
+<a id="yc-178"></a>
+### YC-178 - 09/10/2026 17:13 (UTC+07)
+
+- Người thực hiện: Codex; loại: rà soát bảo mật/thông tin riêng trước chia sẻ.
+- Mục tiêu: kiểm nội dung GitHub, toàn lịch sử reachable, PR/CI và artifact; liên quan ranh giới Git YC-169/171/175 và phát hành YC-177.
+- Baseline: main da566c4, PR2 đã được chủ repo merge lúc16:58:13; audit chỉ đọc, không sửa nguồn/quyền hoặc đẩy lại lịch sử.
+- Kiểm chứng: 196 file main, 3 branch/2 PR refs, 12 commit/237 blob; Gitleaks8.30.1 quét main/patch lịch sử/PR/log CI/text PDF không phát hiện secret; 19 log CI đọc được. Hai PDF và ảnh demo được xem metadata/nội dung; không .env/DB/vector/model/corpus/hồ sơ cá nhân trong refs.
+- Phát hiện còn mở: attribution tên thật trong11 file và email local-machine trong9 commit. Chưa đáp ứng yêu cầu ẩn toàn bộ danh tính; không nhầm metadata với API key. Không chép giá trị email/khóa vào nhật ký.
+- Trước/sau: hoàn tất audit và phương án duyệt; checkout xuất bản riêng dùng GitHub+noreply cho commit sau. Không đổi config global/.git gốc, không rewrite/force-push; nội dung công khai chưa ẩn danh.
+- Review/giới hạn: scanner + review scope không chứng minh tuyệt đối; SHA cũ không truy xuất được không bảo đảm purge cache. Rewrite có thể đổi SHA/mở force-push tạm/ảnh hưởng hai PR và bản clone; cần xác nhận trước bước này. Giấy phép/attribution cần xử lý có chủ đích.
+- Thực thi hành vi/RED–GREEN/handoff/training N/A do audit; không chạm writer corpus. File sửa local: hồ sơ này, STATE, báo cáo/scan evidence docs/project/security-audit-2026-10-09/ (giữ local).
+- Trạng thái: audit hoàn tất; privacy cleanup OPEN, chưa thực hiện rewrite/publish; cập nhật 2026-10-09T17:13:51.059577+07:00.
+
+
+<a id="yc-179"></a>
+### YC-179 - 09/10/2026 17:34 (UTC+07)
+
+- Người thực hiện: Codex; loại: tổ chức nhóm và chuẩn hóa tài liệu nghiệp vụ.
+- Mục tiêu: giữ tên/email tác giả phục vụ bản quyền; dùng mã vai trò trong phân công,
+  giao việc và ví dụ; hoàn thiện tài liệu theo phạm vi, đầu ra và tiêu chí nghiệm thu.
+- Trước/sau: tài liệu còn tên điều phối viên trong phần giao việc, mô tả trùng lặp
+  và nội dung bàn giao nội bộ; sau thống nhất TV1-TV6, trách nhiệm/review/nghiệm thu,
+  quy trình thay đổi, ranh giới tài sản, kế hoạch và điều kiện phát hành.
+- File sửa: README chính/Windows/Mac/quy tắc, CONTRIBUTING, corpus/README, mẫu PR,
+  phân công Markdown và PDF bản 1.1, báo cáo sửa lỗi, nhật ký chung.
+- Quyết định: thay đề xuất ẩn mọi danh tính ở YC-178 bằng giữ nguyên LICENSE và
+  metadata tác giả trong Git; bảng ánh xạ thành viên quản lý riêng. Không rewrite lịch sử.
+- Hiệu chỉnh các mục cũ theo YC-179: thay tên trong trách nhiệm vận hành bằng vai trò,
+  bỏ đường dẫn máy/metadata bàn giao khỏi YC-177; giữ ID, ngày và kết quả kiểm chứng cũ.
+- Kiểm chứng: PDF 5 trang đã render và xem đủ; tiếng Việt/bảng/phân trang đạt.
+  58 liên kết nội bộ và 13 ID lịch sử đạt; 196 file Git cùng văn bản PDF được quét
+  bằng Gitleaks 8.30.1: 0 phát hiện bí mật; ranh giới tài sản đạt.
+  LICENSE giữ nguyên byte; không đổi mã/app/test/dependency hoặc commit lịch sử.
+- Ảnh hưởng: chỉ tài liệu; sáu vai trò, ba chức năng và cổng nguồn/model giữ nguyên.
+  Test hành vi/RED-GREEN/huấn luyện N/A vì không sửa thực thi; CI kiểm trên PR xuất bản.
+- Trạng thái: hoàn tất tài liệu và kiểm tra cục bộ; xuất bản qua branch/PR riêng,
+  không tự merge hoặc đổi bảo vệ nhánh. Cập nhật 2026-10-09T17:34:05.950966+07:00.
+- Giới hạn: nghiệm thu model thật/Windows full installer/corpus và hiệu năng còn mở
+  theo YC-175/177; tài liệu không tự xác nhận các phần đó đã hoàn thành.
+
+<a id="yc-180"></a>
+### YC-180 - 09/10/2026 21:45 (UTC+07)
+
+- Người thực hiện: Codex; loại: tài liệu phương án cải tiến và tài sản dự án.
+- Lỗi/mục tiêu: bổ sung tài liệu đề xuất 8 phương án cải tiến chức năng QA (Improvement_QA_Study_Agent.docx) nhằm nâng cao độ tin cậy và khả năng kiểm chứng cho sinh viên.
+- Trước/sau: trước chưa có tài liệu tổng hợp đánh giá công sức và rủi ro; sau có báo cáo phân tích chi tiết 8 phương án từ A đến H phục vụ định hướng phát triển.
+- Phần sửa: thêm mới file Improvement_QA_Study_Agent.docx vào thư mục gốc dự án.
+- Kiểm thử: kiểm tra tính toàn vẹn file docx, tracking đúng nhánh docs-qa-improvements và không ảnh hưởng mã nguồn.
+- Ảnh hưởng: thuần tài liệu tài sản, không can thiệp luồng runtime hay thay đổi mã nguồn hệ thống.
+- Trạng thái: PASS.
+- Giới hạn, lỗi còn lại, rollback/bước tiếp: không có.

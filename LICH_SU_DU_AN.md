@@ -2,9 +2,9 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 10/10/2026 17:02 (Asia/Ho_Chi_Minh, UTC+07); ISO: 2026-10-10T17:02:25.394988+07:00.
-- Mục mới nhất: **[LOG-20261010-ui-pr6-fix-codex](#log-log-20261010-ui-pr6-fix-codex)**.
-- Nhật ký chung có **17 mục**: 8 môi trường/chức năng (YC-167/170/173/175/177/181/182 và LOG-20261010-ui-pr6-fix-codex), 4 tổ chức/tài liệu (YC-168/172/179/180), 1 phát hành GitHub (YC-169), 3 rà soát/nghiệm thu (YC-171/174/178), 1 làm rõ quyền/quy trình (YC-176).
+- Cập nhật: 2026-10-10T22:35:29.940756+07:00
+- Mục mới nhất: **[YC-190](#yc-190)**.
+- Nhật ký chung có **25 mục**: 7 môi trường/chức năng (YC-167/170/173/175/177/185 và LOG-20261010-ui-pr6-fix-codex), 3 tổ chức/tài liệu (YC-168/172/179), 2 phát hành GitHub (YC-169/190), 6 rà soát/nghiệm thu (YC-171/174/178/181/184/186), 4 làm rõ quyền/quy trình (YC-176/182/183/188), 3 dữ liệu corpus/huấn luyện (YC-180/187/189). Các mã trùng YC-180–183 chứa cả mốc local và GitHub, không tính hai lần.
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
   [quy trình PR](CONTRIBUTING.md), [Windows](README_WINDOWS.md).
 
@@ -26,24 +26,26 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 | YC-168 thay phân công nhóm ở YC-167 | 3 chủ trì chức năng + huấn luyện + giao diện/môi trường + kiểm thử/tài liệu | Phương án 6 người đã lập để nhóm chốt. |
 | YC-168 hiệu chỉnh cách ghi YC-154/167 | Nhật ký tóm tắt lỗi/thay đổi sản phẩm; không lưu prompt; đọc log trước sửa | Đã áp dụng cho file chung và quy tắc. |
 | YC-164/167, YC-168 bổ sung PDF | Mã/UI/test/config/docs/log/metadata/PDF phân công qua Git; dữ liệu/model thật riêng | YC-169 cho phép đưa mã lên repo Study-Agent; dữ liệu thật giữ riêng. |
-| Cổng nguồn/model hiện có | Một writer chính; toàn nguồn review, audit live complete: true và đánh giá độc lập trước kích hoạt | Giữ nguyên; lượt YC-168 không index/train. |
-
+| Cổng nguồn/model trước YC-188 | Một writer chính; toàn nguồn review, audit live complete: true và đánh giá độc lập trước kích hoạt | Phạm vi toàn bộ trang được YC-188 thay bằng phạm vi có 13 ngoại lệ cố định; các cổng chất lượng còn giữ. |
 | YC-179 làm rõ YC-178 | Giữ tên/email tác giả và attribution Git; phân công/giao việc dùng TV1-TV6; bảng ánh xạ quản lý riêng | Đã áp dụng; thay đề xuất ẩn toàn bộ danh tính ở YC-178, không đổi lịch sử Git. |
+| YC-180 hoàn tất corpus có thể đọc | Toàn bộ 1.064 trang có thể đọc mới đã review ảnh thật, nhúng vector; giữ 13 trang unresolved REPORT_ONLY | Hoàn tất 100% trang có thể đọc; sẵn sàng nghiệm thu. |
+| YC-187 nghiệm thu YC-180 | Audit live complete:false vì 13 trang chưa hoàn chỉnh; huấn luyện được yêu cầu sau khi corpus/dataset đạt | Quyết định phạm vi chờ được YC-188 giải quyết; snapshot audit này vẫn complete:false. |
+| YC-188 thay phạm vi cổng nguồn | Cho phép loại đúng 13 trang đã hash-bound, giữ toàn bộ nguồn gốc và nguồn còn lại phải được duyệt | Đã được người dùng chấp thuận; triển khai cổng/data/học còn cần kiểm chứng. |
 
-  ## Mẫu mục mới
+## Mẫu mục mới
 
-  ```markdown
-  <a id="log-ID"></a>
-  ### <ID duy nhất, ví dụ LOG-YYYYMMDD-chucnang-maviec-tvN> - DD/MM/YYYY HH:mm (UTC+07)
-  - Người thực hiện / loại thay đổi:
-  - Lỗi hoặc mục tiêu (ý chính):
-  - Trước / sau thay đổi:
-  - Phần/file sửa và cách xử lý:
-  - Log/phiên bản liên quan; lý do thay quyết định nếu có:
-  - Ảnh hưởng/phối hợp với phần còn lại:
-  - Kiểm thử: môi trường/model/data version, ca tái hiện/hồi quy, kết quả:
-  - Trạng thái: PASS / FAIL / đang làm / NOT_RUN / N/A có lý do:
-  - Giới hạn, lỗi còn lại, rollback/bước tiếp:
+```markdown
+<a id="log-ID"></a>
+### <ID duy nhất, ví dụ LOG-YYYYMMDD-chucnang-maviec-tvN> - DD/MM/YYYY HH:mm (UTC+07)
+- Người thực hiện / loại thay đổi:
+- Lỗi hoặc mục tiêu (ý chính):
+- Trước / sau thay đổi:
+- Phần/file sửa và cách xử lý:
+- Log/phiên bản liên quan; lý do thay quyết định nếu có:
+- Ảnh hưởng/phối hợp với phần còn lại:
+- Kiểm thử: môi trường/model/data version, ca tái hiện/hồi quy, kết quả:
+- Trạng thái: PASS / FAIL / đang làm / NOT_RUN / N/A có lý do:
+- Giới hạn, lỗi còn lại, rollback/bước tiếp:
 ```
 
 ## Nhật ký chung
@@ -254,7 +256,6 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Trạng thái: hoàn tất kiểm tra; PR vẫn chờ reviewer hợp lệ, các thiếu sót mới chưa sửa.
   Cập nhật kết quả: 2026-10-09T15:54:56.958075+07:00; bằng chứng runtime/API/CI và inventory trong cùng thư mục báo cáo.
 
-
 <a id="yc-175"></a>
 ### YC-175 - 09/10/2026 16:16 (UTC+07)
 
@@ -366,7 +367,6 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Thực thi hành vi/RED–GREEN/handoff/training N/A do audit; không chạm writer corpus. File sửa local: hồ sơ này, STATE, báo cáo/scan evidence docs/project/security-audit-2026-10-09/ (giữ local).
 - Trạng thái: audit hoàn tất; privacy cleanup OPEN, chưa thực hiện rewrite/publish; cập nhật 2026-10-09T17:13:51.059577+07:00.
 
-
 <a id="yc-179"></a>
 ### YC-179 - 09/10/2026 17:34 (UTC+07)
 
@@ -394,7 +394,30 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   theo YC-175/177; tài liệu không tự xác nhận các phần đó đã hoàn thành.
 
 <a id="yc-180"></a>
-### YC-180 - 09/10/2026 21:45 (UTC+07)
+### YC-180 - 09/10/2026 19:35 (UTC+07)
+
+- Người thực hiện: Antigravity; loại: dữ liệu corpus và lập chỉ mục tri thức.
+- Mục tiêu: Hoàn tất lập chỉ mục toàn bộ các trang có thể đọc còn lại của `phaitraidungsai.pdf` và corpus theo gói bàn giao `corpus-antigravity-20261008-yc157` (YC-155 / YC-157).
+- Trước / sau:
+  - Trước: 833 trang chưa hoàn chỉnh (824 OCR pending + 9 visual partial), trong đó `phaitraidungsai.pdf` còn dở dang nhiều trang.
+  - Sau: 1.064 trang có thể đọc mới đã được đối chiếu thị giác trực tiếp từ ảnh raster PNG gốc (150 DPI), lập transcript bảo toàn 100% chính tả và lỗi in ấn gốc, xuất bản và tính vector embedding (BGE-M3). 100% trang có thể đọc hoàn tất. Chỉ còn đúng 13 trang khuyết tật vật lý trong PDF gốc được ghi nhận trong `unresolved-source-pages.json`, giữ nguyên trạng thái REPORT_ONLY (không bịa chữ để hợp thức hóa).
+- Phần/file sửa:
+  - Dữ liệu: `data/knowledge_base.db` (`corpus_source_pages`, `documents`, `chunks`, `corpus_vector_provenance`).
+  - Đợt thẩm định: `data/evaluation/corpus-review-20261008/` (`codex-independent/`, `published-direct-reviews.json`, `direct-index-readback.json`, `latest-corpus-audit.json`, `remaining-all-pages-queue.json`, `independent-direct-readback.json`).
+  - Hồ sơ & checkpoint: `data/runtime/codex-study-task-tracker-2026-10-03.json`, `docs/project/STATE.md`, `LICH_SU_DU_AN.md`.
+- Kiểm thử / kiểm chứng:
+  - `verify_direct.py`: PASS toàn diện cả 1.064 trang reviewed. Chunks, full_text=1, dimensions=1024, model_digest khớp tuyệt đối.
+  - `audit_corpus`: 154 tài liệu, 22.705 trang (22.591 `text_verified`, 71 `blank_verified`, 30 `visual_verified`, 9 `visual_review_partial`, 4 `ocr_pending_review`), tổng 52.604 vector, invalid=0, missing=0, integrity="ok".
+  - Hàng đợi chờ (`remaining-all-pages-queue.json`): chính xác 13 trang, khớp 100% danh sách 13 trang khuyết tật nguồn cố định.
+- Quyết định / Tuân thủ:
+  - Tuân thủ YC-158: Không tạo hay kích hoạt bất kỳ lịch cron/tự động nào trên máy local.
+  - Giữ nguyên 13 trang unresolved cố định ở chế độ REPORT_ONLY.
+  - Không sửa mã sản phẩm, không sửa PDF nguồn, không chạy huấn luyện LoRA, không commit/push git tự ý.
+- Trạng thái: PASS; hoàn tất 100% các trang có thể đọc của toàn bộ corpus. Sẵn sàng cho bước nghiệm thu và huấn luyện mô hình khi có yêu cầu tiếp theo.
+
+#### Bản ghi GitHub cùng mã YC-180 — 09/10/2026 21:45 (UTC+07)
+
+- Hiệu chỉnh 10/10/2026 22:35 (UTC+07): phát hiện hai phiên cấp cùng mã cho nội dung khác nhau. Giữ nguyên mã và ngày của cả hai bản ghi; phần trên là mốc local, phần dưới bảo toàn nội dung đã có trên main `11122e7`. Các lần bổ sung sau dùng ID duy nhất; không xóa hoặc đánh lại số lịch sử.
 
 - Người thực hiện: Codex; loại: tài liệu phương án cải tiến và tài sản dự án.
 - Lỗi/mục tiêu: bổ sung tài liệu đề xuất 8 phương án cải tiến chức năng QA (Improvement_QA_Study_Agent.docx) nhằm nâng cao độ tin cậy và khả năng kiểm chứng cho sinh viên.
@@ -406,7 +429,23 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Giới hạn, lỗi còn lại, rollback/bước tiếp: không có.
 
 <a id="yc-181"></a>
-### YC-181 - 10/10/2026 08:49 (UTC+07)
+### YC-181 - 10/10/2026 16:19 (UTC+07)
+
+- Người thực hiện: Codex; loại: rà soát/nghiệm thu khả năng tích hợp Git.
+- Mục tiêu: chẩn đoán vì sao nhánh giao diện mới không merge được vào main; liên quan quy trình branch/PR và bảo vệ main YC-173/176.
+- Baseline live: main `c645f62`, nhánh chính xác `newUI` `d0aaaed`. GitHub Compare trả HTTP 404: `No common ancestor between main and newUI.`
+- Nguyên nhân đã kiểm chứng: newUI chỉ có một commit Initial commit, parents rỗng; lịch sử độc lập với main, không có merge base để GitHub tạo PR theo cách thông thường. Cách nhánh được tạo trên máy thành viên chưa xác minh.
+- Nội dung đối chiếu tree: newUI thêm static/layout.js, static/style.light-backup.css, static/theme.css, static/theme.js; khác static/app.js, static/index.html, static/style.css; thiếu Improvement_QA_Study_Agent.docx đang có ở main. Đây là so sánh snapshot, không phải diff từ tổ tiên chung.
+- Kiểm chứng khác: chưa có PR từ newUI; CI push của đúng SHA có Windows/Mac success, history skipped. Main bắt buộc Windows/Mac/history, strict=true, áp dụng cả admin; approval count=0. Thiếu approval không phải nguyên nhân hiện hành.
+- Đề xuất chưa triển khai: tạo nhánh từ main mới nhất, đưa thay đổi UI có chọn lọc sang; giữ file khác và nhật ký trên main, thêm mục log riêng, tạo PR và chạy đủ checks. Không tự coi câu hỏi là quyền nối lịch sử, commit/push hoặc merge.
+- Phần/file đọc: API commit/compare/tree/checks/protection/PR; AGENTS.md, README_QUY_TAC.md, LICH_SU_DU_AN.md, docs/project/STATE.md, .github/workflows/team-checks.yml, scripts/check_history.py.
+- Trước/sau/file sửa: xác định nguyên nhân và cách khắc phục; chỉ bổ sung hồ sơ local LICH_SU_DU_AN.md, STATE.md và bằng chứng docs/project/merge-diagnosis-2026-10-10/verification.json. Mã ứng dụng và các nhánh GitHub không đổi.
+- Kiểm thử/review: đối chiếu API live và cây file PASS cho chẩn đoán; kiểm bảo toàn ID/nội dung cũ và validate hồ sơ PASS. Triển khai/handoff/RED-GREEN N/A vì chỉ giải thích; test ứng dụng NOT_RUN vì mã không đổi.
+- Trạng thái: hoàn tất chẩn đoán; chưa sửa nhánh/merge. Cập nhật 2026-10-10T16:19:29.199760+07:00. Giới hạn: chưa review hành vi giao diện hoặc nghiệm thu bản tích hợp.
+
+#### Bản ghi GitHub cùng mã YC-181 — 10/10/2026 08:49 (UTC+07)
+
+- Hiệu chỉnh 10/10/2026 22:35 (UTC+07): phát hiện hai phiên cấp cùng mã cho nội dung khác nhau. Giữ nguyên mã và ngày của cả hai bản ghi; phần trên là mốc local, phần dưới bảo toàn nội dung đã có trên main `11122e7`. Các lần bổ sung sau dùng ID duy nhất; không xóa hoặc đánh lại số lịch sử.
 
 - Người thực hiện: Codex; loại: mở rộng QA với câu hỏi luyện tập và danh sách ôn lại cục bộ.
 - Mục tiêu/log liên quan: hỗ trợ tự kiểm tra nội dung đang học, giữ câu hỏi gắn với trang nguồn;
@@ -430,8 +469,22 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
   phiên làm bài hết sau 60 phút hoặc khi máy chủ khởi động lại. Mức độ đúng của đáp án, độ rõ ràng và
   thay đổi điểm trước/sau chưa được đo.
 
-  <a id="yc-182"></a>
-### YC-182 - 10/10/2026 09:15 (UTC+07)
+<a id="yc-182"></a>
+### YC-182 - 10/10/2026 16:22 (UTC+07)
+
+- Người thực hiện: Codex; loại: làm rõ quyền/quy trình khôi phục nhánh UI.
+- Mục tiêu: hướng dẫn xử lý khi dự án đã được copy/tải rồi git init thành lịch sử riêng; tiếp nối chẩn đoán YC-181, người dùng xác nhận trường hợp tạo nhánh này.
+- Trước/sau: nhánh newUI không có tổ tiên chung với main; cung cấp quy trình clone main vào thư mục mới, tạo nhánh từ main, lấy 7 file UI từ origin/newUI, thêm log, kiểm diff, commit/push và mở PR. Đây là hướng dẫn chưa xuất bản, không phải đã sửa nhánh trên GitHub.
+- Kiểm chứng live: main c645f62, newUI d0aaaed không đổi; Compare vẫn HTTP404 No common ancestor.
+- Kiểm chứng lệnh: clone cách ly ở tmp; git restore --source=origin/newUI cho 7 file UI; stage trong snapshot, kiểm diff đúng 7 file, merge-base HEAD/main bằng main hiện hành, tài liệu DOCX của main còn nguyên. PASS cho thao tác chuyển file/phạm vi; chưa commit, chưa push, chưa merge.
+- Phần/file đọc và sửa: đọc YC-181, STATE, .github/workflows/team-checks.yml, tài liệu Git clone/restore; chỉ bổ sung LICH_SU_DU_AN.md, STATE.md và merge-diagnosis-2026-10-10/recovery-verification.json. Snapshot tmp giữ riêng; mã sản phẩm/data/model trong checkout chính không đổi.
+- Ảnh hưởng thiết kế: tạo nhánh mới có chung lịch sử main, giữ branch newUI cũ để đối chiếu; dùng quy trình PR/CI hiện hành. Lệnh lấy phiên bản đã push; thay đổi local chưa push cần copy chọn lọc riêng.
+- Kiểm thử/review: kiểm thao tác Git và bảo toàn tài liệu PASS; kiểm ID/nội dung cũ và validate hồ sơ PASS. Test hành vi UI/full suite NOT_RUN; triển khai/handoff/RED-GREEN N/A vì hướng dẫn, không triển khai sửa repo của người dùng.
+- Trạng thái: hoàn tất hướng dẫn đã kiểm chứng thao tác. Khả năng mở PR sau người dùng thực hiện, CI, review và merge còn chưa kiểm; không đổi bảo vệ nhánh. Cập nhật 2026-10-10T16:22:23.750739+07:00.
+
+#### Bản ghi GitHub cùng mã YC-182 — 10/10/2026 09:15 (UTC+07)
+
+- Hiệu chỉnh 10/10/2026 22:35 (UTC+07): phát hiện hai phiên cấp cùng mã cho nội dung khác nhau. Giữ nguyên mã và ngày của cả hai bản ghi; phần trên là mốc local, phần dưới bảo toàn nội dung đã có trên main `11122e7`. Các lần bổ sung sau dùng ID duy nhất; không xóa hoặc đánh lại số lịch sử.
 
 - Người thực hiện: Codex; loại: tiếp tục hoàn thiện công cụ luyện tập, ôn lại và trích xuất bài tập mẫu.
 - Mục tiêu/log liên quan: tiếp nối YC-174 theo yêu cầu cập nhật, không dựng lại phần đã có; giữ một mục điều hướng duy nhất cho ba công cụ.
@@ -448,6 +501,61 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - NOT_RUN: toàn bộ `pytest` gồm test Mac/POSIX/MLX/private corpus; typecheck/build (repo không cấu hình); đánh giá câu hỏi với Ollama/model thật hoặc bộ mẫu chấm thủ công; hiển thị bài tập thật từ corpus; giả lập trực quan theme sáng. Không đo và không tuyên bố đạt 95%. Local Preview còn mở trên `127.0.0.1:8000` bằng demo fixture, không dùng dữ liệu/corpus cá nhân; chưa commit/push.
 - Cập nhật rà soát 10/10/2026 15:49 (UTC+07): nhãn ba tab khớp yêu cầu “Tạo câu hỏi”, “Ôn tập”, “Trích xuất bài tập mẫu”; câu ôn tập lưu cả lựa chọn người học và nội dung lựa chọn; bộ lọc bài tập chỉ nhận tiêu đề/nhãn câu rõ ràng để tránh coi câu phủ định như “không có bài tập” là nguồn bài tập. Kiểm chứng bổ sung: 16 test Python đặc thù và 8 test Node giao diện PASS; `py_compile`, `node --check` và `git diff --check` PASS. Chạy lại full suite không hoàn tất: lần mặc định 125 ca không tạo được thư mục `basetemp` ngoài sandbox; lần dùng thư mục tạm trong workspace dừng ở 7 ca không có tiến triển và được ngắt. Chạy riêng `test_document_lookup.py` cũng không có tiến triển; không ghi nhận kiểm chứng HTTP end-to-end mới sau rà soát. Không có cấu hình build/typecheck trong repo.
 
+<a id="yc-183"></a>
+### YC-183 - 10/10/2026 16:29 (UTC+07)
+
+- Người thực hiện: Codex; loại: làm rõ quyền/quy trình lưu thay đổi UI.
+- Mục tiêu: giải thích commit không tạo được sau chuyển file, tiếp nối YC-181/182.
+- Bằng chứng: ảnh terminal người dùng cho thấy branch new-ui-from-main, 3 file UI modified và 4 file untracked; thông báo no changes added to commit. Đây là trạng thái trong ảnh, chưa đọc trực tiếp máy Windows.
+- Chẩn đoán: file đã có trong working tree nhưng chưa stage; hướng dẫn thêm mục mới vào nhật ký, git add static LICH_SU_DU_AN.md, kiểm git diff --cached --stat và git status, rồi commit/push. git push -u origin HEAD dùng tên nhánh hiện tại new-ui-from-main, không giả định tên codex trong ví dụ YC-182.
+- Trước/sau: làm rõ bước staging cần có trước commit; chưa xác nhận người dùng đã thực hiện hoặc push thành công.
+- Phần/file đọc và sửa: đọc YC-182, STATE và ảnh terminal; chỉ cập nhật LICH_SU_DU_AN.md, docs/project/STATE.md local. Không sửa mã, index Git của người dùng, dữ liệu/model hoặc các nhánh GitHub.
+- Kiểm thử/review: đối chiếu thông báo Git trong ảnh và quy trình staging; kiểm bảo toàn mục cũ/ID và validate hồ sơ PASS. Triển khai/handoff/RED-GREEN N/A vì hướng dẫn; lệnh trên Windows/CI/test UI NOT_RUN.
+- Trạng thái: hoàn tất chẩn đoán và hướng dẫn; commit/push/PR của người dùng chưa kiểm chứng. Cập nhật 2026-10-10T16:29:42.038477+07:00.
+
+#### Bản ghi GitHub cùng mã YC-183 — 10/10/2026 19:55 (UTC+07)
+
+- Hiệu chỉnh 10/10/2026 22:35 (UTC+07): phát hiện hai phiên cấp cùng mã cho nội dung khác nhau. Giữ nguyên mã và ngày của cả hai bản ghi; phần trên là mốc local, phần dưới bảo toàn nội dung đã có trên main `11122e7`. Các lần bổ sung sau dùng ID duy nhất; không xóa hoặc đánh lại số lịch sử.
+
+- Người thực hiện: Antigravity; loại: tài liệu phân tích kỹ thuật toàn diện dự án.
+- Lỗi/mục tiêu: bổ sung bộ tài liệu phân tích chuyên sâu toàn bộ mã nguồn Study Agent gồm ý tưởng/mục tiêu/nghiệp vụ, cấu trúc mã nguồn/kiến trúc/schema CSDL và hướng dẫn triển khai/vận hành/troubleshooting thực tế.
+- Trước/sau: trước mới có tài liệu phân công và báo cáo sửa lỗi trong docs/team/; sau bổ sung 3 tài liệu chi tiết tại docs/:
+  + docs/01_Y_TUONG_DU_AN.md: Phân tích bài toán, triết lý Local-first, 4 luồng nghiệp vụ cốt lõi (Hybrid RAG, Document Lookup, Timetable Vision, Practice Engine), mô hình an toàn AI và bảng công nghệ.
+  + docs/02_CAU_TRUC_DU_AN.md: Kiểm kê toàn bộ repository, phân tích sâu các module backend trong app/, frontend, 3 schema SQLite (knowledge_base.db, history.db, timetable.db) và cơ chế GPU/File Lock.
+  + docs/03_CACH_TRIEN_KHAI_DU_AN.md: Hướng dẫn cài đặt Windows/macOS, biến môi trường, profiles demo/local, CLI run.py, quy trình kiểm thử tự động và ma trận xử lý 9 lỗi thường gặp.
+- Phần/file sửa: thêm docs/01_Y_TUONG_DU_AN.md, docs/02_CAU_TRUC_DU_AN.md, docs/03_CACH_TRIEN_KHAI_DU_AN.md và cập nhật LICH_SU_DU_AN.md.
+- Kiểm thử: kiểm tra liên kết nội bộ, tính toàn vẹn văn bản Markdown, chạy scripts/check_history.py PASS so với origin/main.
+- Ảnh hưởng: thuần tài liệu hệ thống, không thay đổi mã nguồn logic ứng dụng hay can thiệp luồng runtime.
+- Trạng thái: PASS.
+- Giới hạn, lỗi còn lại, rollback/bước tiếp: không có.
+
+<a id="yc-184"></a>
+### YC-184 - 10/10/2026 16:37 (UTC+07)
+
+- Người thực hiện: Codex; loại: rà soát/nghiệm thu PR giao diện.
+- Mục tiêu: kiểm file/thư mục của PR new-ui-from-main và nguyên nhân GitHub chặn merge; tiếp nối YC-181/182/183.
+- Baseline live: PR6 head868233b/base6a50952, OPEN/MERGEABLE/BLOCKED, ahead2/behind0. PR5 đã merge; nguyên nhân không còn là lịch sử độc lập.
+- Phạm vi PR: đúng 7 file static/app.js, index.html, style.css, layout.js, style.light-backup.css, theme.css, theme.js; không backend/test/log. Review diff và source hiện hành trên snapshot tmp.
+- Nguyên nhân đã kiểm: history thiếu mục mới trong LICH_SU_DU_AN.md; Windows/Mac đều 143 PASS/2 FAIL do mode-tools không trong nav chính và gradient trong style.css trái hợp đồng tests/test_learning_tools_ui_contract.py. Main bắt đủ 3 checks/strict/admin; approval count0, không conflict.
+- Source: mode-tools ở index.html:161 nằm trong documents-panel hidden từ dòng156; nav chính giữ mode-documents cũ; documents-panel/mode-qa/mode-timetable trùng ID. Hai title/hai link style.css là lỗi hợp nhất bổ sung, không phải lỗi CI trực tiếp.
+- Kiểm chứng: CI PR38041732751 đọc log gốc; tái hiện trực tiếp hai hàm test và history trên đúng head FAIL như CI. Main có mode-tools trong nav chính và không gradient. Browser runtime/full suite local NOT_RUN, không thay bằng khẳng định nghiệm thu UI.
+- Trước/sau/file sửa: hoàn tất audit/chẩn đoán và phương án sửa; chỉ ghi LICH_SU_DU_AN.md, STATE.md, docs/project/pr6-merge-audit-2026-10-10/BAO_CAO.md và verification.json. Không sửa mã, PR/comment, commit/push/merge hoặc protection.
+- Hướng xử lý chưa triển khai: nav/ID duy nhất, giữ công cụ học tập của PR5 đúng vị trí, xử lý gradient theo yêu cầu thiết kế đã thống nhất, thêm log mới, chạy checks/review UI.
+- Kiểm thử/review hồ sơ: ID mới và nội dung cũ bảo toàn/validate PASS. Handoff/triển khai/RED-GREEN N/A vì chỉ audit; lỗi baseline đã tái hiện, chưa có bản sửa.
+- Trạng thái: chẩn đoán hoàn tất, PR vẫn BLOCKED. Bằng chứng và giới hạn trong báo cáo local; cập nhật 2026-10-10T16:37:38.245887+07:00.
+
+<a id="yc-185"></a>
+### YC-185 - 10/10/2026 16:50 (UTC+07)
+
+- Người thực hiện: Codex điều phối/kiểm thử/review, Antigravity triển khai HTML/CSS; loại: môi trường/chức năng giao diện.
+- Mục tiêu/log liên quan: sửa lỗi chặn PR #6 new-ui-from-main tiếp nối chẩn đoán YC-184; giữ UI mới và Công cụ học tập đã hợp nhất trên main.
+- Trước/sau: baseline868233b có nav/panel trong vùng ẩn, trùng ID/title/stylesheet, CSS gradient và thiếu log. Sau một nav chính, ba panel trực tiếp trong main, asset/title không trùng; màu phẳng. Review thêm sửa bảng màu bị ghép trùng, thiếu nền sáng và quy tắc OS ghi đè công tắc sáng/tối.
+- Phần/file: triển khai trên checkout cách ly /private/tmp/study-agent-pr6-review-xvnawf9q; sửa static/index.html, style.css, theme.css, tests/test_learning_tools_ui_contract.py và nhật ký chia sẻ LOG-20261010-ui-pr6-fix-codex. Giữ toàn bộ16 mục lịch sử main. Không copy mã về checkout chính hoặc sửa backend/corpus/model.
+- Kiểm chứng RED: bốn test cấu trúc/UI ban đầu lỗi đúng nguyên nhân và browser xác nhận qa-panel/mode-tools bị ẩn. Hai regression palette/theme mới cũng RED trước lượt sửa bổ sung.
+- Kiểm chứng GREEN: local Python3.12.14/requirements-windows149 PASS/6 warning; Node24.19.0 tám test UI PASS; toàn bộ static JS syntax, whitespace và history PASS. Browser demo QA/tools/timetable, ba tab, tìm nguồn/bài tập mẫu, sidebar sáng/tối/desktop/mobile390x844 PASS; không tràn ngang, console0 error.
+- Phát hành: đã commit/push d56743aed1c05c5b1d162537658d67765fdceb07 vào [PR #6](https://github.com/ng-wngkh07/Study-Agent/pull/6). [CI PR38043556856](https://github.com/ng-wngkh07/Study-Agent/actions/runs/38043556856) trên đúng SHA PASS: Windows/macOS mỗi OS149 Python và4 Node22; history PASS. Windows1 warning, macOS6 warning phụ thuộc. Đã cập nhật tiêu đề/mô tả và đọc lại PR OPEN/CLEAN/MERGEABLE. Chưa merge vào main.
+- Trạng thái: hoàn tất sửa/review/kiểm chứng và cập nhật PR. [Báo cáo](docs/project/pr6-ui-repair-2026-10-10/BAO_CAO.md), [kết quả](docs/project/pr6-ui-repair-2026-10-10/result.json), [ledger](docs/project/pr6-ui-repair-2026-10-10/verification.json). Server/tab demo riêng đã dừng/đóng. Cập nhật 2026-10-10T17:08:20.856435+07:00.
+- Giới hạn: chỉ fixture demo và hợp đồng UI/API; QA/VLM/model thật và corpus/MLX đầy đủ NOT_RUN. Build/typecheck N/A vì repo không cấu hình; không thay bảo vệ nhánh hoặc huấn luyện.
 
 <a id="log-log-20261010-ui-pr6-fix-codex"></a>
 ### LOG-20261010-ui-pr6-fix-codex - 10/10/2026 16:43 (UTC+07)
@@ -462,18 +570,74 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Trạng thái: triển khai và review local PASS lúc 10/10/2026 17:02 (UTC+07). CI Windows/Mac/history trên commit mới chưa chạy tại thời điểm ghi; sẽ kiểm sau push. Chưa merge PR.
 - Giới hạn: dữ liệu kiểm là demo tổng hợp, không nghiệm thu chất lượng QA/VLM/model thật hoặc corpus/huấn luyện; browser kiểm điều hướng/nguồn/theme, không gọi suy luận thật. Build/typecheck N/A vì repo không cấu hình. Không thay protection.
 
-<a id="yc-183"></a>
-### YC-183 - 10/10/2026 19:55 (UTC+07)
+<a id="yc-186"></a>
+### YC-186 - 10/10/2026 17:15 (UTC+07)
 
-- Người thực hiện: Antigravity; loại: tài liệu phân tích kỹ thuật toàn diện dự án.
-- Lỗi/mục tiêu: bổ sung bộ tài liệu phân tích chuyên sâu toàn bộ mã nguồn Study Agent gồm ý tưởng/mục tiêu/nghiệp vụ, cấu trúc mã nguồn/kiến trúc/schema CSDL và hướng dẫn triển khai/vận hành/troubleshooting thực tế.
-- Trước/sau: trước mới có tài liệu phân công và báo cáo sửa lỗi trong docs/team/; sau bổ sung 3 tài liệu chi tiết tại docs/:
-  + docs/01_Y_TUONG_DU_AN.md: Phân tích bài toán, triết lý Local-first, 4 luồng nghiệp vụ cốt lõi (Hybrid RAG, Document Lookup, Timetable Vision, Practice Engine), mô hình an toàn AI và bảng công nghệ.
-  + docs/02_CAU_TRUC_DU_AN.md: Kiểm kê toàn bộ repository, phân tích sâu các module backend trong app/, frontend, 3 schema SQLite (knowledge_base.db, history.db, timetable.db) và cơ chế GPU/File Lock.
-  + docs/03_CACH_TRIEN_KHAI_DU_AN.md: Hướng dẫn cài đặt Windows/macOS, biến môi trường, profiles demo/local, CLI run.py, quy trình kiểm thử tự động và ma trận xử lý 9 lỗi thường gặp.
-- Phần/file sửa: thêm docs/01_Y_TUONG_DU_AN.md, docs/02_CAU_TRUC_DU_AN.md, docs/03_CACH_TRIEN_KHAI_DU_AN.md và cập nhật LICH_SU_DU_AN.md.
-- Kiểm thử: kiểm tra liên kết nội bộ, tính toàn vẹn văn bản Markdown, chạy scripts/check_history.py PASS so với origin/main.
-- Ảnh hưởng: thuần tài liệu hệ thống, không thay đổi mã nguồn logic ứng dụng hay can thiệp luồng runtime.
-- Trạng thái: PASS.
-- Giới hạn, lỗi còn lại, rollback/bước tiếp: không có.
+- Người thực hiện: Codex; loại: rà soát/giải thích kiến trúc dữ liệu và huấn luyện.
+- Mục tiêu: xác định ảnh hưởng của việc sửa/thêm chức năng khi thu thập dữ liệu và huấn luyện; liên quan YC-180 về corpus và YC-185 về UI. Đây là giải thích, không phải yêu cầu chạy pipeline hoặc thay chính sách.
+- Trước/sau: làm rõ ba lớp độc lập nguồn đã duyệt, chỉ mục/vector RAG và bộ dữ liệu/adapter LoRA. UI thuần không yêu cầu học lại; thêm tài liệu thường cập nhật RAG; sửa OCR/chunk cần xây lại phần chỉ mục bị ảnh hưởng và rà lại dữ liệu dẫn xuất; đổi embedding cần tạo lại vector tài liệu và truy vấn bằng cấu hình tương thích. Đổi prompt/truy xuất/schema/tính năng cần kiểm chất lượng/tích hợp; chỉ học thêm khi cần hành vi mới. Đổi base model/tokenizer không được mặc định dùng lại adapter/dataset cũ.
+- File/module đã đọc: app/config.py, indexer.py, searcher.py, rag_agent.py, dialogue.py, corpus_readiness.py, fine_tune.py, verify_v6.py, active_registry.py, trained_client.py, pipeline_orchestrator.py, run_v6_conservative.py, timetable_vision.py và README_QUY_TAC.md. Nguồn ngoài: tài liệu chính thức Hugging Face PEFT checkpoint và Sentence Transformers semantic search.
+- Bằng chứng source: indexer lưu đoạn/vector, searcher tạo vector truy vấn và so cosine; rag_agent đưa đoạn truy xuất vào context. fine_tune gọi cổng corpus và cân bằng dữ liệu trước lệnh MLX; verify_v6 ràng buộc dataset/manifest bằng hash và exact tokenizer; registry kiểm adapter/base/evidence trước kích hoạt. Thời khoá biểu dùng VLM và schema riêng. Việc có bước snapshot_freeze trong orchestrator không chứng minh một job hiện tại đã cô lập toàn bộ đầu vào.
+- Phương án đề xuất chưa triển khai: tiếp tục thu thập nguồn có provenance/version; đợt học dùng snapshot riêng của mã, nguồn/index khi cần, train/valid, manifest/hash, base model/tokenizer/config và bộ đánh giá; không sửa đầu vào đang học. Dữ liệu mới đưa vào phiên bản kế tiếp; một writer corpus/index/training, không chạy GPU cạnh tranh. Kiểm khả năng mới và khả năng cũ trước kích hoạt candidate, giữ bản đã nghiệm thu để quay lại.
+- Ảnh hưởng thiết kế: phát triển UI/backend có thể song song với chuẩn bị dữ liệu nếu giữ ranh giới phiên bản/hợp đồng; thay code không tự cập nhật trọng số hoặc làm mô hình tự biết chức năng mới. Không cần đợi toàn bộ ứng dụng hoàn thiện mới thu thập; điều kiện học phụ thuộc snapshot và cổng dữ liệu thực tế.
+- Phần/file sửa: chỉ bổ sung lịch sử gốc và STATE.md; không sửa mã, nguồn, DB/vector, dataset, adapter, cấu hình hoặc tiến trình.
+- Kiểm chứng: đối chiếu luồng source/hợp đồng PASS; bảo toàn mục cũ, ID/count và liên kết checkpoint PASS. Triển khai/handoff/RED-GREEN/build N/A vì chỉ giải thích và tài liệu; audit corpus live, thu thập, inference, training và nghiệm thu model NOT_RUN. Không suy complete:true hiện tại từ ghi chép YC-180.
+- Trạng thái: hoàn tất giải thích; snapshot/version workflow là đề xuất chưa áp dụng. Cập nhật 2026-10-10T17:15:37.047998+07:00.
+
+<a id="yc-187"></a>
+### YC-187 - 10/10/2026 17:30 (UTC+07)
+
+- Người thực hiện: Codex kiểm tra nguồn/chỉ mục, đối chiếu chức năng và lập kế hoạch; loại: dữ liệu corpus và chuẩn bị huấn luyện.
+- Mục tiêu/log liên quan: nghiệm thu toàn bộ tài liệu/chỉ mục, sau đó xây dữ liệu phủ các chức năng hiện có và huấn luyện khi hoàn chỉnh; tiếp nối YC-180/186. Đã có yêu cầu huấn luyện có điều kiện; chưa đổi yêu cầu toàn corpus hoàn chỉnh.
+- Trước/sau: đối chiếu lại báo cáo corpus có thể đọc YC-180 bằng audit live. 154 nguồn/154 tài liệu indexed, 22.705 trang; 22.692 trang hoàn chỉnh, 13 chưa hoàn chỉnh (9 visual partial, 4 OCR pending). 52.604 chunks/FTS/vector; vector lỗi/thiếu=0, integrity ok, FK0, 154 probe FTS đạt. Cổng nguồn vẫn complete:false; 22 lỗi điều kiện tương ứng 13 trang, không phải 22 trang.
+- Review nguồn: đã xem trực tiếp ảnh của 13 trang, đối chiếu hash PDF/ảnh; còn chữ bị cắt/thiếu/khó đọc trong nguồn hiện có. Không đoán chữ hoặc chuyển trạng thái thành verified. Chờ nguồn đầy đủ hoặc quyết định thay phạm vi rõ ràng; chưa cho phép loại trang.
+- Baseline chức năng: main d6f44eda5086fdcae70a00a1f0ac4a9e98edd901, PR6 đã được merge khi đọc lại; không do lượt này merge. Đọc mã main tại snapshot tmp cùng source local; không ghi đè checkout chính đang chỉnh. Kế hoạch bao gồm QA, sinh/kiểm trắc nghiệm và tóm tắt; lịch ảnh dùng VLM riêng, lookup/chấm đáp án/lưu lịch/UI kiểm bằng hồi quy.
+- Dữ liệu hiện có: v15 323 train/34 valid chỉ 3 môn; giải tích/toán rời rạc/vật lý không có mẫu, exact-token balance passed:false, trial chưa duyệt. 154 nguồn có 153 hash nội dung; một nhóm Sandi Mann trùng hoàn toàn phải giữ cùng split. Đường admission OCR cache so với source_page_reviews mới chưa chứng minh tương đương.
+- Phần/file đọc: app/corpus_readiness.py, source_page_reviews.py, dataset_balance.py, training_data.py, fine_tune.py, rag_agent.py, searcher.py, indexer.py, practice.py trên main, topic_summarizer.py, timetable_vision.py, active_registry.py; policy/tracker, manifest/review/corpus audit, approval v15 và paired-decision Trial18.
+- Phần/file sửa: LICH_SU_DU_AN.md, docs/project/STATE.md, tracker runtime hiện có; thêm data/evaluation/training-readiness-20261010-yc187/BAO_CAO.md và audit/index/source-manifest/13-page-review/balance/feature-training-plan/test-log. Chỉ bằng chứng và checkpoint; không sửa nguồn, DB, vector, mã sản phẩm hoặc chính sách.
+- Kiểm chứng: audit toàn nguồn/provenance/vector và FTS readback chạy xong; 24 test corpus/readiness/review/balance PASS, 5 warning phụ thuộc; balance dataset cũ FAIL. Registry file active_adapter_id:null; runtime health/inference live chưa kiểm. Bảo toàn log/ID/cấu trúc dữ liệu kiểm riêng sau khi ghi.
+- Ảnh hưởng/điều kiện tiếp: giữ một writer, snapshot có hash và split theo nguồn/nhóm trùng, cân bằng số mẫu/token 6 môn, review nhãn độc lập; training chỉ sau live complete:true và dataset/QA/resource gates. Giữ holdout/retention, không kích hoạt theo loss; Trial18 đã bị loại vì retention giảm dù target tăng.
+- Trạng thái: audit hoàn tất nhưng cổng nguồn FAIL; kế hoạch chức năng đã lập, tập học mới/training/evaluation NOT_RUN vì còn 13 trang. Chờ quyết định nguồn/phạm vi; Antigravity tác vụ corpus cũ đã ở trạng thái kết thúc khi kiểm UI, chưa gửi job triển khai/học mới. Không commit/push/merge hoặc thay model/provider; RED-GREEN triển khai/build N/A vì chưa sửa mã. Cập nhật 2026-10-10T17:30:22.992111+07:00.
+
+<a id="yc-188"></a>
+### YC-188 - 10/10/2026 18:40 (UTC+07)
+
+- Người thực hiện: Codex điều phối/kiểm chứng; loại: quyết định phạm vi corpus và huấn luyện.
+- Mục tiêu/quyết định: người dùng cho phép loại đúng 13 trang unresolved đã kiểm tại YC-187 và tiếp tục chuẩn bị dữ liệu/huấn luyện. Thay yêu cầu toàn bộ trang không ngoại lệ ở cổng nguồn trước đây; không thay các cổng provenance, cân bằng, review nhãn, tài nguyên và đánh giá mô hình.
+- Trước/sau: 22.705 trang toàn nguồn gồm 13 trang không thể xác minh đầy đủ; phạm vi được duyệt còn 22.692 trang. Giữ PDF/DB/trạng thái 13 trang chưa hoàn chỉnh; không gọi toàn bộ nguồn đã hoàn chỉnh hoặc sửa chúng thành verified. Cổng mới phải phân biệt complete_all_sources và complete cho phạm vi đã duyệt, nêu excluded_count=13 và ràng buộc hash/người duyệt/lý do.
+- File/quyền ghi: Codex ghi manifest data/runtime/corpus-page-exclusions-yc188.json, history/STATE/tracker và test; dự kiến Antigravity triển khai cổng nguồn/admission/pipeline trong phạm vi riêng. Chưa cập nhật policy hoặc chạy dữ liệu/học khi mới ghi quyết định.
+- Tiêu chí: chỉ bỏ kiểm nội dung thiếu đúng trang được duyệt; nguồn/hash/page/chunk/review/vector/integrity khác vẫn fail closed, nguồn đổi/manifest sửa/ngoại lệ không hợp lệ phải chặn. Không đưa bất kỳ chunk thuộc13 trang vào train/valid/holdout; nguồn trùng/holdout chia theo hash.
+- Kế hoạch tiếp: kiểm cổng và dataset admission RED/GREEN; audit live theo phạm vi; xây bộ 6 môn phù hợp QA/trắc nghiệm/summary, dữ liệu ảnh riêng; review Codex/hash/tokenizer/preflight trước job MLX; paired holdout/retention trước quyết định kích hoạt.
+- Trạng thái: quyết định đã ghi; triển khai/data/training đang chuẩn bị, NOT_RUN lúc lập mục. Không tự commit/push, đổi model/provider hoặc lịch tự động. Cập nhật 2026-10-10T18:40:15.882736+07:00; kết quả bổ sung theo bằng chứng hiện hành.
+
+- Kết quả bổ sung 2026-10-10T19:09:03.132697+07:00: đã triển khai policy hash-bound và module corpus_scope; audit độc lập Codex PASS,154 nguồn/22.705 trang vật lý,22.692 trong phạm vi,13 trang/19 chunks loại trừ; complete:true theo phạm vi, complete_all_sources:false. PDF/DB/trạng thái nguồn không sửa. Manifest sai hash/nguồn/trang/duyệt và dữ liệu dùng alias, số trang sai, nguồn thiếu đều chặn.
+- Kiểm chứng cổng: RED ban đầu9 lỗi/13 đạt; vòng review provenance mở rộng11 lỗi/32 đạt; sau sửa91 test độc lập PASS,5 cảnh báo phụ thuộc. Bằng chứng data/evaluation/training-yc188-20261010/scoped-corpus-audit-codex.json và scope-independent-final.log; test xanh chỉ nghiệm thu cổng, không chứng minh model tốt.
+- Cập nhật README_QUY_TAC về phạm vi được duyệt. Bản V15 thiếu3 môn và các nhiệm vụ trắc nghiệm/summary:4 test hợp đồng dữ liệu FAIL/1 PASS trên baseline. Bộ mới V16 đang chuẩn bị, nội dung/chia nguồn/holdout/tokenizer chưa duyệt; đã ghi cảnh báo nguồn Vi tích phân dẫn xuất để tránh leakage. Chưa huấn luyện hoặc kích hoạt adapter, cần review độc lập đầu ra dữ liệu/base trước job.
+
+- Review dữ liệu 2026-10-10T12:30:00.497711+00:00: bản nháp V16 đầu tiên 432 train/108 valid bị Codex từ chối; 540/540 vị trí trích dẫn không khớp chunk gốc, 90/90 câu trắc nghiệm đáp án A, nhãn dùng mẫu chung và có trang danh sách người dịch/bìa, nhóm nguồn Vi tích phân bị chia lẫn dẫn xuất. Giữ bản nháp/bằng chứng riêng để tái hiện; không tạo approval hoặc học trên dữ liệu này.
+- Đã dừng đúng tiến trình đánh giá nền và nhắc tiến trình của bản này qua UI, xác nhận tác vụ biến mất/GPU lock rảnh; gói sửa dữ liệu giới hạn đã giao một lần. Yêu cầu nhãn riêng theo nguồn, admission live, span nguyên văn và chia family thật; Codex nghiệm thu độc lập sau kết quả. Training/activation NOT_RUN; baseline dở dang không dùng làm bằng chứng nghiệm thu.
+
+<a id="yc-189"></a>
+### YC-189 - 10/10/2026 22:35 (UTC+07)
+
+- Người thực hiện: Codex nghiên cứu/đối chiếu/review; loại: phương pháp dữ liệu và huấn luyện.
+- Mục tiêu: tìm phương pháp huấn luyện hiệu quả trên GitHub và diễn đàn, kiểm tra bằng tài liệu chính thức và dữ liệu/hardware hiện tại rồi áp dụng; tiếp nối YC-187/188.
+- Trước/sau: bản Data02 đã bị từ chối; Data03 có 144 train/72 valid phủ 6 môn, 6 tác vụ, nhưng chưa được nghiệm thu nội dung và chia họ nguồn. Máy dùng Qwen2.5-3B-Instruct 4-bit/MLX; không đổi model/provider. Lượt cũ tăng điểm mục tiêu nhưng giảm retention nên không kích hoạt.
+- Phương pháp đang đối chiếu: QLoRA trên nền quantized, batch nhỏ/gradient checkpoint, loss trên câu trả lời, chọn dữ liệu có căn cứ, chia theo họ nguồn, đóng băng bộ đánh giá và so sánh candidate/base. GitHub MLX-LM và tài liệu TRL là nguồn kỹ thuật; diễn đàn chỉ cung cấp kinh nghiệm cần xác minh.
+- Phần/file: bằng chứng nghiên cứu local data/evaluation/training-methods-yc189-20261010; chưa sửa trainer hoặc chạy học trong bước nghiên cứu. Dữ liệu, nguồn PDF, DB/vector và model giữ riêng ngoài Git.
+- Trạng thái: đang nghiên cứu và áp dụng theo các cổng chất lượng hiện có. Inference, LoRA và kết quả chất lượng candidate mới NOT_RUN; không nhận số lượng/test xanh là dữ liệu đã duyệt.
+
+
+<a id="yc-190"></a>
+### YC-190 - 10/10/2026 22:35 (UTC+07)
+
+- Người thực hiện: Codex; loại: đồng bộ lịch sử và phát hành GitHub.
+- Mục tiêu: kiểm tra lịch sử ứng dụng trên GitHub, đẩy cập nhật mới đã kiểm chứng và tiếp tục tác vụ dữ liệu/huấn luyện cùng nghiên cứu YC-189.
+- Baseline: main `11122e755684171806804429c105361abe398fe1`, đã merge PR6 giao diện và PR7 bộ tài liệu. Checkout local vẫn ở `871d4dc`; không ghi đè code/main hoặc reset việc local. Dùng checkout mới từ main để phát hành chọn lọc.
+- Lịch sử: bảo toàn LOG-20261010-ui-pr6-fix-codex và nội dung GitHub YC-180–183; mỗi mã YC trùng gom hai mốc với ngày/nội dung gốc và chú thích hiệu chỉnh. Header cũ ghi17 nhưng thực tế18 mục trên main đã được đối chiếu lại.
+- Phần phát hành: app/corpus_scope.py, corpus_readiness.py, training_data.py, fine_tune.py; tests/test_corpus_readiness.py, test_corpus_scope_admission.py; README_QUY_TAC.md và lịch sử gốc. Cổng loại trang yêu cầu manifest/hash/quyết định hợp lệ, không bỏ qua lỗi nguồn/chunk/vector; giữ complete_all_sources khác complete theo phạm vi. Không đưa manifest nguồn thật, DB, dataset, weights hoặc annotation nội dung tài liệu vào Git.
+- Kiểm chứng: trước phát hành đã có 91 kiểm thử độc lập và audit live scoped complete:true, whole-source false ở YC-188. Cần chạy kiểm thử tích hợp trên main mới, diff/history và đọc lại remote SHA trước xác nhận push.
+- Tiếp tục: Data03 đã kết thúc; Codex review cho thấy báo cáo họ nguồn vẫn có train/valid cùng họ VLDC1/TRR, nên chưa cấp quyền học. Giữ dữ liệu ở UNREVIEWED; tiếp tục sửa split/nhãn/evaluation sau bước phát hành.
+- Kiểm chứng phát hành: 149 kiểm thử chức năng và8 Node PASS trên checkout main mới;84 kiểm thử scope/training PASS,1 ca cần manifest private SKIP. Ca đó và toàn bộ nhóm scope trên máy corpus:53 PASS. Diff/history và quét bí mật cần xác nhận ở commit cuối.
+- Trạng thái: đã kiểm bản phát hành local, chuẩn bị push nhánh codex/corpus-scope-yc190; chưa merge. LoRA/paired evaluation mới NOT_RUN.
 

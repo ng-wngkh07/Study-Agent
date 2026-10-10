@@ -232,3 +232,10 @@ def test_exclusion_manifest_rejects_ancestor_symlink(tmp_path):
     with pytest.raises(ValueError, match="symlink"):
         validate_page_exclusion_manifest(tmp_path, entry)
 
+
+
+def test_producer_type_annotations_are_resolvable():
+    """Resolve annotations even on Python versions that defer their evaluation."""
+    from typing import get_type_hints
+    hints = get_type_hints(is_chunk_allowed_in_training)
+    assert hints["return"] is bool

@@ -7,7 +7,7 @@ import re
 import sqlite3
 import unicodedata
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Optional, Set, Tuple
 from xml.sax.saxutils import escape
 
 import requests

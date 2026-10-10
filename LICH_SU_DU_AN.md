@@ -2,7 +2,7 @@
 
 <!-- PROJECT_HISTORY_SCHEMA: 3 -->
 - File chung duy nhất: `LICH_SU_DU_AN.md` ở gốc, push cùng mã nguồn.
-- Cập nhật: 2026-10-10T22:35:29.940756+07:00
+- Cập nhật: 2026-10-10T22:47:49.500414+07:00
 - Mục mới nhất: **[YC-190](#yc-190)**.
 - Nhật ký chung có **25 mục**: 7 môi trường/chức năng (YC-167/170/173/175/177/185 và LOG-20261010-ui-pr6-fix-codex), 3 tổ chức/tài liệu (YC-168/172/179), 2 phát hành GitHub (YC-169/190), 6 rà soát/nghiệm thu (YC-171/174/178/181/184/186), 4 làm rõ quyền/quy trình (YC-176/182/183/188), 3 dữ liệu corpus/huấn luyện (YC-180/187/189). Các mã trùng YC-180–183 chứa cả mốc local và GitHub, không tính hai lần.
 - [Quy tắc](README_QUY_TAC.md), [phân công 6 người](docs/team/PHAN_CONG_6_NGUOI.md),
@@ -639,5 +639,7 @@ YC-168 biên tập YC-167 theo yêu cầu mới; bản trước hiệu chỉnh v
 - Kiểm chứng: trước phát hành đã có 91 kiểm thử độc lập và audit live scoped complete:true, whole-source false ở YC-188. Cần chạy kiểm thử tích hợp trên main mới, diff/history và đọc lại remote SHA trước xác nhận push.
 - Tiếp tục: Data03 đã kết thúc; Codex review cho thấy báo cáo họ nguồn vẫn có train/valid cùng họ VLDC1/TRR, nên chưa cấp quyền học. Giữ dữ liệu ở UNREVIEWED; tiếp tục sửa split/nhãn/evaluation sau bước phát hành.
 - Kiểm chứng phát hành: 149 kiểm thử chức năng và8 Node PASS trên checkout main mới;84 kiểm thử scope/training PASS,1 ca cần manifest private SKIP. Ca đó và toàn bộ nhóm scope trên máy corpus:53 PASS. Diff/history và quét bí mật cần xác nhận ở commit cuối.
-- Trạng thái: đã kiểm bản phát hành local, chuẩn bị push nhánh codex/corpus-scope-yc190; chưa merge. LoRA/paired evaluation mới NOT_RUN.
+- Kết quả phát hành: đã push commit `85ded1e659cf049a35f89cb6fbb2c4fc378df774` nhánh codex/corpus-scope-yc190 và mở [PR8](https://github.com/ng-wngkh07/Study-Agent/pull/8); đọc lại refs khớp, history/diff/Gitleaks PASS. CI đang chờ; chưa merge. Cập nhật 2026-10-10T22:37:47.040860+07:00. LoRA/paired evaluation mới NOT_RUN.
 
+
+- Sửa CI 2026-10-10T22:47:49.500414+07:00: GitHub Python3.12 phát hiện NameError do thiếu Set/Tuple tại annotation của training_data; local Python3.14 trì hoãn annotation nên suite cũ không bắt được. Thêm ca get_type_hints tái hiện RED rồi bổ sung đúng hai typing imports, không đổi hành vi. Codex kiểm lại root54 PASS, checkout phát hành53 PASS/1 private-policy SKIP; scripts/dev.py check PASS. CI cũ38064366774 FAIL giữ bằng chứng, đang đẩy sửa và chờ kiểm chứng lại trên cả Windows/Mac Python3.12.
